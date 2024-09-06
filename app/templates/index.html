@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham's Portfolio Website</title>
+    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='03_imgs/favicon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='01_css/index_styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="{{ url_for('static', filename='02_js/index_scripts.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo-all">
+            <a href="#" class="logo-holder">
+                <div class="logo">AD</div>
+                <div class="logo-text">Adham's Portfolio</div>
+            </a>
+            <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
+                </svg>
+            </a>
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact" class="button">Contact</a></li>
+                <li></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-blue">
+                <div>
+                    <h1><small> Hi I'm</small>
+                        Akhmad Adham Nur Husaen
+                    </h1>
+                    <p>
+                        I am an Operations Research Engineer with extensive 
+                        experience in extracting, analyzing, and visualizing 
+                        large datasets to provide insights and actionable 
+                        recommendations for operational efficiency and strategic 
+                        decision-making especially in the manufacture and mining industry. 
+                        <span>
+                        I am keen to advance my expertise in data science 
+                        to further enhance my skills and contributions.
+                        </span>
+                    </p>
+                    <div class="call-to-action">
+                        <a href="#" class="button black">
+                            View Resume
+                        </a>
+                        <a href="#contact" class="button black">
+                            Contact Me
+                        </a>
+                        <a href="https://github.com/adhamhusein" class="button white" target="_blank">
+                            <img src="{{ url_for('static', filename='03_imgs/github.png') }}" alt="github">
+                            Github
+                        </a>
+                        <a href="https://www.linkedin.com/in/akhmad-adham-nur-husaen/" class="button white" target="_blank">
+                            <img src="{{ url_for('static', filename='03_imgs/linkedin.png') }}" alt="linkedin">
+                            Linkedin
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-yellow">
+                <img src="{{ url_for('static', filename='03_imgs/hero-image.png') }}" alt="Adham Picture" width="100%"
+            </div>
+        </section>
+
+        <section class="logos container">
+            <div class="marquee">
+                <div class="track">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/postgresql.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/ssms.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/python.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/pandas.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/seaborn.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/knime.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/ssrs.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/powerbi.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/vba.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/excel.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/ppt.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/vscode.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/html.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/css.png') }}">
+
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/postgresql.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/ssms.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/python.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/pandas.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/seaborn.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/knime.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/ssrs.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/powerbi.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/vba.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/excel.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/ppt.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/vscode.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/html.png') }}">
+                    <img src="{{ url_for('static', filename='03_imgs/logo-skills/css.png') }}">
+
+                </div>
+            </div>
+        </section>
+
+        <section class="skills container" id="skills">
+            <h2>
+                <small>About Me</small>
+                Skills
+            </h2>
+            <div class="holder-blue">
+                <div class="left-column">
+                    <h3>Data Manipulation</h3>
+                    <ul>
+                        <li>PostgreSQL</li>
+                        <li>Microsoft SQL Server</li>
+                        <li>SQLite</li>
+                    </ul>
+                    <h3>Data Processing</h3>
+                    <ul>
+                        <li>Python</li>
+                        <li>KNIME</li>
+                        <li>Microsoft Excel</li>
+                        <li>VBA</li>
+                        <li>Rest API</li>
+                        <li>Pandas</li>
+                        <li>Seaborn</li>
+                        <li>TheFuzz</li>
+                    </ul>
+                    <h3>Data Visualization</h3>
+                    <ul>
+                        <li>SQL Server Reporting Service</li>
+                        <li>Power BI</li>
+                        <li>Advizor</li>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>Microsoft Power Point</li>
+                    </ul>
+
+                </div>
+                <div class="right-column">
+                    <h3>A bit about me</h3>
+                    <p>
+                        As an Operations Research Engineer, I specialize in extracting, 
+                        analyzing, and visualizing large datasets to generate insights and 
+                        actionable recommendations. My expertise lies in optimizing operational 
+                        efficiency and supporting strategic decisions, with a particular focus 
+                        on the manufacturing and mining sectors. I have a strong background in 
+                        data manipulation using PostgreSQL, Microsoft SQL Server, and SQLite, 
+                        as well as data processing with tools such as Python, KNIME, Microsoft 
+                        Excel VBA, REST API, Pandas, Seaborn, and TheFuzz. Additionally, my 
+                        skills in data visualization include proficiency in SQL Server Reporting 
+                        Services, Power BI, Advizor, HTML, CSS, and Microsoft PowerPoint.
+                    </p>
+                    <p>
+                        I also have experience in maintaining Ubuntu servers, ensuring smooth 
+                        data operations and infrastructure management. I am passionate about 
+                        advancing my expertise in data science and continuously enhancing my 
+                        skills. My goal is to uncover deeper insights and deliver impactful 
+                        results for organizations, driving improvements and strategic growth.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects container" id="projects">
+            <h2>
+                <small>Previous</small>
+                Completed Projects
+            </h2>
+            <div class="jobs">
+                <article>
+                    <figure>
+                        <div><img src="{{ url_for('static', filename='03_imgs/img-project/project-001.png') }}" width="100%"></div>
+                        <figcaption>End-to-End Property Data Solutions</figcaption>
+                    </figure>
+
+                    <h3><a href="#"> End-to-End Property Data Solutions: 
+                        <small> From Acquisition to Visualization and Insights</small></a></h3>
+                    <div class="year">2024</div>
+                    <p>This include schematic for my comprehensive End-to-End Property Data Solutions, 
+                        covering all stages from data acquisition to visualization and insights, 
+                        a brief overview of the analytics generated from the property data, and 
+                        update daily data using the LINE API
+                    </p>
+                </article>
+
+                <article>
+                    <figure>
+                        <div><img src="{{ url_for('static', filename='03_imgs/img-project/project-002.png') }}" width="100%"></div>
+                        <figcaption>Property Price-Location Analysis & Insights</figcaption>
+                    </figure>
+
+                    <h3><a href="#"> Property Price-Location Analysis & Insights:
+                        <small> Case Study Indonesia</small></a></h3>
+                    <div class="year">2024</div>
+                    <p>
+                        This project analyzing price vs. location based on 
+                        gathered data from previous project. Data stored in 
+                        PostgreSQL hence this analysis using Microsoft Excel
+                        for data manipulation and PowerPoint for the visualization.
+                    </p>
+                </article>
+
+                <article>
+                    <figure>
+                        <div><img src="{{ url_for('static', filename='03_imgs/img-project/project-003.png') }}" width="100%"></div>
+                        <figcaption>Property Data Interactive Dashboard</figcaption>
+                    </figure>
+
+                    <h3><a href="#"> Property Data Interactive Dashboard:
+                        <small> Apache Superset</small></a></h3>
+                    <div class="year">2024</div>
+                    <p>
+                        Superset is a modern data exploration and data visualization 
+                        platform. Superset can replace or augment proprietary business 
+                        intelligence tools for many teams. Superset integrates well with 
+                        a variety of data sources. You can explore property data From previous 
+                        project your self.
+                    </p>
+                </article>
+            </div>
+            <div class="more">
+                <button class="learn-more">
+                    <span class="circle" aria-hidden="true">
+                        <span class="icon arrow"></span>
+                    </span>
+                    <a href="{{ url_for('project') }}" class="button-text">See More Projects</a>
+                </button>
+            </div>
+        </section>
+
+        <section class="journey container" id="experience">
+            <h2><small>Background</small>My Journey</h2>
+
+            <div class="title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z"/></svg>
+				<h4>EDUCATION</h4>
+            </div>
+            <div class="contents">
+				<div class="box">
+                    <h5>Universitas Gadjah Mada</h5>
+					<h4>Bachelor's Degree in Industrial Engineering | Aug 2017 - Jul 2021</h4>
+					<p>
+                        I am a graduate of Industrial Engineering with a 
+                        <strong>GPA of 3.74/4.00</strong>, 
+                        equipped with expertise in both engineering and 
+                        management. I possess the skills to design, implement, 
+                        manage, and optimize comprehensive systems that integrate 
+                        people, machinery, materials, energy, and information.
+                    </p> <br>
+                    <p>Courses learned during study:</p>
+                    <div class="course-learned">
+                        <ul>
+                            <li>Statistics and Probability</li>
+                            <li>Operations Research</li>
+                            <li>Programming</li>
+                            <li class="second">Systems Simulation</li>
+                            <li class="second">Decision Theory</li>
+                            <li>Decision Support System</li>
+                            <li>Cost Analysis</li>
+                            <li class="second">Engineering Economics</li>
+                            <li>Industrial Feasibility Analysis</li>
+                            <li class="second">Product Design</li>
+                            <li>Ergonomics</li>
+                            <li class="second">Engineering Drawing and Mechanics</li>
+                            <li>Supply Chain Engineering</li>
+                            <li class="second">Industrial Information System</li>
+                            <li>Project Management</li>
+                            <li class="second">Revenue Management</li>
+                            <a href="#">See More</a>
+                        </ul>
+                    </div>
+				</div>
+			</div>
+
+            <div class="title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M280-120v-80h160v-124q-49-11-87.5-41.5T296-442q-75-9-125.5-65.5T120-640v-40q0-33 23.5-56.5T200-760h80v-80h400v80h80q33 0 56.5 23.5T840-680v40q0 76-50.5 132.5T664-442q-18 46-56.5 76.5T520-324v124h160v80H280Zm0-408v-152h-80v40q0 38 22 68.5t58 43.5Zm200 128q50 0 85-35t35-85v-240H360v240q0 50 35 85t85 35Zm200-128q36-13 58-43.5t22-68.5v-40h-80v152Zm-200-52Z"/></svg>
+				<h4>ACHIEVEMENTS & AWARDS</h4>
+            </div>
+
+            <div class="contents">
+				<div class="box">
+                    <h5>Striking Gold Medal at PIMNAS 32</h5>
+					<h4>National Student Science Week | Bali, 2019</h4>
+					<p>
+                        PIMNAS is the final stage competition of the Student 
+                        Creativity Program (PKM), 
+                        <strong>a national scale forum for students to present 
+                        and communicate through intellectual creations.</strong>
+                        As the peak of national-scale student 
+                        scientific activities, PIMNAS is organized in Higher 
+                        Educations, designated by the Directorate General of 
+                        Belmawa based on the leaders willingness and agreement
+                    </p> <br>
+                    <p>For more information about our publications:</p>
+                    <div class="publications">
+                        <ul>
+                            <li>
+                                <a href="http://dx.doi.org/10.28989/angkasa.v14i1.1082" target="_blank">
+                                <strong>Jurnal Angkasa:</strong><br>
+                                Design of Difable Care (DC) mouse as the 
+                                accessibility of people with hand disabilities</a></li>
+                            <li>
+                                <a href="https://www.researchgate.net/publication/360472608_Design_of_Difable_Care_DC_mouse_as_the_accessibility_of_people_with_hand_disabilities" target="_blank">
+                                <strong>Research Gate:</strong><br> 
+                                Design of Difable Care (DC) mouse as the 
+                                accessibility of people with hand disabilities</a></li>
+                            <li>
+                                <a href="https://www.youtube.com/watch?v=_mw4G1u18_o" target="_blank">
+                                <strong>Youtube Sobat FT UGM:</strong><br> 
+                                #FTPunya DC Mouse menuju Pimnas! | PKM 2019</a></li>
+                        </ul>
+                    </div>
+                    <p>For further details about our media coverage:</p>
+                    <section class="container swiper">
+                        <div class="timeline-box">
+                            <div class="slider-wrapper">
+                                <div class="date">
+                                    <div class="swiper-slide-button swiper-button-prev">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+                                    </div>
+                                    <div class="time-event">
+                                        <p>Media Coverage</p>
+                                    </div>
+                                    <div class="swiper-slide-button swiper-button-next">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="card-list swiper-wrapper">
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-2.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">UGM SDGs CENTER</h4>
+                                        <p class="user-proffesion">universitas gadjah mada</p>
+                                        <a href="https://sustainabledevelopment.ugm.ac.id/2019/08/14/ugm-students-create-computer-mouse-for-people-with-disability/" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+                
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-3.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">TIRTO.id</h4>
+                                        <p class="user-proffesion">mnc portal</p>
+                                        <a href="https://tirto.id/mahasiswa-ugm-buat-mouse-untuk-tuna-daksa-dengan-nama-difabel-care-eghv" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-4.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">SINDO NEWS</h4>
+                                        <p class="user-proffesion">sindonews.com</p>
+                                        <a href="https://daerah.sindonews.com/artikel/jateng/7841/mahasiswa-ugm-buat-mouse-bagi-penyandang-cacat-tangan" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-5.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">LIPUTAN 6</h4>
+                                        <p class="user-proffesion">liputan6.com</p>
+                                        <a href="https://www.liputan6.com/regional/read/4053116/menilik-cara-kerja-mouse-komputer-karya-mahasiswa-ugm-untuk-tunadaksa?page=2" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-6.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">BALI PORTAL</h4>
+                                        <p class="user-proffesion">baliportalnews.com</p>
+                                        <a href="https://baliportalnews.com/2019/08/mahasiswa-ugm-buat-inovasi-mouse-bagi-penyandang-tuna-daksa/" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-7.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">UGM (id)</h4>
+                                        <p class="user-proffesion">universitas gadjah mada</p>
+                                        <a href="https://ugm.ac.id/id/berita/18250-mahasiswa-ugm-buat-inovasi-mouse-bagi-penyandang-tuna-daksa/" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-8.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">BALI EKBIS</h4>
+                                        <p class="user-proffesion">baliekbis.com</p>
+                                        <a href="https://www.baliekbis.com/mahasiswa-ugm-buat-inovasi-mouse-bagi-penyandang-tuna-daksa/" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-9.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">REPUBLIKA</h4>
+                                        <p class="user-proffesion">tekno republika</p>
+                                        <a href="https://tekno.republika.co.id/berita/px71bd463/tuna-daksa-mudah-operasikan-komputer-dengan-dc-mouse" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-10.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">UGM (en)</h4>
+                                        <p class="user-proffesion">universitas gadjah mada</p>
+                                        <a href="https://ugm.ac.id/en/news/18253-ugm-students-make-computer-mouse-for-the-disabled/" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-11.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">HENDRA MAULANA</h4>
+                                        <p class="user-proffesion">universitas narotama</p>
+                                        <a href="http://hendramaulana.dosen.narotama.ac.id/2019/09/menilik-cara-kerja-mouse-komputer-karya.html" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-12.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">OKEDUKASI</h4>
+                                        <p class="user-proffesion">okezone.com</p>
+                                        <a href="https://edukasi.okezone.com/read/2019/08/15/65/2092404/dc-mouse-hardware-khusus-bagi-penyandang-tunadaksa-untuk-akses-internet" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-13.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">BERNAS.id</h4>
+                                        <p class="user-proffesion">redaksi bernas.id</p>
+                                        <a href="https://www.bernas.id/2019/08/33637/68787-mouse-ini-bisa-dipakai-penyandang-tuna-daksa/" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-14.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">IND. OBSERVER</h4>
+                                        <p class="user-proffesion">observerid.com</p>
+                                        <a href="https://observerid.com/ugm-students-create-computer-mouse-for-people-with-disabilities/" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+
+                                    <div class="card-item swiper-slide">
+                                        <img src="{{ url_for('static', filename='03_imgs/pimnas/pimnas-15.png') }}" alt="" class="user-image">
+                                        <h4 class="user-name">HEAD TOPICS</h4>
+                                        <p class="user-proffesion">headtopics.com</p>
+                                        <a href="https://headtopics.com/id/dc-mouse-hardware-khusus-bagi-penyandang-tunadaksa-untuk-akses-internet-okezone-news-7574321" 
+                                            target="_blank" class="message-button"> Read
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+				</div>
+
+				<div class="box">
+					<h5>2020 DESCOMFIRST Runner-Up</h5>
+					<h4>Design Competition for Industrial System and Environment | UNS Solo, 2020</h4>
+					<p>
+                        Design Competition for Industrial System and Environment 
+                        (DESCOMFIRST) is design competition about Industrial 
+                        Engineering organized by Himpunan Mahasiswa Teknik Industri 
+                        Universitas Sebelas Maret (Industrial Engineering Student 
+                        Association of Sebelas Maret University). DESCOMFIRST 2020 
+                        is aimed to develop creativity and innovation of student, 
+                        that can be reached by designing eco-friendly products or 
+                        equipments. DESCOMFIRST consists of 3 stages of selection. 
+                        The first stage is the Mini Proposal Concept Selection, 
+                        the second stage is Full Proposal Selection and the third 
+                        stage which is include a Presentation and Public Exhibition 
+                        (EXPO).
+                    </p><br>
+                    <p>Below are what we bring to achieve this accomplishment:</p>
+                    <p class="tim-name">Touch, Explore, Thrive: A Revolutionary Tactile Board Game for Blind Toddlers</p>
+                    <div class="video-present">
+                        <iframe src="https://drive.google.com/file/d/1Y6F7bDk2Y3zdZyoRPKNVOn0oaIU9kegQ/preview" allow="autoplay"></iframe>
+                    </div>
+				</div>
+			</div>
+            
+            <div class="title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M42-120v-112q0-33 17-62t47-44q51-26 115-44t141-18q77 0 141 18t115 44q30 15 47 44t17 62v112H42Zm80-80h480v-32q0-11-5.5-20T582-266q-36-18-92.5-36T362-320q-71 0-127.5 18T142-266q-9 5-14.5 14t-5.5 20v32Zm240-240q-66 0-113-47t-47-113h-10q-9 0-14.5-5.5T172-620q0-9 5.5-14.5T192-640h10q0-45 22-81t58-57v38q0 9 5.5 14.5T302-720q9 0 14.5-5.5T322-740v-54q9-3 19-4.5t21-1.5q11 0 21 1.5t19 4.5v54q0 9 5.5 14.5T422-720q9 0 14.5-5.5T442-740v-38q36 21 58 57t22 81h10q9 0 14.5 5.5T552-620q0 9-5.5 14.5T532-600h-10q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T442-600H282q0 33 23.5 56.5T362-520Zm300 160-6-30q-6-2-11.5-4.5T634-402l-28 10-20-36 22-20v-24l-22-20 20-36 28 10q4-4 10-7t12-5l6-30h40l6 30q6 2 12 5t10 7l28-10 20 36-22 20v24l22 20-20 36-28-10q-5 5-10.5 7.5T708-390l-6 30h-40Zm20-70q12 0 21-9t9-21q0-12-9-21t-21-9q-12 0-21 9t-9 21q0 12 9 21t21 9Zm72-130-8-42q-9-3-16.5-7.5T716-620l-42 14-28-48 34-30q-2-5-2-8v-16q0-3 2-8l-34-30 28-48 42 14q6-6 13.5-10.5T746-798l8-42h56l8 42q9 3 16.5 7.5T848-780l42-14 28 48-34 30q2 5 2 8v16q0 3-2 8l34 30-28 48-42-14q-6 6-13.5 10.5T818-602l-8 42h-56Zm28-90q21 0 35.5-14.5T832-700q0-21-14.5-35.5T782-750q-21 0-35.5 14.5T732-700q0 21 14.5 35.5T782-650ZM362-200Z"/></svg>
+                <h4>WORK EXPERIENCE</h4>
+            </div>
+
+            <div class="contents">
+                <div class="box">
+                    <h5>PT. Pamapersada Nusantara | East Borneo</h5>
+                    <h4>Operation Research Engineer | Dec 2022 – present</h4>
+                    <div class="job-desc">
+                        <ul>
+                            <li>Developed and implemented a <strong>Mining Auto Dispatch 
+                                System </strong> that revolutionized monitoring and control 
+                                of the entire mining process with 500+ heavy equipment. 
+                                <strong> Utilized large-scale data management and analysis 
+                                techniques from multiple sources </strong> to optimize resource 
+                                allocation, equipment utilization, and manpower deployment, 
+                                resulting operational efficiency gains.</li>
+                            <li><strong>Analyzed company performance data </strong> using statistical tools 
+                                and created <strong> detailed visualizations </strong> using SSRS and Power BI 
+                                to identify trends and provide actionable recommendations to 
+                                Operation, enhancing overall operational efficiency.</li>
+                            <li>Designed detailed simulations to analyze and fine-tune 40+ 
+                                mining fleets and <strong> supervised 27 dispatchers </strong> in the execution 
+                                for enhanced productivity and cost effectiveness. </li>
+                            <li>Conducted in-depth performance analysis and utilized data-driven 
+                                insights to <strong> drive improvements with cross-functional 
+                                team </strong> in various operational aspects and enhancing 
+                                overall performance.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h5>PT. Prakarsa Alam Segar (Wings Group) | Bekasi</h5>
+                    <h4>Purchasing Fresh Material, Premix Sauce, and Coloring | Oct 2021 – Dec 2022</h4>
+                    <div class="job-desc">
+                        <ul>
+                            <li><strong>Negotiate the price, quantity and quality with more than 30 suppliers,</strong> 
+                                both local and imported, also monitoring its shipment to 
+                                ensure on-time delivery.</li>
+                            <li><strong>Coordinate with Quality Control and Material Planning Team </strong> 
+                                to ensure the quality and the quantity of the material according to the 
+                                specifications required on each shipment and make a <strong> convincing 
+                                claim report to the supplier.</strong></li>
+                            <li>Research potential vendors and compare them with existing vendors to find 
+                                materials at <strong>lower prices (cost down), better quality or other 
+                                beneficial contracts.</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact container" id="contact">
+            <h2>
+                <small>Get in Touch</small>
+                Let's Work Together
+            </h2>
+            <div class="contact-me">
+                <form action="https://api.web3forms.com/submit" method="POST" id="form">
+                    <input type="hidden" name="access_key" value="40d1dd68-57e6-412e-adfa-3ef6e2ba26d7">
+                    <div class="form-group">
+                        <label for="name">Name :</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name" class="contact-inputs" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email :</label>
+                        <input type="email" id="email" name="email" placeholder="Your Email" class="contact-inputs" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message :</label>
+                        <textarea id="message" name="message" placeholder="Your Message" class="contact-inputs textarea" required></textarea>
+                    </div>
+                    <button type="submit">
+                        Send Message
+                    </button>
+                </form>
+                <div class="image-right">
+                    <img src="{{ url_for('static', filename='03_imgs/contact-me.png') }}" alt="contact-me">
+                </div>
+                <div id="result"></div>
+            </div>
+        </section>
+
+        <section class="footer container">
+            <div class="socialicons">
+                <a href="https://github.com/adhamhusein" target="_blank"><img src="{{ url_for('static', filename='03_imgs/github.png') }}" alt="github"></a>
+                <a href="https://www.linkedin.com/in/akhmad-adham-nur-husaen/" target="_blank"><img src="{{ url_for('static', filename='03_imgs/linkedin.png') }}" alt="linkedin"></a>
+            </div>
+            <div class="footernav">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#contact" class="button">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footerbot">
+                by Akhmad Adham Nur Husaen
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
