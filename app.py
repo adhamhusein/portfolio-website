@@ -13,4 +13,4 @@ def project():
     return render_template('project.html')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5500)
+    app.run(debug=True, host='0.0.0.0', port=5500)
