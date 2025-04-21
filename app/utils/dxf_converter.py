@@ -11,6 +11,7 @@ import tempfile
 import uuid
 from flask import send_file
 from shapely import wkt
+from ezdxf.math import Matrix44
 
 def mapping(geom):
     return geom.__geo_interface__
@@ -43,6 +44,21 @@ class DXFConverter:
                 text = entity.dxf.text.replace("^J", "").replace("^", "").upper()
                 self.point_list.append([lon, lat, text, date])
 
+            elif entity.dxftype() == 'MTEXT':
+                lon, lat = transform(self.utm_proj, self.wgs84_proj, entity.dxf.insert.x, entity.dxf.insert.y)
+                text = entity.text.replace("^J", "").replace("^", "").strip().upper()
+                self.point_list.append([lon, lat, text, date])
+
+            elif entity.dxftype() == 'INSERT':
+                insert_point = entity.dxf.insert
+                transform_matrix = Matrix44().translate(insert_point.x, insert_point.y, insert_point.z)
+                for attrib in entity.attribs:
+                    local_point = attrib.dxf.insert
+                    modelspace_point = transform_matrix.transform(local_point)
+                    lon, lat = transform(self.utm_proj, self.wgs84_proj, modelspace_point.x, modelspace_point.y)
+                    text = attrib.dxf.text.strip().upper().replace("^J", "").replace("^", "").replace("\\N", "").replace("\\", "")
+                    self.point_list.append([lon, lat, text, date])
+                
     def filter_polygons(self):
         filtered_polygon_list = []
         df_polygon = pd.DataFrame(self.polygon_list, columns=["Geometry"])
