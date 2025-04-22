@@ -109,7 +109,6 @@ def handle_project_001(request, upload_folder):
         # === TEXT INSERT ===
         if converter.point_list:
             result_lines.append("--=== TEXTS ===--")
-            result_lines.append("CINGKLANGKONGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
             result_lines.append("INSERT INTO ref_blastid (point_date, point_lon, point_lat, point_text, polygon_wkt, updated_at)")
             result_lines.append("VALUES")
 
