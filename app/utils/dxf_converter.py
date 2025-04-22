@@ -79,7 +79,7 @@ class DXFConverter:
             texts_in_poly = []
             for _, row_point in df_point.iterrows():
                 point = Point(row_point["lon"], row_point["lat"])
-                if point.within(polygon):
+                if point.within(polygon) or point.touches(polygon):
                     texts_in_poly.append(row_point["text"])
             combined_text = " ".join(sorted(set(texts_in_poly))).strip() if texts_in_poly else "NO BLAST CODE"
             
