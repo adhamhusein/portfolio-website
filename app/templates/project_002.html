@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham's Portfolio - DXF Converter</title>
+    <link rel="icon" type="image/jpg" href="../static/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../static/css/project_styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="../static/js/index_scripts.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo-all">
+            <a href="#" class="logo-holder">
+                <div class="logo">AD</div>
+                <div class="logo-text">Adham's Portfolio</div>
+            </a>
+            <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
+                </svg>
+            </a>
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#skills">Skills</a></li>
+                <li><a href="/#projects">Projects</a></li>
+                <li><a href="/#experience">Experience</a></li>
+                <li><a href="/#contact" class="button">Contact</a></li>
+                <li></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="text-center mb-5">End-to-End Property Data Solutions</h1>
+      
+        <!-- Project Flow Image -->
+        <div class="row mb-5">
+          <div class="col-md-12 text-center">
+            <img src="../static/images/img-project/project-001.png" class="img-fluid rounded shadow" alt="Project Flow Diagram">
+          </div>
+        </div>
+      
+        <!-- Introduction -->
+        <section class="row mb-5">
+          <div class="col-md-8 offset-md-2">
+            <h2>Project Introduction</h2>
+            <p>
+              This project automates the full pipeline of real estate data management for <strong>Properti123.com</strong> — from web scraping and data cleaning to database storage and real-time user notification.
+              Built to ensure <strong>data freshness</strong> and <strong>user engagement</strong> without manual intervention, it leverages <strong>Python</strong>, <strong>PostgreSQL</strong>, <strong>BeautifulSoup</strong>, <strong>Fuzzy Matching</strong>, and <strong>LINE Messaging API</strong> on an Ubuntu-based VPS server.
+            </p>
+          </div>
+        </section>
+      
+        <!-- Pipeline Stages -->
+        <section class="row text-center mb-5">
+          <h2 class="mb-4">Pipeline Stages</h2>
+      
+          <div class="col-md-3">
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h5 class="card-title">1. Data Acquisition</h5>
+                <p class="card-text">Scraping new property listings daily using BeautifulSoup, requests, and Selenium (if dynamic content detected).</p>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col-md-3">
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h5 class="card-title">2. Data Transformation</h5>
+                <p class="card-text">Standardizing and enriching raw addresses using TheFuzz (fuzzy string matching) for more reliable downstream analytics.</p>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col-md-3">
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h5 class="card-title">3. Data Storage</h5>
+                <p class="card-text">Structured data is inserted into PostgreSQL tables: property_link, property_detail (38+ fields), and property_address.</p>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col-md-3">
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h5 class="card-title">4. User Notification</h5>
+                <p class="card-text">Filtered and formatted results are automatically pushed to users daily through a custom Line Bot integration.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- Detailed Data Structure -->
+        <section class="row mb-5">
+          <div class="col-md-8 offset-md-2">
+            <h2>Database Structure</h2>
+            <p>
+              The <strong>property_detail</strong> table captures comprehensive property attributes, crucial for data-driven decision making. Key fields include:
+            </p>
+            <ul>
+              <li>Property ID (Primary Key)</li>
+              <li>Property Type (House, Apartment, Land)</li>
+              <li>Price, Negotiability, Certification Type</li>
+              <li>Dimensions: Building Area, Land Area, Bedrooms, Bathrooms</li>
+              <li>Electricity Power, Garage, Direction (e.g., Facing North)</li>
+              <li>Additional Features: Garden, Terrace, Balcony, etc.</li>
+            </ul>
+      
+            <div class="text-center mt-4">
+              <img src="./f0368c26-14d6-442c-bb0d-2454412dc87c.png" class="img-fluid rounded shadow" alt="Sample Table Structure">
+            </div>
+          </div>
+        </section>
+      
+        <!-- Technical Stack -->
+        <section class="row mb-5">
+          <div class="col-md-8 offset-md-2">
+            <h2>Technology Stack</h2>
+            <ul>
+              <li><strong>Backend:</strong> Python 3.10 (Requests, BeautifulSoup4, Selenium)</li>
+              <li><strong>Database:</strong> PostgreSQL 14</li>
+              <li><strong>Notification:</strong> LINE Messaging API (Python SDK)</li>
+              <li><strong>Server:</strong> Ubuntu 22.04 VPS</li>
+              <li><strong>Automation:</strong> Crontab (Scheduled Execution)</li>
+              <li><strong>Version Control:</strong> Git (Private GitHub Repo)</li>
+            </ul>
+          </div>
+        </section>
+      
+        <!-- Challenges and Solutions -->
+        <section class="row mb-5">
+          <div class="col-md-8 offset-md-2">
+            <h2>Challenges & Solutions</h2>
+            <p><strong>1. Dynamic Content Scraping</strong></p>
+            <p>Some property details were loaded dynamically via JavaScript. To solve this, Selenium WebDriver was used for pages where static HTML scraping failed.</p>
+      
+            <p><strong>2. Inconsistent Address Formatting</strong></p>
+            <p>Raw scraped addresses were messy and varied. Implemented fuzzy string matching to align addresses against a curated master list for consistent geospatial analysis.</p>
+      
+            <p><strong>3. Avoiding Duplicate Records</strong></p>
+            <p>Implemented upsert logic (ON CONFLICT DO UPDATE) in PostgreSQL to ensure no duplicate property IDs are stored while updating new details when listings are refreshed.</p>
+      
+            <p><strong>4. Server Resource Management</strong></p>
+            <p>Scripts were optimized to run during off-peak server hours to avoid conflict with other hosted applications, and connection pooling was used to manage database performance.</p>
+          </div>
+        </section>
+      
+        <!-- Automation -->
+        <section class="row mb-5">
+          <div class="col-md-8 offset-md-2">
+            <h2>Automation and Scheduling</h2>
+            <p>
+              Using <strong>crontab</strong> on the Ubuntu VPS server, the entire pipeline (scraping, processing, storing, notifying) is fully automated to run once daily at 06:00 AM.
+            </p>
+            <pre><code>0 6 * * * /usr/bin/python3 /path/to/scraper_script.py >> /var/log/property_scraper.log 2>&1</code></pre>
+          </div>
+        </section>
+      
+        <!-- Footer -->
+        <footer class="bg-light text-center py-4 mt-5">
+          <p>© 2025 Akhmad Adham Nur Husaen — End-to-End Property Data Automation Project</p>
+        </footer>
+      
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
