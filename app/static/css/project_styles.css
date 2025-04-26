@@ -274,32 +274,87 @@ header nav {
 
 main .search-bar {
 	justify-content: space-between;
-	align-items: center;
-	margin-right: 27px;
 	.container-input {
 		display: flex;
 		align-items: center;
 	}
 	.container-input .input {
 		align-items: center;
-		width: 150px;
-		height: 40px;
+		font-size: 13px;
+		width: 350px;
+		height: 35px;
 		padding: 10px 0px 10px 40px;
-		border-radius: 9999px;
+		border-radius: 8px;
 		border: solid 1px #333;
-		transition: all .2s ease-in-out;
+		transition: all .1s ease-in-out;
 		outline: none;
 		opacity: 0.8;
+
+		@media (max-width: 750px) {
+			width: 300px;
+		}
+
 		&:focus {
 			opacity: 1;
-			width: 300px;
+			width: 370px;
+			border-width: 2px;
+			@media (max-width: 750px) {
+				width: 320px;
+			}
 		}
 	}
 	.container-input svg {
 		position: relative;
 		left: 33px;
+		margin-left: 7px;
+	}
+	.container-tab .tabs {
+		display: flex;
+		justify-content: space-between;
+		position: relative;
+		background-color: #fff;
+		box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+		padding: 0.35rem;
+		border-radius: 8px;
+		font-size: 13px;
+
+		* {
+			z-index: 2;
+		}
+
+		.tab {
+			padding-left: 5px;
+			padding-right: 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: black;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: color 0.15s ease-in;
+		}
+
+		input[type="radio"] {
+			display: none;
+			&:checked + label {
+				color: #185ee0;
+				background-color: #e6eef9;
+				border-radius: 99px;
+				padding: 5px 15px;
+			}
+		}
+
+		@media (max-width: 750px) {
+			margin-left: 27px;
+			margin-top: 15px;
+			font-size: 10px;
+			.tabs {
+				transform: scale(0.6);
+			}
+		}
 	}
 }
+	
 
 main .highlight {
 	@media (max-width:784px) {
@@ -380,10 +435,5 @@ main .highlight .card .card-body {
 		}
 	}
 }
-  
-  
-  
-  
-  
   
   
