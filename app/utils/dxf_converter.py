@@ -75,7 +75,8 @@ class DXFConverter:
     def process_points(self, filtered_polygon_list, date):
         df_point = pd.DataFrame(self.point_list, columns=["lon", "lat", "text", "date"])
         results = []
-        for polygon in filtered_polygon_list:
+        offset_polygons = [poly.buffer(0.000008983) for poly in filtered_polygon_list]
+        for polygon in offset_polygons:
             texts_in_poly = []
             for _, row_point in df_point.iterrows():
                 point = Point(row_point["lon"], row_point["lat"])
