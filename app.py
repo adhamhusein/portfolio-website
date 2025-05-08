@@ -52,6 +52,10 @@ def home():
 def project():
     return render_template('project.html')
 
+@app.route('/project/project_002')
+def project():
+    return render_template('project_002.html')
+
 @app.route('/project/project_001', methods=['GET', 'POST'])
 def project_001():
     return handle_project_001(request, app.config['UPLOAD_FOLDER'])
