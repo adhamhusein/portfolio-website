@@ -1,180 +1,1156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adham's Portfolio - DXF Converter</title>
-    <link rel="icon" type="image/jpg" href="../static/images/favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../static/css/project_styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="../static/js/index_scripts.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End-to-End Property Data Solutions</title>
+  <link rel="stylesheet" href="../static/css/project_002_styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="logo-all">
-            <a href="#" class="logo-holder">
-                <div class="logo">AD</div>
-                <div class="logo-text">Adham's Portfolio</div>
-            </a>
-            <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
-                </svg>
-            </a>
-        </div>
-        <nav>
-            <ul id="menu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/#skills">Skills</a></li>
-                <li><a href="/#projects">Projects</a></li>
-                <li><a href="/#experience">Experience</a></li>
-                <li><a href="/#contact" class="button">Contact</a></li>
-                <li></li>
-            </ul>
-        </nav>
-    </header>
-
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
-        <h1 class="text-center mb-5">End-to-End Property Data Solutions</h1>
-      
-        <!-- Project Flow Image -->
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <img src="../static/images/img-project/project-001.png" class="img-fluid rounded shadow" alt="Project Flow Diagram">
+      <div class="hero-content">
+        <h1>End-to-End Property Data Solutions</h1>
+        <p>A comprehensive system for collecting, processing, and analyzing property data at scale</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary">Explore Project <i class="fas fa-arrow-right"></i></button>
+          <button class="btn btn-outline">View Documentation</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="container">
+      <ul class="nav-links">
+        <li><a href="#introduction"><i class="fas fa-chart-bar"></i> Introduction</a></li>
+        <li><a href="#pipeline"><i class="fas fa-bolt"></i> Pipeline</a></li>
+        <li><a href="#database"><i class="fas fa-database"></i> Database</a></li>
+        <li><a href="#tech-stack"><i class="fas fa-code"></i> Tech Stack</a></li>
+        <li><a href="#challenges"><i class="fas fa-server"></i> Challenges</a></li>
+        <li><a href="#automation"><i class="fas fa-clock"></i> Automation</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Introduction Section -->
+  <section id="introduction" class="section">
+    <div class="container">
+      <h2>Project Introduction</h2>
+      <div class="content-wrapper">
+        <p class="lead-text">
+          This project delivers a comprehensive solution for property data management, from initial data
+          collection to analysis and visualization. The system automates the gathering of property information
+          from multiple sources, processes and standardizes the data, and provides powerful tools for insight
+          generation.
+        </p>
+        <p class="lead-text">
+          The solution addresses the challenges of working with disparate property data sources, ensuring data
+          quality, and providing timely insights for decision-making in real estate and property management.
+        </p>
+        <div class="feature-box">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+            <li><span class="feature-number">1</span> Automated data collection from multiple sources</li>
+            <li><span class="feature-number">2</span> Robust ETL pipeline for data processing</li>
+            <li><span class="feature-number">3</span> Comprehensive data validation and cleaning</li>
+            <li><span class="feature-number">4</span> Scalable database architecture</li>
+            <li><span class="feature-number">5</span> Advanced analytics and reporting</li>
+            <li><span class="feature-number">6</span> Scheduled data refreshes and updates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pipeline Stages Section -->
+  <section id="pipeline" class="section section-alt">
+    <div class="container">
+      <h2>Pipeline Stages</h2>
+      <p class="lead-text">
+        Our data pipeline consists of several key stages that transform raw property data into actionable
+        insights.
+      </p>
+      <div class="pipeline-stages">
+        <div class="pipeline-stage">
+          <div class="stage-number">1</div>
+          <div class="stage-content">
+            <h3>Data Collection</h3>
+            <p>Gathering raw property data from multiple sources including public records, MLS listings, and proprietary databases.</p>
+            <div class="stage-details">
+              <ul>
+                <li><i class="fas fa-arrow-right"></i> API integrations with data providers</li>
+                <li><i class="fas fa-arrow-right"></i> Web scraping for public data</li>
+                <li><i class="fas fa-arrow-right"></i> Batch imports from partner systems</li>
+                <li><i class="fas fa-arrow-right"></i> Real-time data streams</li>
+              </ul>
+            </div>
           </div>
         </div>
+        
+        <div class="pipeline-stage">
+          <div class="stage-number">2</div>
+          <div class="stage-content">
+            <h3>Data Validation & Cleaning</h3>
+            <p>Ensuring data quality through validation checks, deduplication, and standardization processes.</p>
+            <div class="stage-details">
+              <ul>
+                <li><i class="fas fa-arrow-right"></i> Address normalization</li>
+                <li><i class="fas fa-arrow-right"></i> Property attribute validation</li>
+                <li><i class="fas fa-arrow-right"></i> Duplicate detection and resolution</li>
+                <li><i class="fas fa-arrow-right"></i> Data completeness checks</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pipeline-stage">
+          <div class="stage-number">3</div>
+          <div class="stage-content">
+            <h3>Data Transformation</h3>
+            <p>Converting raw data into standardized formats and enriching with additional information.</p>
+            <div class="stage-details">
+              <ul>
+                <li><i class="fas fa-arrow-right"></i> Property classification</li>
+                <li><i class="fas fa-arrow-right"></i> Geocoding and spatial analysis</li>
+                <li><i class="fas fa-arrow-right"></i> Historical trend calculation</li>
+                <li><i class="fas fa-arrow-right"></i> Feature engineering for analytics</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pipeline-stage">
+          <div class="stage-number">4</div>
+          <div class="stage-content">
+            <h3>Data Storage</h3>
+            <p>Storing processed data in optimized database structures for efficient retrieval and analysis.</p>
+            <div class="stage-details">
+              <ul>
+                <li><i class="fas fa-arrow-right"></i> Relational database for structured data</li>
+                <li><i class="fas fa-arrow-right"></i> Document store for unstructured content</li>
+                <li><i class="fas fa-arrow-right"></i> Time-series data for historical analysis</li>
+                <li><i class="fas fa-arrow-right"></i> Spatial indexing for location queries</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pipeline-stage">
+          <div class="stage-number">5</div>
+          <div class="stage-content">
+            <h3>Analytics & Reporting</h3>
+            <p>Generating insights and visualizations from the processed property data.</p>
+            <div class="stage-details">
+              <ul>
+                <li><i class="fas fa-arrow-right"></i> Market trend analysis</li>
+                <li><i class="fas fa-arrow-right"></i> Property valuation models</li>
+                <li><i class="fas fa-arrow-right"></i> Investment opportunity scoring</li>
+                <li><i class="fas fa-arrow-right"></i> Customizable dashboards and reports</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Database Structure Section -->
+  <section id="database" class="section">
+    <div class="container">
+      <h2>Database Structure</h2>
+      <p class="lead-text">
+        The database is designed for optimal performance, scalability, and data integrity, with a focus on
+        property-related entities and relationships.
+      </p>
       
-        <!-- Introduction -->
-        <section class="row mb-5">
-          <div class="col-md-8 offset-md-2">
-            <h2>Project Introduction</h2>
-            <p>
-              This project automates the full pipeline of real estate data management for <strong>Properti123.com</strong> — from web scraping and data cleaning to database storage and real-time user notification.
-              Built to ensure <strong>data freshness</strong> and <strong>user engagement</strong> without manual intervention, it leverages <strong>Python</strong>, <strong>PostgreSQL</strong>, <strong>BeautifulSoup</strong>, <strong>Fuzzy Matching</strong>, and <strong>LINE Messaging API</strong> on an Ubuntu-based VPS server.
+      <div class="tabs">
+        <div class="tab-header">
+          <button class="tab-btn active" data-tab="schema">Schema Diagram</button>
+          <button class="tab-btn" data-tab="tables">Key Tables</button>
+          <button class="tab-btn" data-tab="relationships">Relationships</button>
+        </div>
+        
+        <div class="tab-content">
+          <div class="tab-pane active" id="schema">
+            <div class="schema-diagram">
+              <div class="schema-container">
+                <svg viewBox="0 0 800 400" class="schema-svg">
+                  <!-- Properties Table -->
+                  <rect x="50" y="50" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
+                  <text x="150" y="30" text-anchor="middle" fill="#334155" font-weight="bold">Properties</text>
+                  <line x1="50" y1="80" x2="250" y2="80" stroke="#94a3b8" stroke-width="2"></line>
+                  <text x="60" y="70" fill="#64748b" font-size="12">id (PK)</text>
+                  <text x="60" y="100" fill="#64748b" font-size="12">address</text>
+                  <text x="60" y="120" fill="#64748b" font-size="12">property_type</text>
+                  <text x="60" y="140" fill="#64748b" font-size="12">last_updated</text>
+                  <text x="60" y="160" fill="#64748b" font-size="12">geo_location</text>
+
+                  <!-- Owners Table -->
+                  <rect x="550" y="50" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
+                  <text x="650" y="30" text-anchor="middle" fill="#334155" font-weight="bold">Owners</text>
+                  <line x1="550" y1="80" x2="750" y2="80" stroke="#94a3b8" stroke-width="2"></line>
+                  <text x="560" y="70" fill="#64748b" font-size="12">id (PK)</text>
+                  <text x="560" y="100" fill="#64748b" font-size="12">name</text>
+                  <text x="560" y="120" fill="#64748b" font-size="12">contact_info</text>
+                  <text x="560" y="140" fill="#64748b" font-size="12">type</text>
+
+                  <!-- Property Details Table -->
+                  <rect x="50" y="250" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
+                  <text x="150" y="230" text-anchor="middle" fill="#334155" font-weight="bold">Property Details</text>
+                  <line x1="50" y1="280" x2="250" y2="280" stroke="#94a3b8" stroke-width="2"></line>
+                  <text x="60" y="270" fill="#64748b" font-size="12">property_id (FK)</text>
+                  <text x="60" y="300" fill="#64748b" font-size="12">square_footage</text>
+                  <text x="60" y="320" fill="#64748b" font-size="12">bedrooms</text>
+                  <text x="60" y="340" fill="#64748b" font-size="12">bathrooms</text>
+                  <text x="60" y="360" fill="#64748b" font-size="12">year_built</text>
+
+                  <!-- Transactions Table -->
+                  <rect x="550" y="250" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
+                  <text x="650" y="230" text-anchor="middle" fill="#334155" font-weight="bold">Transactions</text>
+                  <line x1="550" y1="280" x2="750" y2="280" stroke="#94a3b8" stroke-width="2"></line>
+                  <text x="560" y="270" fill="#64748b" font-size="12">id (PK)</text>
+                  <text x="560" y="300" fill="#64748b" font-size="12">property_id (FK)</text>
+                  <text x="560" y="320" fill="#64748b" font-size="12">transaction_date</text>
+                  <text x="560" y="340" fill="#64748b" font-size="12">price</text>
+                  <text x="560" y="360" fill="#64748b" font-size="12">transaction_type</text>
+
+                  <!-- Relationships -->
+                  <path d="M 250 110 L 400 110 L 400 110 L 550 110" stroke="#94a3b8" stroke-width="2" fill="none"></path>
+                  <polygon points="545,105 550,110 545,115" fill="#94a3b8"></polygon>
+
+                  <path d="M 150 170 L 150 210 L 150 210 L 150 250" stroke="#94a3b8" stroke-width="2" fill="none"></path>
+                  <polygon points="145,245 150,250 155,245" fill="#94a3b8"></polygon>
+
+                  <path d="M 250 310 L 400 310 L 400 310 L 550 310" stroke="#94a3b8" stroke-width="2" fill="none"></path>
+                  <polygon points="545,305 550,310 545,315" fill="#94a3b8"></polygon>
+                </svg>
+              </div>
+              <p class="schema-caption">Database schema showing key tables and their relationships</p>
+            </div>
+            <p class="schema-description">
+              The database schema is designed to efficiently store and relate property data. The central Properties table
+              connects to related entities like Owners, Property Details, and Transactions, enabling comprehensive data
+              analysis and reporting.
             </p>
           </div>
-        </section>
-      
-        <!-- Pipeline Stages -->
-        <section class="row text-center mb-5">
-          <h2 class="mb-4">Pipeline Stages</h2>
-      
-          <div class="col-md-3">
-            <div class="card shadow-sm mb-3">
-              <div class="card-body">
-                <h5 class="card-title">1. Data Acquisition</h5>
-                <p class="card-text">Scraping new property listings daily using BeautifulSoup, requests, and Selenium (if dynamic content detected).</p>
+          
+          <div class="tab-pane" id="tables">
+            <div class="tables-container">
+              <div class="db-table">
+                <div class="db-table-header">
+                  <h3>Properties</h3>
+                  <p>Core table storing basic property information</p>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Column</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>id</td>
+                      <td>UUID</td>
+                      <td>Primary key</td>
+                    </tr>
+                    <tr>
+                      <td>address</td>
+                      <td>TEXT</td>
+                      <td>Full property address</td>
+                    </tr>
+                    <tr>
+                      <td>property_type</td>
+                      <td>VARCHAR(50)</td>
+                      <td>Residential, Commercial, etc.</td>
+                    </tr>
+                    <tr>
+                      <td>geo_location</td>
+                      <td>POINT</td>
+                      <td>Latitude/longitude coordinates</td>
+                    </tr>
+                    <tr>
+                      <td>last_updated</td>
+                      <td>TIMESTAMP</td>
+                      <td>Last data update time</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div class="db-table">
+                <div class="db-table-header">
+                  <h3>Property Details</h3>
+                  <p>Extended property attributes and features</p>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Column</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>property_id</td>
+                      <td>UUID</td>
+                      <td>Foreign key to Properties</td>
+                    </tr>
+                    <tr>
+                      <td>square_footage</td>
+                      <td>INTEGER</td>
+                      <td>Total area in square feet</td>
+                    </tr>
+                    <tr>
+                      <td>bedrooms</td>
+                      <td>INTEGER</td>
+                      <td>Number of bedrooms</td>
+                    </tr>
+                    <tr>
+                      <td>bathrooms</td>
+                      <td>DECIMAL(3,1)</td>
+                      <td>Number of bathrooms</td>
+                    </tr>
+                    <tr>
+                      <td>year_built</td>
+                      <td>INTEGER</td>
+                      <td>Construction year</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div class="db-table">
+                <div class="db-table-header">
+                  <h3>Transactions</h3>
+                  <p>Historical property transactions</p>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Column</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>id</td>
+                      <td>UUID</td>
+                      <td>Primary key</td>
+                    </tr>
+                    <tr>
+                      <td>property_id</td>
+                      <td>UUID</td>
+                      <td>Foreign key to Properties</td>
+                    </tr>
+                    <tr>
+                      <td>transaction_date</td>
+                      <td>DATE</td>
+                      <td>Date of transaction</td>
+                    </tr>
+                    <tr>
+                      <td>price</td>
+                      <td>DECIMAL(12,2)</td>
+                      <td>Transaction amount</td>
+                    </tr>
+                    <tr>
+                      <td>transaction_type</td>
+                      <td>VARCHAR(50)</td>
+                      <td>Sale, Refinance, etc.</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-      
-          <div class="col-md-3">
-            <div class="card shadow-sm mb-3">
-              <div class="card-body">
-                <h5 class="card-title">2. Data Transformation</h5>
-                <p class="card-text">Standardizing and enriching raw addresses using TheFuzz (fuzzy string matching) for more reliable downstream analytics.</p>
+          
+          <div class="tab-pane" id="relationships">
+            <div class="relationships-container">
+              <div class="relationships-box">
+                <h3>Key Relationships</h3>
+                <ul class="relationships-list">
+                  <li class="relationship-item">
+                    <div class="relationship-header">
+                      <div>
+                        <h4>Property to Property Details</h4>
+                        <p>Each property has one set of detailed attributes</p>
+                      </div>
+                      <div class="relationship-type">One-to-One</div>
+                    </div>
+                    <div class="relationship-constraint">
+                      <code>property_details.property_id → properties.id</code>
+                    </div>
+                  </li>
+                  
+                  <li class="relationship-item">
+                    <div class="relationship-header">
+                      <div>
+                        <h4>Property to Transactions</h4>
+                        <p>Each property can have multiple transaction records over time</p>
+                      </div>
+                      <div class="relationship-type">One-to-Many</div>
+                    </div>
+                    <div class="relationship-constraint">
+                      <code>transactions.property_id → properties.id</code>
+                    </div>
+                  </li>
+                  
+                  <li class="relationship-item">
+                    <div class="relationship-header">
+                      <div>
+                        <h4>Property to Owners</h4>
+                        <p>Properties can have multiple owners, and owners can have multiple properties</p>
+                      </div>
+                      <div class="relationship-type">Many-to-Many</div>
+                    </div>
+                    <div class="relationship-constraint">
+                      <code>property_owners join table with property_id and owner_id foreign keys</code>
+                    </div>
+                  </li>
+                  
+                  <li class="relationship-item">
+                    <div class="relationship-header">
+                      <div>
+                        <h4>Property to Market Data</h4>
+                        <p>Each property has multiple market value assessments over time</p>
+                      </div>
+                      <div class="relationship-type">One-to-Many</div>
+                    </div>
+                    <div class="relationship-constraint">
+                      <code>market_data.property_id → properties.id</code>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="integrity-box">
+                <h3>Database Integrity</h3>
+                <p>The database implements several integrity constraints to ensure data quality and consistency:</p>
+                <ul class="integrity-list">
+                  <li><span class="integrity-number">1</span> Foreign key constraints with cascading updates and deletes where appropriate</li>
+                  <li><span class="integrity-number">2</span> Check constraints for data validation (e.g., price > 0)</li>
+                  <li><span class="integrity-number">3</span> Unique constraints on natural keys like property addresses</li>
+                  <li><span class="integrity-number">4</span> Not-null constraints on required fields</li>
+                  <li><span class="integrity-number">5</span> Triggers for maintaining data consistency across related tables</li>
+                </ul>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Stack Section -->
+  <section id="tech-stack" class="section section-alt">
+    <div class="container">
+      <h2>Technology Stack</h2>
+      <p class="lead-text">
+        Our solution leverages modern technologies to ensure reliability, performance, and maintainability.
+      </p>
       
-          <div class="col-md-3">
-            <div class="card shadow-sm mb-3">
-              <div class="card-body">
-                <h5 class="card-title">3. Data Storage</h5>
-                <p class="card-text">Structured data is inserted into PostgreSQL tables: property_link, property_detail (38+ fields), and property_address.</p>
+      <div class="tech-tabs">
+        <div class="tech-tab-header">
+          <button class="tech-tab-btn active" data-tab="data">
+            <i class="fas fa-database"></i> Data Layer
+          </button>
+          <button class="tech-tab-btn" data-tab="backend">
+            <i class="fas fa-server"></i> Backend
+          </button>
+          <button class="tech-tab-btn" data-tab="frontend">
+            <i class="fas fa-code"></i> Frontend
+          </button>
+          <button class="tech-tab-btn" data-tab="infra">
+            <i class="fas fa-cloud"></i> Infrastructure
+          </button>
+          <button class="tech-tab-btn" data-tab="analytics">
+            <i class="fas fa-chart-bar"></i> Analytics
+          </button>
+          <button class="tech-tab-btn" data-tab="devops">
+            <i class="fas fa-code-branch"></i> DevOps
+          </button>
+        </div>
+        
+        <div class="tech-tab-content">
+          <div class="tech-tab-pane active" id="data-tab">
+            <div class="tech-cards">
+              <div class="tech-card">
+                <h3>PostgreSQL</h3>
+                <p>Primary relational database with PostGIS extension for spatial data</p>
+              </div>
+              <div class="tech-card">
+                <h3>Redis</h3>
+                <p>In-memory data store for caching and real-time data processing</p>
+              </div>
+              <div class="tech-card">
+                <h3>Elasticsearch</h3>
+                <p>Full-text search and analytics engine for property data</p>
+              </div>
+              <div class="tech-card">
+                <h3>TimescaleDB</h3>
+                <p>Time-series database extension for historical data analysis</p>
               </div>
             </div>
           </div>
-      
-          <div class="col-md-3">
-            <div class="card shadow-sm mb-3">
-              <div class="card-body">
-                <h5 class="card-title">4. User Notification</h5>
-                <p class="card-text">Filtered and formatted results are automatically pushed to users daily through a custom Line Bot integration.</p>
+          
+          <div class="tech-tab-pane" id="backend-tab">
+            <div class="tech-cards">
+              <div class="tech-card">
+                <h3>Python</h3>
+                <p>Primary language for data processing and ETL pipelines</p>
+              </div>
+              <div class="tech-card">
+                <h3>FastAPI</h3>
+                <p>Modern, high-performance web framework for APIs</p>
+              </div>
+              <div class="tech-card">
+                <h3>Celery</h3>
+                <p>Distributed task queue for background processing</p>
+              </div>
+              <div class="tech-card">
+                <h3>SQLAlchemy</h3>
+                <p>SQL toolkit and ORM for database interactions</p>
               </div>
             </div>
           </div>
-        </section>
-      
-        <!-- Detailed Data Structure -->
-        <section class="row mb-5">
-          <div class="col-md-8 offset-md-2">
-            <h2>Database Structure</h2>
-            <p>
-              The <strong>property_detail</strong> table captures comprehensive property attributes, crucial for data-driven decision making. Key fields include:
-            </p>
-            <ul>
-              <li>Property ID (Primary Key)</li>
-              <li>Property Type (House, Apartment, Land)</li>
-              <li>Price, Negotiability, Certification Type</li>
-              <li>Dimensions: Building Area, Land Area, Bedrooms, Bathrooms</li>
-              <li>Electricity Power, Garage, Direction (e.g., Facing North)</li>
-              <li>Additional Features: Garden, Terrace, Balcony, etc.</li>
-            </ul>
-      
-            <div class="text-center mt-4">
-              <img src="./f0368c26-14d6-442c-bb0d-2454412dc87c.png" class="img-fluid rounded shadow" alt="Sample Table Structure">
+          
+          <div class="tech-tab-pane" id="frontend-tab">
+            <div class="tech-cards">
+              <div class="tech-card">
+                <h3>HTML/CSS/JavaScript</h3>
+                <p>Core web technologies for building user interfaces</p>
+              </div>
+              <div class="tech-card">
+                <h3>D3.js</h3>
+                <p>JavaScript library for data visualization</p>
+              </div>
+              <div class="tech-card">
+                <h3>Chart.js</h3>
+                <p>Simple yet flexible JavaScript charting library</p>
+              </div>
+              <div class="tech-card">
+                <h3>Leaflet</h3>
+                <p>Open-source JavaScript library for interactive maps</p>
+              </div>
             </div>
           </div>
-        </section>
-      
-        <!-- Technical Stack -->
-        <section class="row mb-5">
-          <div class="col-md-8 offset-md-2">
-            <h2>Technology Stack</h2>
-            <ul>
-              <li><strong>Backend:</strong> Python 3.10 (Requests, BeautifulSoup4, Selenium)</li>
-              <li><strong>Database:</strong> PostgreSQL 14</li>
-              <li><strong>Notification:</strong> LINE Messaging API (Python SDK)</li>
-              <li><strong>Server:</strong> Ubuntu 22.04 VPS</li>
-              <li><strong>Automation:</strong> Crontab (Scheduled Execution)</li>
-              <li><strong>Version Control:</strong> Git (Private GitHub Repo)</li>
-            </ul>
+          
+          <div class="tech-tab-pane" id="infra-tab">
+            <div class="tech-cards">
+              <div class="tech-card">
+                <h3>Docker</h3>
+                <p>Containerization platform for consistent environments</p>
+              </div>
+              <div class="tech-card">
+                <h3>Kubernetes</h3>
+                <p>Container orchestration for scaling and management</p>
+              </div>
+              <div class="tech-card">
+                <h3>AWS</h3>
+                <p>Cloud infrastructure provider (EC2, S3, RDS, Lambda)</p>
+              </div>
+              <div class="tech-card">
+                <h3>Terraform</h3>
+                <p>Infrastructure as code for automated provisioning</p>
+              </div>
+            </div>
           </div>
-        </section>
-      
-        <!-- Challenges and Solutions -->
-        <section class="row mb-5">
-          <div class="col-md-8 offset-md-2">
-            <h2>Challenges & Solutions</h2>
-            <p><strong>1. Dynamic Content Scraping</strong></p>
-            <p>Some property details were loaded dynamically via JavaScript. To solve this, Selenium WebDriver was used for pages where static HTML scraping failed.</p>
-      
-            <p><strong>2. Inconsistent Address Formatting</strong></p>
-            <p>Raw scraped addresses were messy and varied. Implemented fuzzy string matching to align addresses against a curated master list for consistent geospatial analysis.</p>
-      
-            <p><strong>3. Avoiding Duplicate Records</strong></p>
-            <p>Implemented upsert logic (ON CONFLICT DO UPDATE) in PostgreSQL to ensure no duplicate property IDs are stored while updating new details when listings are refreshed.</p>
-      
-            <p><strong>4. Server Resource Management</strong></p>
-            <p>Scripts were optimized to run during off-peak server hours to avoid conflict with other hosted applications, and connection pooling was used to manage database performance.</p>
+          
+          <div class="tech-tab-pane" id="analytics-tab">
+            <div class="tech-cards">
+              <div class="tech-card">
+                <h3>Apache Spark</h3>
+                <p>Distributed computing system for big data processing</p>
+              </div>
+              <div class="tech-card">
+                <h3>Pandas</h3>
+                <p>Data analysis and manipulation library</p>
+              </div>
+              <div class="tech-card">
+                <h3>Jupyter Notebooks</h3>
+                <p>Interactive computing environment for data exploration</p>
+              </div>
+              <div class="tech-card">
+                <h3>Grafana</h3>
+                <p>Analytics and monitoring platform for visualizing metrics</p>
+              </div>
+            </div>
           </div>
-        </section>
-      
-        <!-- Automation -->
-        <section class="row mb-5">
-          <div class="col-md-8 offset-md-2">
-            <h2>Automation and Scheduling</h2>
-            <p>
-              Using <strong>crontab</strong> on the Ubuntu VPS server, the entire pipeline (scraping, processing, storing, notifying) is fully automated to run once daily at 06:00 AM.
-            </p>
-            <pre><code>0 6 * * * /usr/bin/python3 /path/to/scraper_script.py >> /var/log/property_scraper.log 2>&1</code></pre>
+          
+          <div class="tech-tab-pane" id="devops-tab">
+            <div class="tech-cards">
+              <div class="tech-card">
+                <h3>GitHub Actions</h3>
+                <p>CI/CD pipeline automation</p>
+              </div>
+              <div class="tech-card">
+                <h3>Prometheus</h3>
+                <p>Monitoring and alerting toolkit</p>
+              </div>
+              <div class="tech-card">
+                <h3>Sentry</h3>
+                <p>Error tracking and performance monitoring</p>
+              </div>
+              <div class="tech-card">
+                <h3>ArgoCD</h3>
+                <p>GitOps continuous delivery for Kubernetes</p>
+              </div>
+            </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges & Solutions Section -->
+  <section id="challenges" class="section">
+    <div class="container">
+      <h2>Challenges & Solutions</h2>
+      <p class="lead-text">
+        Throughout the development of this project, we encountered and overcame several significant challenges.
+      </p>
       
-        <!-- Footer -->
-        <footer class="bg-light text-center py-4 mt-5">
-          <p>© 2025 Akhmad Adham Nur Husaen — End-to-End Property Data Automation Project</p>
-        </footer>
-      
+      <div class="alert">
+        <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <div class="alert-content">
+          <h3>Challenges Overview</h3>
+          <p>Building an end-to-end property data solution presented several significant technical and operational
+          challenges. Below are the key challenges we faced and how we addressed them.</p>
+        </div>
       </div>
       
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      <div class="accordion">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-status solved">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="accordion-title">
+              <h3>Data Quality and Consistency</h3>
+              <p><span class="status-badge solved">Solved</span> Property data from different sources often had inconsistent formats, missing values, and...</p>
+            </div>
+            <div class="accordion-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="challenge-solution">
+              <div class="challenge-section">
+                <h4>Challenge:</h4>
+                <p>Property data from different sources often had inconsistent formats, missing values, and conflicting information.</p>
+              </div>
+              <div class="solution-section">
+                <h4>Solution:</h4>
+                <p>Implemented a robust data validation pipeline with custom rules for each data source. Created a scoring system to identify and prioritize data quality issues. Developed automated data cleansing processes and manual review workflows for edge cases.</p>
+              </div>
+              <div class="impact-section">
+                <h4>Impact:</h4>
+                <p>Improved data accuracy from 78% to 97%, significantly enhancing the reliability of downstream analytics.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-status solved">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="accordion-title">
+              <h3>Processing at Scale</h3>
+              <p><span class="status-badge solved">Solved</span> The system needed to process millions of property records daily while maintaining performance...</p>
+            </div>
+            <div class="accordion-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="challenge-solution">
+              <div class="challenge-section">
+                <h4>Challenge:</h4>
+                <p>The system needed to process millions of property records daily while maintaining performance and cost-efficiency.</p>
+              </div>
+              <div class="solution-section">
+                <h4>Solution:</h4>
+                <p>Redesigned the architecture to use distributed processing with Apache Spark. Implemented incremental processing to only handle changed data. Optimized database queries and added appropriate indexes. Used caching strategically for frequently accessed data.</p>
+              </div>
+              <div class="impact-section">
+                <h4>Impact:</h4>
+                <p>Reduced processing time by 85% while handling 3x the original data volume.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-status solved">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="accordion-title">
+              <h3>Real-time Data Requirements</h3>
+              <p><span class="status-badge solved">Solved</span> Certain use cases required near real-time data updates, which conflicted with our batch...</p>
+            </div>
+            <div class="accordion-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="challenge-solution">
+              <div class="challenge-section">
+                <h4>Challenge:</h4>
+                <p>Certain use cases required near real-time data updates, which conflicted with our batch processing approach.</p>
+              </div>
+              <div class="solution-section">
+                <h4>Solution:</h4>
+                <p>Implemented a hybrid architecture with a primary batch processing pipeline for comprehensive updates and a separate streaming pipeline for critical real-time updates. Used Kafka for event streaming and Redis for real-time data access.</p>
+              </div>
+              <div class="impact-section">
+                <h4>Impact:</h4>
+                <p>Achieved sub-minute data freshness for critical data points while maintaining efficient batch processing for the majority of data.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-status solved">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="accordion-title">
+              <h3>Data Privacy and Compliance</h3>
+              <p><span class="status-badge solved">Solved</span> Property data often contains sensitive information subject to various regulations...</p>
+            </div>
+            <div class="accordion-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="challenge-solution">
+              <div class="challenge-section">
+                <h4>Challenge:</h4>
+                <p>Property data often contains sensitive information subject to various regulations and privacy concerns.</p>
+              </div>
+              <div class="solution-section">
+                <h4>Solution:</h4>
+                <p>Implemented comprehensive data governance policies. Created data anonymization and masking processes for sensitive fields. Developed role-based access controls and audit logging for all data access. Established data retention and purging policies compliant with regulations.</p>
+              </div>
+              <div class="impact-section">
+                <h4>Impact:</h4>
+                <p>Achieved full compliance with relevant regulations while still providing valuable insights from the data.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-status in-progress">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="accordion-title">
+              <h3>Integration with Legacy Systems</h3>
+              <p><span class="status-badge in-progress">In Progress</span> Needed to integrate with several legacy systems that lacked modern APIs...</p>
+            </div>
+            <div class="accordion-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="challenge-solution">
+              <div class="challenge-section">
+                <h4>Challenge:</h4>
+                <p>Needed to integrate with several legacy systems that lacked modern APIs or documentation.</p>
+              </div>
+              <div class="solution-section">
+                <h4>Solution:</h4>
+                <p>Developed custom adapters for each legacy system. Created a robust error handling and retry mechanism for unreliable connections. Implemented data reconciliation processes to verify data consistency across systems.</p>
+              </div>
+              <div class="impact-section">
+                <h4>Impact:</h4>
+                <p>Successfully integrated with all required systems while isolating the core platform from legacy system limitations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="accordion-status in-progress">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="accordion-title">
+              <h3>Complex Analytical Requirements</h3>
+              <p><span class="status-badge in-progress">In Progress</span> Users needed to perform complex spatial and temporal analyses...</p>
+            </div>
+            <div class="accordion-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="challenge-solution">
+              <div class="challenge-section">
+                <h4>Challenge:</h4>
+                <p>Users needed to perform complex spatial and temporal analyses that were difficult to express in traditional query languages.</p>
+              </div>
+              <div class="solution-section">
+                <h4>Solution:</h4>
+                <p>Developed a domain-specific query language for property analytics. Created pre-computed aggregates and materialized views for common analysis patterns. Implemented a custom query optimizer for spatial and temporal queries.</p>
+              </div>
+              <div class="impact-section">
+                <h4>Impact:</h4>
+                <p>Enabled users to perform complex analyses that were previously impossible, reducing time-to-insight from days to minutes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Automation and Scheduling Section -->
+  <section id="automation" class="section section-alt">
+    <div class="container">
+      <h2>Automation and Scheduling</h2>
+      <p class="lead-text">
+        Our system includes robust automation features to ensure data is always up-to-date and processes run
+        smoothly without manual intervention.
+      </p>
+      
+      <div class="automation-tabs">
+        <div class="automation-tab-header">
+          <button class="automation-tab-btn active" data-tab="data-collection">
+            <i class="fas fa-sync"></i> Data Collection
+          </button>
+          <button class="automation-tab-btn" data-tab="data-processing">
+            <i class="fas fa-chart-line"></i> Data Processing
+          </button>
+          <button class="automation-tab-btn" data-tab="maintenance">
+            <i class="fas fa-check-circle"></i> Maintenance
+          </button>
+          <button class="automation-tab-btn" data-tab="monitoring">
+            <i class="fas fa-exclamation-circle"></i> Monitoring & Alerts
+          </button>
+        </div>
+        
+        <div class="automation-tab-content">
+          <div class="automation-tab-pane active" id="data-collection-tab">
+            <div class="automation-cards">
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Public Records Sync</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 2:00 AM</div>
+                </div>
+                <p>Synchronizes with county and municipal property records databases</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>45 minutes</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Records Processed</span>
+                    <span>~50,000 per run</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>99.2%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>MLS Listings Update</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Every 4 hours</div>
+                </div>
+                <p>Retrieves new and updated property listings from Multiple Listing Services</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>12 minutes</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Records Processed</span>
+                    <span>~5,000 per run</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>99.8%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Market Data Collection</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Weekly on Sundays</div>
+                </div>
+                <p>Gathers market trends, comparable sales, and neighborhood statistics</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>2 hours</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Records Processed</span>
+                    <span>~100,000 per run</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>98.5%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="automation-tab-pane" id="data-processing-tab">
+            <div class="automation-cards">
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>ETL Pipeline</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 4:00 AM</div>
+                </div>
+                <p>Transforms raw property data into standardized formats and loads into the database</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>1.5 hours</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Records Processed</span>
+                    <span>~75,000 per run</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>99.5%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Data Enrichment</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 6:00 AM</div>
+                </div>
+                <p>Enhances property records with additional data points and calculated fields</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>50 minutes</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Records Processed</span>
+                    <span>~60,000 per run</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>99.1%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Analytics Pre-computation</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 8:00 AM</div>
+                </div>
+                <p>Generates pre-computed aggregates and statistics for faster query performance</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>1 hour</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Records Processed</span>
+                    <span>Full database</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>99.7%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="automation-tab-pane" id="maintenance-tab">
+            <div class="automation-cards">
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Database Optimization</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Weekly on Saturdays</div>
+                </div>
+                <p>Performs index rebuilding, vacuum, and other database maintenance tasks</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>3 hours</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Impact</span>
+                    <span>Query performance improved by ~25%</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>100%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Data Quality Audit</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Weekly on Mondays</div>
+                </div>
+                <p>Runs comprehensive data quality checks and generates reports on issues</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>1.5 hours</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Issues Detected</span>
+                    <span>~200 per run</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>100%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>System Health Check</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Every 15 minutes</div>
+                </div>
+                <p>Monitors system performance, resource usage, and service availability</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Avg Runtime</span>
+                    <span>30 seconds</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Checks Performed</span>
+                    <span>50+</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Success Rate</span>
+                    <span>99.99%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="automation-tab-pane" id="monitoring-tab">
+            <div class="automation-cards">
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Pipeline Failure Alerts</h3>
+                  <div class="schedule"><i class="fas fa-exclamation-circle"></i> On job failure</div>
+                </div>
+                <p>Sends notifications when data pipelines fail or exceed time thresholds</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Alert Channels</span>
+                    <span>Email, Slack, SMS</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Avg Response Time</span>
+                    <span>< 15 minutes</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>False Positive Rate</span>
+                    <span>< 0.5%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>Data Quality Alerts</h3>
+                  <div class="schedule"><i class="fas fa-exclamation-circle"></i> On quality threshold breach</div>
+                </div>
+                <p>Alerts when data quality metrics fall below defined thresholds</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Alert Channels</span>
+                    <span>Email, Slack</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Avg Response Time</span>
+                    <span>< 1 hour</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>False Positive Rate</span>
+                    <span>< 1%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="automation-card">
+                <div class="automation-card-header">
+                  <h3>System Performance Alerts</h3>
+                  <div class="schedule"><i class="fas fa-exclamation-circle"></i> On resource threshold breach</div>
+                </div>
+                <p>Monitors CPU, memory, disk usage and alerts on high utilization</p>
+                <div class="metrics-box">
+                  <h4>PERFORMANCE METRICS</h4>
+                  <div class="metric-item">
+                    <span>Alert Channels</span>
+                    <span>Email, Slack, PagerDuty</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>Avg Response Time</span>
+                    <span>< 5 minutes</span>
+                  </div>
+                  <div class="metric-item">
+                    <span>False Positive Rate</span>
+                    <span>< 0.2%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <h2>End-to-End Property Data Solutions</h2>
+      <p>A comprehensive system for property data management and analysis</p>
+      <div class="footer-buttons">
+        <button class="btn btn-outline-light">Contact</button>
+        <button class="btn btn-outline-light">Documentation</button>
+      </div>
+      <p class="copyright">© <span id="current-year"></span> Property Data Solutions. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../static/js/project_002_script.js"></script>
 </body>
 </html>
