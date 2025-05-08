@@ -33,6 +33,8 @@ body {
   color: var(--color-text);
   line-height: 1.5;
   background-color: #fff;
+  max-width:1440px;
+  margin:auto;
 }
 
 .container {
@@ -153,6 +155,13 @@ img {
   position: relative;
   padding: 8rem 0;
   overflow: hidden;
+  background-image: url('../images/img-project/project-005.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero::before {
@@ -186,7 +195,11 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
+
+  .btn {
+    gap: 0.7rem;
+  }
 }
 
 /* Navigation */

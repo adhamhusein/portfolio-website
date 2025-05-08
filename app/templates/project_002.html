@@ -5,11 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>End-to-End Property Data Solutions</title>
   <link rel="stylesheet" href="../static/css/project_002_styles.css">
+  <link rel="stylesheet" href="../static/css/navbar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="../static/js/index_scripts.js" defer></script>
 </head>
 <body>
+  <header>
+    <div class="logo-all">
+        <a href="#" class="logo-holder">
+            <div class="logo">AD</div>
+            <div class="logo-text">Adham's Portfolio</div>
+        </a>
+        <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
+            </svg>
+        </a>
+    </div>
+    <nav>
+        <ul id="menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#skills">Skills</a></li>
+            <li><a href="/#projects">Projects</a></li>
+            <li><a href="/#experience">Experience</a></li>
+            <li><a href="/#contact" class="button">Contact</a></li>
+            <li></li>
+        </ul>
+    </nav>
+  </header>
+
   <!-- Hero Section -->
   <section class="hero">
+    <div class="hero-overlay">
+      <!-- <img src="../static/images/img-project/project-005.png" alt="Adham Picture"> -->
+    </div>
     <div class="container">
       <div class="hero-content">
         <h1>End-to-End Property Data Solutions</h1>
