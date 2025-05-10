@@ -54,7 +54,7 @@ def project():
     return render_template('project.html')
 
 @app.route('/project/project_002')
-# @app.route('/project/project_002/')
+@app.route('/project/project_002/')
 def project_002():
     return render_template('project_002.html')
 
