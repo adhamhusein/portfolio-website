@@ -9,6 +9,7 @@ app = Flask(__name__,
             template_folder='app/templates', 
             static_folder='app/static')
 
+app.url_map.strict_slashes = False
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -53,8 +54,10 @@ def project():
     return render_template('project.html')
 
 @app.route('/project/project_002')
-def project():
+# @app.route('/project/project_002/')
+def project_002():
     return render_template('project_002.html')
+
 
 @app.route('/project/project_001', methods=['GET', 'POST'])
 def project_001():

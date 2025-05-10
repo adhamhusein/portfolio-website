@@ -119,13 +119,14 @@
           <div class="stage-number">1</div>
           <div class="stage-content">
             <h3>Data Collection</h3>
-            <p>Gathering raw property data from multiple sources including public records, MLS listings, and proprietary databases.</p>
+            Automatically retrieve new property listing data from <a href="https://properti123.com">https://properti123.com</a> 
+            using Python scripts scheduled with <code>crontab</code>.
             <div class="stage-details">
               <ul>
-                <li><i class="fas fa-arrow-right"></i> API integrations with data providers</li>
-                <li><i class="fas fa-arrow-right"></i> Web scraping for public data</li>
-                <li><i class="fas fa-arrow-right"></i> Batch imports from partner systems</li>
-                <li><i class="fas fa-arrow-right"></i> Real-time data streams</li>
+                <li><i class="fas fa-arrow-right"></i> Built a python web scraper to crawl property URLs</li>
+                <li><i class="fas fa-arrow-right"></i> Retrieve all detailed data (price, address, etc) from each link and store into table                </li>
+                <li><i class="fas fa-arrow-right"></i> Persisted new entries into a PostgreSQL table</li>
+                <li><i class="fas fa-arrow-right"></i> Scheduled automated tasks via crontab to ensure fresh data ingestion daily</li>
               </ul>
             </div>
           </div>
@@ -141,7 +142,7 @@
                 <li><i class="fas fa-arrow-right"></i> Address normalization</li>
                 <li><i class="fas fa-arrow-right"></i> Property attribute validation</li>
                 <li><i class="fas fa-arrow-right"></i> Duplicate detection and resolution</li>
-                <li><i class="fas fa-arrow-right"></i> Data completeness checks</li>
+                <li><i class="fas fa-arrow-right"></i> Date convertion</li>
               </ul>
             </div>
           </div>
