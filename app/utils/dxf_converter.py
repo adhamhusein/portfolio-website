@@ -33,7 +33,7 @@ class DXFConverter:
                     lon, lat = transform(self.utm_proj, self.wgs84_proj, vertex.dxf.location.x, vertex.dxf.location.y)
                     coordinates.append([lon, lat])
 
-                if coordinates[0] == coordinates[-1]:
+                if coordinates[0] == coordinates[-1] and len(coordinates) >= 4:
                     polygon = Polygon(coordinates)
                     self.polygon_list.append(polygon)
                 else:
