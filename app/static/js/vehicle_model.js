@@ -189,9 +189,20 @@ export class VehicleEntityManager {
                 const diff = Math.abs(Cesium.JulianDate.secondsDifference(time, dp.getTime()));
                 if (diff < minDiff) { closest = dp; minDiff = diff; }
             }
+            // Subtract 8 hours from closest.reportTime for display
+            let reportTimeDisplay = closest.reportTime;
+            if (reportTimeDisplay) {
+                let dateObj = new Date(reportTimeDisplay);
+                if (!isNaN(dateObj.getTime())) {
+                    dateObj.setHours(dateObj.getHours() - 8);
+                    // Format as 'YYYY-MM-DD HH:mm:ss'
+                    const pad = n => n.toString().padStart(2, '0');
+                    reportTimeDisplay = `${dateObj.getFullYear()}-${pad(dateObj.getMonth()+1)}-${pad(dateObj.getDate())} ${pad(dateObj.getHours())}:${pad(dateObj.getMinutes())}:${pad(dateObj.getSeconds())}`;
+                }
+            }
             return `
                 <table style='font-size:15px; background:#222; color:#fff; border-collapse:collapse; min-width:220px;'>
-                    <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Report Time</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.reportTime}</td></tr>
+                    <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Report Time</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${reportTimeDisplay}</td></tr>
                     <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Activity ID</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.mobileActivityId}</td></tr>
                     <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Status ID</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.mobileStatusId}</td></tr>
                     <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Altitude</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.posAlt}</td></tr>
