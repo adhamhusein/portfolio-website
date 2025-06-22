@@ -116,6 +116,15 @@ class VehicleDataProcessor:
         else:
             self.df_processed['plm_state'] = 'unknown'
 
+    def add_8_hours_to_reporttime(self):
+        # Add 8 hours to the 'reporttime' column if it exists
+        if 'reporttime' in self.df_processed.columns:
+            # Try to parse as datetime, add 8 hours, and format back to string if needed
+            self.df_processed['reporttime'] = pd.to_datetime(self.df_processed['reporttime']) + pd.Timedelta(hours=8)
+            # If original was string, convert back to string in the same format
+            if self.df['reporttime'].dtype == object:
+                self.df_processed['reporttime'] = self.df_processed['reporttime'].dt.strftime('%Y-%m-%d %H:%M:%S')
+
     def export_results(self):
         # Export only the specified columns to CSV file in the given order
         columns_to_export = [
@@ -139,5 +148,6 @@ class VehicleDataProcessor:
         self.apply_speed_corrections()
         self.calculate_vessel_angle()
         self.add_plm_state()
+        self.add_8_hours_to_reporttime()
         self.export_results()
         return self.df_processed
