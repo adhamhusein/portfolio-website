@@ -26,7 +26,8 @@ const CONFIG = {
             PLM_STATUS: 12,
             IS_REVERSED: 13,
             VESSEL_ANGLE: 14,
-            PLM_STATE: 15
+            PLM_STATE: 15,
+            REPORT_TIME_DISPLAY: 16
         }
     },
     HEADING_OFFSETS: {
@@ -57,7 +58,7 @@ window.VEHICLE_CONFIG = CONFIG;
 
 // Vehicle telemetry data point
 class VehicleDataPoint {
-    constructor(mobileId, reportTime, longitude, latitude, speed, heading, plmStatus, mobileTypeId, isReversed, plmPayload, mobileActivityId, vesselAngle, plmInc, mobileStatusId, posAlt, plmState) {
+    constructor(mobileId, reportTime, longitude, latitude, speed, heading, plmStatus, mobileTypeId, isReversed, plmPayload, mobileActivityId, vesselAngle, plmInc, mobileStatusId, posAlt, plmState, reportTimeDisplay) {
         this.mobileId = mobileId;
         this.reportTime = reportTime;
         this.longitude = longitude;
@@ -74,6 +75,7 @@ class VehicleDataPoint {
         this.mobileStatusId = mobileStatusId;
         this.posAlt = posAlt;
         this.plmState = plmState;
+        this.reportTimeDisplay = reportTimeDisplay;
     }
 
     getTime() {
@@ -145,7 +147,8 @@ class CSVDataLoader {
             parseFloat(columns[C.PLM_INC]),
             columns[C.MOBILE_STATUS_ID],
             parseFloat(columns[C.POS_ALT]),
-            columns[C.PLM_STATE]
+            columns[C.PLM_STATE],
+            columns[C.REPORT_TIME_DISPLAY]
         );
     }
 }
@@ -189,20 +192,9 @@ export class VehicleEntityManager {
                 const diff = Math.abs(Cesium.JulianDate.secondsDifference(time, dp.getTime()));
                 if (diff < minDiff) { closest = dp; minDiff = diff; }
             }
-            // Subtract 8 hours from closest.reportTime for display
-            let reportTimeDisplay = closest.reportTime;
-            if (reportTimeDisplay) {
-                let dateObj = new Date(reportTimeDisplay);
-                if (!isNaN(dateObj.getTime())) {
-                    dateObj.setHours(dateObj.getHours() - 8);
-                    // Format as 'YYYY-MM-DD HH:mm:ss'
-                    const pad = n => n.toString().padStart(2, '0');
-                    reportTimeDisplay = `${dateObj.getFullYear()}-${pad(dateObj.getMonth()+1)}-${pad(dateObj.getDate())} ${pad(dateObj.getHours())}:${pad(dateObj.getMinutes())}:${pad(dateObj.getSeconds())}`;
-                }
-            }
             return `
                 <table style='font-size:15px; background:#222; color:#fff; border-collapse:collapse; min-width:220px;'>
-                    <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Report Time</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${reportTimeDisplay}</td></tr>
+                    <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Report Time</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.reportTimeDisplay}</td></tr>
                     <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Activity ID</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.mobileActivityId}</td></tr>
                     <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Status ID</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.mobileStatusId}</td></tr>
                     <tr><td style='font-weight:bold; padding:6px 12px; background:#333; border-right:1px solid #444; border-bottom:1px solid #444;'>Altitude</td><td style='padding:6px 12px; background:#222; border-bottom:1px solid #444;'>${closest.posAlt}</td></tr>

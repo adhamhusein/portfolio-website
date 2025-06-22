@@ -117,12 +117,12 @@ class VehicleDataProcessor:
             self.df_processed['plm_state'] = 'unknown'
 
     def add_8_hours_to_reporttime(self):
-        # Add 8 hours to the 'reporttime' column if it exists
+        # Preserve the original 'reporttime' in 'reporttime_display' and add 8 hours to 'reporttime'
         if 'reporttime' in self.df_processed.columns:
-            # Try to parse as datetime, add 8 hours, and format back to string if needed
+            self.df_processed['reporttime_display'] = self.df_processed['reporttime']
             self.df_processed['reporttime'] = pd.to_datetime(self.df_processed['reporttime']) + pd.Timedelta(hours=8)
             # If original was string, convert back to string in the same format
-            if self.df['reporttime'].dtype == object:
+            if self.df['reporttime_display'].dtype == object:
                 self.df_processed['reporttime'] = self.df_processed['reporttime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
     def export_results(self):
@@ -131,7 +131,7 @@ class VehicleDataProcessor:
             'mobileid', 'reporttime', 'mobiletypeid', 'mobileactivityid', 'mobilestatusid',
             'pos_lon', 'pos_lat', 'pos_alt', 'pos_speed', 'pos_dir',
             'plm_payload', 'plm_inc', 'plm_status', 'is_reversed',
-            'vessel_angle', 'plm_state'
+            'vessel_angle', 'plm_state', 'reporttime_display'
         ]
         columns_to_export = [col for col in columns_to_export if col in self.df_processed.columns]
         self.df_processed[columns_to_export].to_csv(self.output_file, index=False)
