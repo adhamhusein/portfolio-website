@@ -914,7 +914,7 @@
         async function uploadFile(file, fileType, progressBar) {
             return new Promise((resolve, reject) => {
                 // Validate file size (max 50MB)
-                const maxSize = 50 * 1024 * 1024; // 50MB
+                const maxSize = 200 * 1024 * 1024; // 50MB
                 if (file.size > maxSize) {
                     reject(new Error('File size too large. Maximum size is 50MB.'));
                     return;
