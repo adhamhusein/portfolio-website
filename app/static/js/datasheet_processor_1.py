@@ -152,5 +152,5 @@ class VehicleDataProcessor:
         self.export_results()
         return self.df_processed
 
-processor = VehicleDataProcessor('app\static\js\datasheet7.csv', 'app\static\js\datasheet8.csv')
-processor.process()
+# processor = VehicleDataProcessor('app\static\js\datasheet7.csv', 'app\static\js\datasheet8.csv')
+# processor.process()
