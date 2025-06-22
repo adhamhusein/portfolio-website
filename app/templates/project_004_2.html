@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mining FMS Playback - Cesium Global</title>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.118/Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
+  <style>
+    html, body, #cesiumContainer {
+      margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+      font-family: sans-serif;
+    }
+    #map-controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 250px;
+      background: rgba(42, 42, 42, 0.8);
+      padding: 10px;
+      border-radius: 5px;
+      color: white;
+      z-index: 1000;
+      font-size: 13px;
+    }
+    #map-controls label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="map-controls">
+    <h3 style="margin: 0 0 7px 0; text-align: center; border-bottom: 1px solid #555; padding-bottom: 8px;">Map Controls</h3>
+    
+    <!-- Display Controls -->
+    <div style="margin-bottom: 7px;">
+      <h4 style="margin: 0 0 8px 0; color: #ffc107;">Display</h4>
+      <label><input type="checkbox" id="label-toggle" checked> Show Map Labels</label>
+    </div>
+    
+    <!-- Search Controls -->
+    <div style="margin-bottom: 7px;">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <input id="vehicle-search-input" type="text" placeholder="Search object name..." style="flex: 1; padding: 4px 8px; border-radius: 3px; border: 1px solid #444; background: #222; color: #fff; outline: none;" />
+        <button id="vehicle-search-btn" style="padding: 4px 10px; border-radius: 3px; border: none; background: #ffc107; color: #222; font-weight: bold; cursor: pointer;">Search</button>
+      </div>
+    </div>
+    
+    <!-- Heatmap Controls -->
+    <div style="margin-bottom: 7px;">
+      <h4 style="margin: 0 0 8px 0; color: #ffc107;">Heatmaps</h4>
+      <div style="margin-bottom: 8px;">
+        <label><input type="checkbox" id="speed-heatmap-toggle"> Speed Heatmap</label>
+        <label><input type="checkbox" id="grade-heatmap-toggle"> Grade Heatmap</label>
+        <label><input type="checkbox" id="zero-speed-heatmap-toggle"> Zero Speed Heatmap</label>
+      </div>
+      
+      <!-- Range Settings (Collapsible) -->
+      <div style="margin-top: 8px;">
+        <button id="ranges-toggle" style="width: 100%; padding: 4px 8px; background: #333; color: #ffc107; border: 1px solid #555; border-radius: 3px; cursor: pointer; font-size: 11px; font-weight: bold; text-align: left;">
+          ▼ Range Settings
+        </button>
+        <div id="ranges-content" style="display: none; margin-top: 4px;">
+          
+          <!-- Speed Range Settings -->
+          <div style="padding: 8px; background: rgba(0,0,0,0.2); border-radius: 4px; margin-bottom: 8px;">
+            <div style="font-weight: bold; margin-bottom: 6px; color: #ff6b6b;">Speed Ranges</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <label style="font-size: 11px;">Low: <input type="number" id="speed-low-max" value="18" min="0" max="100" style="width: 50px; padding: 2px; background: #222; color: #fff; border: 1px solid #444; border-radius: 2px;"></label>
+              <label style="font-size: 11px;">Medium: <input type="number" id="speed-medium-max" value="21" min="0" max="100" style="width: 50px; padding: 2px; background: #222; color: #fff; border: 1px solid #444; border-radius: 2px;"></label>
+            </div>
+          </div>
+          
+          <!-- Grade Range Settings -->
+          <div style="padding: 8px; background: rgba(0,0,0,0.2); border-radius: 4px; margin-bottom: 8px;">
+            <div style="font-weight: bold; margin-bottom: 6px; color: #4ecdc4;">Grade Ranges</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <label style="font-size: 11px;">Low: <input type="number" id="grade-low-max" value="2" min="0" max="20" style="width: 50px; padding: 2px; background: #222; color: #fff; border: 1px solid #444; border-radius: 2px;"></label>
+              <label style="font-size: 11px;">Medium: <input type="number" id="grade-medium-max" value="4" min="0" max="20" style="width: 50px; padding: 2px; background: #222; color: #fff; border: 1px solid #444; border-radius: 2px;"></label>
+            </div>
+          </div>
+          
+          <!-- Zero Speed Range Settings -->
+          <div style="padding: 8px; background: rgba(0,0,0,0.2); border-radius: 4px;">
+            <div style="font-weight: bold; margin-bottom: 6px; color: #a8e6cf;">Zero Speed Ranges</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <label style="font-size: 11px;">Low: <input type="number" id="zero-speed-low-max" value="5" min="0" max="50" style="width: 50px; padding: 2px; background: #222; color: #fff; border: 1px solid #444; border-radius: 2px;"></label>
+              <label style="font-size: 11px;">Medium: <input type="number" id="zero-speed-medium-max" value="10" min="0" max="50" style="width: 50px; padding: 2px; background: #222; color: #fff; border: 1px solid #444; border-radius: 2px;"></label>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <!-- Legend -->
+    <div style="margin-bottom: 7px;">
+      <div id="heatmap-legend" style="padding: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; font-size: 11px; border: 1px solid #555;">
+        <div id="legend-content">No heatmap active</div>
+      </div>
+    </div>
+    
+    <!-- Distance Measurement Controls -->
+    <div style="margin-bottom: 7px;">
+      <h4 style="margin: 0 0 8px 0; color: #ffc107;">Distance Measurement</h4>
+      <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+        <button id="distance-measurement-btn" style="flex: 1; padding: 6px 10px; border-radius: 3px; border: none; background: #28a745; color: white; font-weight: bold; cursor: pointer;">Start Measuring</button>
+        <button id="clear-measurement-btn" style="padding: 6px 10px; border-radius: 3px; border: none; background: #6c757d; color: white; font-weight: bold; cursor: pointer;">Clear</button>
+      </div>
+      <div style="font-size: 11px; color: #ccc; padding: 6px; background: rgba(0,0,0,0.2); border-radius: 3px;">
+        Click to add points & press Enter to finish
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.118/Build/Cesium/Cesium.js"></script>
+  <script type="module" src="/static/js/cesium_main.js"></script>
+  
+  <script>
+    // Collapsible range settings functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('ranges-toggle');
+      const contentDiv = document.getElementById('ranges-content');
+      
+      if (toggleBtn && contentDiv) {
+        toggleBtn.addEventListener('click', function() {
+          const isVisible = contentDiv.style.display !== 'none';
+          contentDiv.style.display = isVisible ? 'none' : 'block';
+          toggleBtn.innerHTML = isVisible ? '▼ Range Settings' : '▲ Range Settings';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

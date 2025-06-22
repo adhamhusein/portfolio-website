@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham's Portfolio - Mining FMS Playback</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/project_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <script src="{{ url_for('static', filename='js/index_scripts.js') }}" defer></script>
+    <style>
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        iframe {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+        .iframe-container {
+            flex: 1;
+            display: flex;
+        }
+        
+        /* Upload Page Styles */
+        .upload-cover {
+            min-height: 50vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .upload-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(0, 0, 0, 0.04);
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .upload-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+        
+        .upload-subtitle {
+            color: #6c757d;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-sections {
+            display: flex;
+            gap: 2rem;
+            align-items: stretch;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+        }
+        
+        .upload-area:hover {
+            border-color: #6c757d;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .upload-area.dragover {
+            border-color: #495057;
+            background-color: rgba(248, 249, 250, 0.9);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-text {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 0rem;
+            font-weight: 500;
+        }
+        
+        .upload-hint {
+            font-size: 0.7rem;
+            color: #6c757d;
+        }
+        
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .progress-container {
+            margin-top: 0.05rem;
+            display: none;
+            width: 100%;
+        }
+        
+        .progress {
+            height: 6px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #6c757d, #495057);
+            border-radius: 8px;
+            transition: width 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .upload-btn {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 0rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(108, 117, 125, 0.3);
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(108, 117, 125, 0.4);
+            background: linear-gradient(135deg, #495057, #343a40);
+        }
+        
+        .upload-btn:disabled {
+            background: #dee2e6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-btn.loading {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            cursor: not-allowed;
+            position: relative;
+            color: transparent;
+        }
+        
+        .upload-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .file-info {
+            margin-top: 0.05rem;
+            padding: 0.5rem;
+            background-color: rgba(248, 249, 250, 0.8);
+            border-radius: 8px;
+            display: none;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(222, 226, 230, 0.5);
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+        
+        .file-size {
+            color: #6c757d;
+            font-size: 0.5rem;
+        }
+        
+        .upload-status {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .upload-status.uploading {
+            color: #6c757d;
+        }
+        
+        .upload-status.success {
+            color: #198754;
+        }
+        
+        .upload-status.error {
+            color: #dc3545;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .processing-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .processing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .processing-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .processing-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .processing-subtitle {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .processing-steps {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        
+        .processing-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .processing-step.completed {
+            color: #198754;
+        }
+        
+        .processing-step.current {
+            color: #0d6efd;
+            font-weight: 500;
+        }
+        
+        .step-icon {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .processing-progress {
+            width: 100%;
+            height: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .processing-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6c757d, #495057);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .rendering-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+        }
+        
+        .rendering-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .rendering-icon {
+            font-size: 3rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .rendering-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rendering-subtitle {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .rendering-progress {
+            width: 100%;
+            height: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .rendering-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0d6efd, #0056b3);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .rendering-status {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        
+        .rendering-tip {
+            font-size: 0.75rem;
+            color: #6c757d;
+            font-style: italic;
+            padding: 0.5rem;
+            background: rgba(13, 110, 253, 0.1);
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .upload-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .upload-title {
+                font-size: 2rem;
+            }
+            
+            .upload-area {
+                padding: 1.5rem;
+            }
+            
+            .upload-sections {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .upload-section {
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-all">
+            <a href="/" class="logo-holder">
+                <div class="logo">AD</div>
+                <div class="logo-text">Adham's Portfolio</div>
+            </a>
+            <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
+                </svg>
+            </a>
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#skills">Skills</a></li>
+                <li><a href="/#projects">Projects</a></li>
+                <li><a href="/#experience">Experience</a></li>
+                <li><a href="/#contact" class="button">Contact</a></li>
+                <li></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Upload Cover -->
+        <div id="uploadCover" class="upload-cover">
+            <div class="upload-card">
+                <h1 class="upload-title">Mining FMS Playback</h1>
+                <p class="upload-subtitle">Upload your vehicle position and map datasets (CSV format) to start the visualization</p>
+                
+                <!-- Vehicle Position Dataset Upload -->
+                <div class="upload-sections">
+                    <div class="upload-section">
+                        <div class="upload-area" id="positionUploadArea">
+                            <i class="bi bi-geo-alt upload-icon"></i>
+                            <div class="upload-text">Vehicle Position Dataset</div>
+                            <div class="upload-hint">Click or drag to upload GPS data (CSV only)</div>
+                            <input type="file" class="file-input" id="positionFile" accept=".csv">
+                            
+                            <div class="file-info" id="positionFileInfo">
+                                <div class="file-name" id="positionFileName"></div>
+                                <div class="file-size" id="positionFileSize"></div>
+                                <div class="upload-status" id="positionUploadStatus"></div>
+                            </div>
+                            
+                            <div class="progress-container" id="positionProgressContainer">
+                                <div class="progress">
+                                    <div class="progress-bar" id="positionProgressBar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Dataset Upload -->
+                    <div class="upload-section">
+                        <div class="upload-area" id="mapUploadArea">
+                            <i class="bi bi-map upload-icon"></i>
+                            <div class="upload-text">Map Dataset</div>
+                            <div class="upload-hint">Click or drag to upload map data (CSV only)</div>
+                            <input type="file" class="file-input" id="mapFile" accept=".csv">
+                            
+                            <div class="file-info" id="mapFileInfo">
+                                <div class="file-name" id="mapFileName"></div>
+                                <div class="file-size" id="mapFileSize"></div>
+                                <div class="upload-status" id="mapUploadStatus"></div>
+                            </div>
+                            
+                            <div class="progress-container" id="mapProgressContainer">
+                                <div class="progress">
+                                    <div class="progress-bar" id="mapProgressBar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="upload-btn" id="startVisualization" disabled>
+                    Start Visualization
+                </button>
+            </div>
+        </div>
+        
+        <!-- Iframe Container (Hidden initially) -->
+        <div id="iframeContainer" class="iframe-container hidden">
+            <iframe src="{{ url_for('project_004_2') }}" title="Cesium Map View" style="height: 87vb;"></iframe>
+        </div>
+        
+        <!-- Processing Overlay -->
+        <div id="processingOverlay" class="processing-overlay">
+            <div class="processing-card">
+                <i class="bi bi-gear processing-icon"></i>
+                <h2 class="processing-title">Processing Your Data</h2>
+                <p class="processing-subtitle">Please wait while we process your uploaded files...</p>
+                
+                <div class="processing-steps">
+                    <div class="processing-step" id="step1">
+                        <i class="bi bi-check-circle step-icon"></i>
+                        <span>Validating uploaded files</span>
+                    </div>
+                    <div class="processing-step" id="step2">
+                        <i class="bi bi-clock step-icon"></i>
+                        <span>Processing vehicle position data</span>
+                    </div>
+                    <div class="processing-step" id="step3">
+                        <i class="bi bi-clock step-icon"></i>
+                        <span>Converting map data to GeoJSON</span>
+                    </div>
+                    <div class="processing-step" id="step4">
+                        <i class="bi bi-clock step-icon"></i>
+                        <span>Preparing visualization</span>
+                    </div>
+                    <div class="processing-step" id="step5">
+                        <i class="bi bi-clock step-icon"></i>
+                        <span>Rendering vehicles and map data</span>
+                    </div>
+                </div>
+                
+                <div class="processing-progress">
+                    <div class="processing-progress-bar" id="processingProgressBar"></div>
+                </div>
+                
+                <div id="processingStatus" style="font-size: 0.8rem; color: #6c757d;">
+                    Initializing processing...
+                </div>
+                
+                <button id="cancelProcessing" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">
+                    Cancel Processing
+                </button>
+            </div>
+        </div>
+        
+        <!-- Rendering Overlay -->
+        <div id="renderingOverlay" class="rendering-overlay">
+            <div class="rendering-card">
+                <i class="bi bi-gear rendering-icon"></i>
+                <h2 class="rendering-title">Rendering</h2>
+                <p class="rendering-subtitle">Please wait while we render the visualization...</p>
+                
+                <div class="rendering-progress">
+                    <div class="rendering-progress-bar" id="renderingProgressBar"></div>
+                </div>
+                
+                <div id="renderingStatus" class="rendering-status">
+                    Initializing rendering...
+                </div>
+                
+                <div class="rendering-tip">
+                    This may take a few minutes. Please do not close the browser or navigate away from this page.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-2">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="text-muted">
+                        © 2025 Adham's Portfolio. All rights reserved.
+                    </span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="https://github.com/adhamhusein" class="text-dark text-decoration-none me-3" target="_blank">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/akhmad-adham-nur-husaen/" class="text-dark text-decoration-none me-3" target="_blank">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                    <a href="mailto:akhmad.adham.n@gmail.com" class="text-dark text-decoration-none">
+                        <i class="bi bi-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // File upload handling
+        let positionFile = null;
+        let mapFile = null;
+        let positionUploadedFile = null;
+        let mapUploadedFile = null;
+        
+        // Position file upload
+        const positionUploadArea = document.getElementById('positionUploadArea');
+        const positionFileInput = document.getElementById('positionFile');
+        const positionFileInfo = document.getElementById('positionFileInfo');
+        const positionFileName = document.getElementById('positionFileName');
+        const positionFileSize = document.getElementById('positionFileSize');
+        const positionProgressContainer = document.getElementById('positionProgressContainer');
+        const positionProgressBar = document.getElementById('positionProgressBar');
+        const positionUploadStatus = document.getElementById('positionUploadStatus');
+        
+        // Map file upload
+        const mapUploadArea = document.getElementById('mapUploadArea');
+        const mapFileInput = document.getElementById('mapFile');
+        const mapFileInfo = document.getElementById('mapFileInfo');
+        const mapFileName = document.getElementById('mapFileName');
+        const mapFileSize = document.getElementById('mapFileSize');
+        const mapProgressContainer = document.getElementById('mapProgressContainer');
+        const mapProgressBar = document.getElementById('mapProgressBar');
+        const mapUploadStatus = document.getElementById('mapUploadStatus');
+        
+        // Start button
+        const startButton = document.getElementById('startVisualization');
+        const uploadCover = document.getElementById('uploadCover');
+        const iframeContainer = document.getElementById('iframeContainer');
+        
+        // Processing overlay elements
+        const processingOverlay = document.getElementById('processingOverlay');
+        const processingProgressBar = document.getElementById('processingProgressBar');
+        const processingStatus = document.getElementById('processingStatus');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const step5 = document.getElementById('step5');
+        const cancelProcessingBtn = document.getElementById('cancelProcessing');
+        
+        // Rendering overlay elements
+        const renderingOverlay = document.getElementById('renderingOverlay');
+        const renderingProgressBar = document.getElementById('renderingProgressBar');
+        const renderingStatus = document.getElementById('renderingStatus');
+        
+        // Abort controller for fetch request
+        let abortController = null;
+        
+        // Function to show processing overlay
+        function showProcessingOverlay() {
+            processingOverlay.style.display = 'flex';
+            startButton.classList.add('loading');
+            startButton.disabled = true;
+        }
+        
+        // Function to hide processing overlay
+        function hideProcessingOverlay() {
+            processingOverlay.style.display = 'none';
+            startButton.classList.remove('loading');
+            startButton.disabled = false;
+            
+            // Abort any ongoing request
+            if (abortController) {
+                abortController.abort();
+                abortController = null;
+            }
+        }
+        
+        // Function to show rendering overlay
+        function showRenderingOverlay() {
+            renderingOverlay.style.display = 'flex';
+        }
+        
+        // Function to hide rendering overlay
+        function hideRenderingOverlay() {
+            renderingOverlay.style.display = 'none';
+        }
+        
+        // Function to update processing progress
+        function updateProcessingProgress(step, progress, status) {
+            // Update progress bar
+            processingProgressBar.style.width = `${progress}%`;
+            
+            // Update status text
+            processingStatus.textContent = status;
+            
+            // Update step indicators
+            const steps = [step1, step2, step3, step4, step5];
+            steps.forEach((stepElement, index) => {
+                const stepNumber = index + 1;
+                const icon = stepElement.querySelector('.step-icon');
+                const text = stepElement.querySelector('span');
+                
+                if (stepNumber < step) {
+                    // Completed step
+                    stepElement.className = 'processing-step completed';
+                    icon.className = 'bi bi-check-circle step-icon';
+                } else if (stepNumber === step) {
+                    // Current step
+                    stepElement.className = 'processing-step current';
+                    icon.className = 'bi bi-arrow-clockwise step-icon';
+                } else {
+                    // Pending step
+                    stepElement.className = 'processing-step';
+                    icon.className = 'bi bi-clock step-icon';
+                }
+            });
+        }
+        
+        // Function to simulate processing steps (since we can't get real-time progress from backend)
+        function simulateProcessingSteps() {
+            let currentStep = 1;
+            let progress = 0;
+            
+            // Step 1: Validating files (0-20%)
+            updateProcessingProgress(1, 20, 'Validating uploaded files...');
+            
+            setTimeout(() => {
+                currentStep = 2;
+                progress = 40;
+                updateProcessingProgress(2, 40, 'Processing vehicle position data...');
+                
+                setTimeout(() => {
+                    currentStep = 3;
+                    progress = 60;
+                    updateProcessingProgress(3, 60, 'Converting map data to GeoJSON...');
+                    
+                    setTimeout(() => {
+                        currentStep = 4;
+                        progress = 80;
+                        updateProcessingProgress(4, 80, 'Preparing visualization...');
+                        
+                        setTimeout(() => {
+                            currentStep = 5;
+                            progress = 100;
+                            updateProcessingProgress(5, 100, 'Rendering vehicles and map data...');
+                        }, 1000);
+                    }, 1000);
+                }, 1500);
+            }, 1000);
+        }
+        
+        // Position file handling
+        positionUploadArea.addEventListener('click', (e) => {
+            // Don't trigger if clicking on the file input
+            if (e.target !== positionFileInput) {
+                positionFileInput.click();
+            }
+        });
+        
+        positionFileInput.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        positionUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            positionUploadArea.classList.add('dragover');
+        });
+        positionUploadArea.addEventListener('dragleave', () => {
+            positionUploadArea.classList.remove('dragover');
+        });
+        positionUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            positionUploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handlePositionFile(files[0]);
+            }
+        });
+        
+        positionFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handlePositionFile(e.target.files[0]);
+            }
+        });
+        
+        // Map file handling
+        mapUploadArea.addEventListener('click', (e) => {
+            // Don't trigger if clicking on the file input
+            if (e.target !== mapFileInput) {
+                mapFileInput.click();
+            }
+        });
+        
+        mapFileInput.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        mapUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            mapUploadArea.classList.add('dragover');
+        });
+        mapUploadArea.addEventListener('dragleave', () => {
+            mapUploadArea.classList.remove('dragover');
+        });
+        mapUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            mapUploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleMapFile(files[0]);
+            }
+        });
+        
+        mapFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleMapFile(e.target.files[0]);
+            }
+        });
+        
+        async function handlePositionFile(file) {
+            positionFile = file;
+            positionFileName.textContent = file.name;
+            positionFileSize.textContent = formatFileSize(file.size);
+            positionFileInfo.style.display = 'block';
+            
+            // Show progress container and set initial status
+            positionProgressContainer.style.display = 'block';
+            positionUploadStatus.textContent = 'Uploading...';
+            positionUploadStatus.className = 'upload-status uploading';
+            
+            try {
+                // Upload file with real progress tracking
+                positionUploadedFile = await uploadFile(file, 'position', positionProgressBar);
+                console.log('Position file uploaded successfully:', positionUploadedFile);
+                
+                // Show success status
+                positionUploadStatus.textContent = 'Upload complete ✓';
+                positionUploadStatus.className = 'upload-status success';
+            } catch (error) {
+                console.error('Error uploading position file:', error);
+                alert('Error uploading position file. Please try again.');
+                
+                // Show error status
+                positionUploadStatus.textContent = 'Upload failed ✗';
+                positionUploadStatus.className = 'upload-status error';
+                
+                // Reset UI
+                positionFile = null;
+                positionUploadedFile = null;
+                positionFileInfo.style.display = 'none';
+                positionProgressContainer.style.display = 'none';
+            }
+            
+            checkFilesReady();
+        }
+        
+        async function handleMapFile(file) {
+            mapFile = file;
+            mapFileName.textContent = file.name;
+            mapFileSize.textContent = formatFileSize(file.size);
+            mapFileInfo.style.display = 'block';
+            
+            // Show progress container and set initial status
+            mapProgressContainer.style.display = 'block';
+            mapUploadStatus.textContent = 'Uploading...';
+            mapUploadStatus.className = 'upload-status uploading';
+            
+            try {
+                // Upload file with real progress tracking
+                mapUploadedFile = await uploadFile(file, 'map', mapProgressBar);
+                console.log('Map file uploaded successfully:', mapUploadedFile);
+                
+                // Show success status
+                mapUploadStatus.textContent = 'Upload complete ✓';
+                mapUploadStatus.className = 'upload-status success';
+            } catch (error) {
+                console.error('Error uploading map file:', error);
+                alert('Error uploading map file. Please try again.');
+                
+                // Show error status
+                mapUploadStatus.textContent = 'Upload failed ✗';
+                mapUploadStatus.className = 'upload-status error';
+                
+                // Reset UI
+                mapFile = null;
+                mapUploadedFile = null;
+                mapFileInfo.style.display = 'none';
+                mapProgressContainer.style.display = 'none';
+            }
+            
+            checkFilesReady();
+        }
+        
+        async function uploadFile(file, fileType, progressBar) {
+            return new Promise((resolve, reject) => {
+                // Validate file size (max 50MB)
+                const maxSize = 50 * 1024 * 1024; // 50MB
+                if (file.size > maxSize) {
+                    reject(new Error('File size too large. Maximum size is 50MB.'));
+                    return;
+                }
+                
+                // Validate file type (CSV only)
+                const fileName = file.name.toLowerCase();
+                if (!fileName.endsWith('.csv')) {
+                    reject(new Error('Invalid file type. Only CSV files are allowed.'));
+                    return;
+                }
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('file_type', fileType);
+                
+                const xhr = new XMLHttpRequest();
+                
+                // Progress tracking
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percentComplete = (e.loaded / e.total) * 100;
+                        progressBar.style.width = percentComplete + '%';
+                    }
+                });
+                
+                // Upload complete
+                xhr.addEventListener('load', () => {
+                    if (xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.success) {
+                                resolve(response);
+                            } else {
+                                reject(new Error(response.error || 'Upload failed'));
+                            }
+                        } catch (error) {
+                            reject(new Error('Invalid response from server'));
+                        }
+                    } else {
+                        reject(new Error(`Upload failed with status: ${xhr.status}`));
+                    }
+                });
+                
+                // Upload error
+                xhr.addEventListener('error', () => {
+                    reject(new Error('Network error during upload'));
+                });
+                
+                // Start upload
+                xhr.open('POST', '/project/project_004_upload');
+                xhr.send(formData);
+            });
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function checkFilesReady() {
+            if (positionUploadedFile && mapUploadedFile) {
+                startButton.disabled = false;
+            }
+        }
+        
+        startButton.addEventListener('click', async () => {
+            try {
+                // Show processing overlay and start progress simulation
+                showProcessingOverlay();
+                simulateProcessingSteps();
+                
+                // Create abort controller for this request
+                abortController = new AbortController();
+                
+                // Create a timeout promise
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout - processing took too long')), 300000); // 5 minutes timeout
+                });
+                
+                // Create the fetch promise
+                const fetchPromise = fetch('/project/project_004_start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        position_file: positionUploadedFile,
+                        map_file: mapUploadedFile
+                    }),
+                    signal: abortController.signal
+                });
+                
+                // Race between fetch and timeout
+                const response = await Promise.race([fetchPromise, timeoutPromise]);
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Wait a bit for the progress animation to complete
+                    setTimeout(() => {
+                        // Hide processing overlay
+                        hideProcessingOverlay();
+                        
+                        // Store session information
+                        const sessionData = {
+                            session_id: result.session_id,
+                            processed_files: result.processed_files,
+                            processing_info: result.processing_info
+                        };
+                        
+                        // Store in sessionStorage for the iframe to access
+                        sessionStorage.setItem('project004_session', JSON.stringify(sessionData));
+                        
+                        // Hide upload cover and show iframe
+                        uploadCover.classList.add('hidden');
+                        iframeContainer.classList.remove('hidden');
+                        
+                        // Update iframe src with session parameters
+                        const iframe = document.querySelector('#iframeContainer iframe');
+                        const baseUrl = iframe.src;
+                        const separator = baseUrl.includes('?') ? '&' : '?';
+                        iframe.src = `${baseUrl}${separator}session_id=${result.session_id}`;
+                        
+                        // Show rendering overlay
+                        showRenderingOverlay();
+                        updateRenderingProgress(0, 'Initializing visualization...');
+                        
+                        // Listen for rendering completion message from iframe
+                        window.addEventListener('message', function(event) {
+                            if (event.data.type === 'rendering_complete') {
+                                console.log('Rendering completed, allowing user interaction');
+                                // Hide rendering overlay after a short delay
+                                setTimeout(() => {
+                                    hideRenderingOverlay();
+                                }, 1000);
+                            } else if (event.data.type === 'rendering_progress') {
+                                console.log('Rendering progress:', event.data.progress, event.data.message);
+                                updateRenderingProgress(event.data.progress, event.data.message);
+                            }
+                        });
+                        
+                        console.log('Processing completed successfully:', sessionData);
+                    }, 3000); // Wait 3 seconds for progress animation and initial loading
+                } else {
+                    // Hide processing overlay on error
+                    hideProcessingOverlay();
+                    alert('Error starting visualization: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                // Hide processing overlay on error
+                hideProcessingOverlay();
+                console.error('Error starting visualization:', error);
+                
+                let errorMessage = 'Error starting visualization. Please try again.';
+                if (error.name === 'AbortError') {
+                    errorMessage = 'Processing was cancelled.';
+                } else if (error.message.includes('timeout')) {
+                    errorMessage = 'Processing took too long. Please try with smaller files or try again later.';
+                } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    errorMessage = 'Network error. Please check your connection and try again.';
+                }
+                
+                alert(errorMessage);
+            }
+        });
+        
+        // Cancel button event listener
+        cancelProcessingBtn.addEventListener('click', () => {
+            hideProcessingOverlay();
+            alert('Processing cancelled by user.');
+        });
+        
+        // Function to update rendering progress
+        function updateRenderingProgress(progress, status) {
+            renderingProgressBar.style.width = `${progress}%`;
+            renderingStatus.textContent = status;
+        }
+    </script>
+</body>
+</html>
