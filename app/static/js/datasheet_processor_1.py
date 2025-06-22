@@ -122,7 +122,7 @@ class VehicleDataProcessor:
             self.df_processed['reporttime_display'] = self.df_processed['reporttime']
             self.df_processed['reporttime'] = pd.to_datetime(self.df_processed['reporttime']) + pd.Timedelta(hours=8)
             # If original was string, convert back to string in the same format
-            if self.df['reporttime_display'].dtype == object:
+            if self.df_processed['reporttime_display'].dtype == object:
                 self.df_processed['reporttime'] = self.df_processed['reporttime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
     def export_results(self):
@@ -151,3 +151,6 @@ class VehicleDataProcessor:
         self.add_8_hours_to_reporttime()
         self.export_results()
         return self.df_processed
+
+processor = VehicleDataProcessor('app\static\js\datasheet7.csv', 'app\static\js\datasheet8.csv')
+processor.process()
