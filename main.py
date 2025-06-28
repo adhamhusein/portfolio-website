@@ -110,36 +110,73 @@ def project_004_cleanup(session_id):
 @app.route('/project/project_004_start', methods=['POST'])
 def project_004_start():
     """Handle starting the visualization with uploaded files and process them."""
-    data = request.get_json()
-    position_file = data.get('position_file')
-    map_file = data.get('map_file')
-    
-    if not position_file or not map_file:
-        return jsonify({'error': 'Both position and map files are required'}), 400
-    
-    # Verify files exist in uploads folder
-    position_path = os.path.join(app.config['UPLOAD_FOLDER'], position_file['filename'])
-    map_path = os.path.join(app.config['UPLOAD_FOLDER'], map_file['filename'])
-    
-    if not os.path.exists(position_path) or not os.path.exists(map_path):
-        return jsonify({'error': 'Uploaded files not found'}), 404
+    print("=== Starting visualization processing ===")
     
     try:
+        data = request.get_json()
+        print(f"Received data: {data}")
+        
+        position_file = data.get('position_file')
+        map_file = data.get('map_file')
+        
+        print(f"Position file info: {position_file}")
+        print(f"Map file info: {map_file}")
+        
+        if not position_file or not map_file:
+            print("Missing position or map file")
+            return jsonify({'error': 'Both position and map files are required'}), 400
+        
+        # Verify files exist in uploads folder
+        position_path = os.path.join(app.config['UPLOAD_FOLDER'], position_file['filename'])
+        map_path = os.path.join(app.config['UPLOAD_FOLDER'], map_file['filename'])
+        
+        print(f"Position file path: {position_path}")
+        print(f"Map file path: {map_path}")
+        
+        if not os.path.exists(position_path):
+            print(f"Position file not found: {position_path}")
+            return jsonify({'error': f'Position file not found: {position_file["filename"]}'}), 404
+        
+        if not os.path.exists(map_path):
+            print(f"Map file not found: {map_path}")
+            return jsonify({'error': f'Map file not found: {map_file["filename"]}'}), 404
+        
+        print("Both files exist, starting processing...")
+        
         # Create session processor and process files
-        processor = create_session_processor(app.config['UPLOAD_FOLDER'])
-        processed_files = processor.process_files(position_file, map_file)
+        try:
+            processor = create_session_processor(app.config['UPLOAD_FOLDER'])
+            print("Session processor created successfully")
+            
+            processed_files = processor.process_files(position_file, map_file)
+            print(f"Processing completed. Session ID: {processed_files['session_id']}")
+            
+        except Exception as processing_error:
+            print(f"Error during file processing: {str(processing_error)}")
+            import traceback
+            traceback.print_exc()
+            return jsonify({'error': f'File processing failed: {str(processing_error)}'}), 500
         
         # Verify processed files were created
         processed_position_path = processed_files['processed_position']['path']
         geojson_path = processed_files['geojson']['path']
         
+        print(f"Checking processed position file: {processed_position_path}")
+        print(f"Checking GeoJSON file: {geojson_path}")
+        
         if not os.path.exists(processed_position_path):
-            raise FileNotFoundError(f"Processed position file not created: {processed_position_path}")
+            error_msg = f"Processed position file not created: {processed_position_path}"
+            print(error_msg)
+            raise FileNotFoundError(error_msg)
         
         if not os.path.exists(geojson_path):
-            raise FileNotFoundError(f"GeoJSON file not created: {geojson_path}")
+            error_msg = f"GeoJSON file not created: {geojson_path}"
+            print(error_msg)
+            raise FileNotFoundError(error_msg)
         
-        return jsonify({
+        print("All processed files verified successfully")
+        
+        response_data = {
             'success': True,
             'session_id': processed_files['session_id'],
             'position_file': position_file,
@@ -152,10 +189,15 @@ def project_004_start():
                 'processed_at': processed_files['processed_at'],
                 'vehicle_data_rows': processed_files['vehicle_data_rows']
             }
-        })
+        }
+        
+        print(f"Returning success response: {response_data}")
+        return jsonify(response_data)
         
     except Exception as e:
-        print(f"Error processing files: {str(e)}")
+        print(f"Unexpected error in project_004_start: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': f'Processing failed: {str(e)}'}), 500
 
 @app.route('/project/project_001', methods=['GET', 'POST'])

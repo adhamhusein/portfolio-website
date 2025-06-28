@@ -2,6 +2,7 @@
 
 import pandas as pd
 import numpy as np
+import os
 
 class VehicleDataProcessor:
     # Handles processing of vehicle movement data
@@ -13,9 +14,25 @@ class VehicleDataProcessor:
 
     def load_data(self):
         # Load and sort the input data by mobileid and reporttime
-        self.df = pd.read_csv(self.input_file)
-        self.df_processed = self.df.sort_values(['mobileid', 'reporttime']).copy()
-        return self.df_processed
+        print(f"Loading data from: {self.input_file}")
+        try:
+            self.df = pd.read_csv(self.input_file)
+            print(f"Data loaded successfully. Shape: {self.df.shape}")
+            print(f"Columns: {list(self.df.columns)}")
+            
+            # Check for required columns
+            required_columns = ['mobileid', 'reporttime']
+            missing_columns = [col for col in required_columns if col not in self.df.columns]
+            if missing_columns:
+                raise ValueError(f"Missing required columns: {missing_columns}")
+            
+            self.df_processed = self.df.sort_values(['mobileid', 'reporttime']).copy()
+            print(f"Data sorted successfully. Shape: {self.df_processed.shape}")
+            return self.df_processed
+            
+        except Exception as e:
+            print(f"Error loading data: {str(e)}")
+            raise
 
     def calculate_vessel_angle(self):
         # Set vessel_angle to -50 if mobileactivityid is 8, else 0; override to 0 if speed > 5
@@ -127,14 +144,29 @@ class VehicleDataProcessor:
 
     def export_results(self):
         # Export only the specified columns to CSV file in the given order
-        columns_to_export = [
-            'mobileid', 'reporttime', 'mobiletypeid', 'mobileactivityid', 'mobilestatusid',
-            'pos_lon', 'pos_lat', 'pos_alt', 'pos_speed', 'pos_dir',
-            'plm_payload', 'plm_inc', 'plm_status', 'is_reversed',
-            'vessel_angle', 'plm_state', 'reporttime_display'
-        ]
-        columns_to_export = [col for col in columns_to_export if col in self.df_processed.columns]
-        self.df_processed[columns_to_export].to_csv(self.output_file, index=False)
+        print(f"Exporting results to: {self.output_file}")
+        try:
+            columns_to_export = [
+                'mobileid', 'reporttime', 'mobiletypeid', 'mobileactivityid', 'mobilestatusid',
+                'pos_lon', 'pos_lat', 'pos_alt', 'pos_speed', 'pos_dir',
+                'plm_payload', 'plm_inc', 'plm_status', 'is_reversed',
+                'vessel_angle', 'plm_state', 'reporttime_display'
+            ]
+            columns_to_export = [col for col in columns_to_export if col in self.df_processed.columns]
+            print(f"Exporting columns: {columns_to_export}")
+            
+            # Ensure output directory exists
+            if output_dir := os.path.dirname(self.output_file):
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir)
+                    print(f"Created output directory: {output_dir}")
+            
+            self.df_processed[columns_to_export].to_csv(self.output_file, index=False)
+            print(f"Results exported successfully. File size: {os.path.getsize(self.output_file)} bytes")
+            
+        except Exception as e:
+            print(f"Error exporting results: {str(e)}")
+            raise
 
     def process(self):
         # Execute the complete data processing pipeline

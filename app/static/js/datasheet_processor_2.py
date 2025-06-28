@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import numpy as np
 from typing import Optional
+import os
 
 class GeoJSONProcessor:
     def __init__(self, datasheet_path: Optional[str] = None):
@@ -45,56 +46,95 @@ class GeoJSONProcessor:
 
     def convert_csv_to_geojson(self, csv_path: str, geojson_path: str) -> None:
         # Convert a CSV with WKT geometries to a GeoJSON file, optionally merging in road statistics
-        df = pd.read_csv(csv_path)
-        features = []
-        for _, row in df.iterrows():
-            wkt = row['the_geom_text']
-            geom_type = row['geom_type'].upper()
-            # Geometry conversion
-            if wkt.startswith('LINESTRING') or geom_type == 'ROAD':
-                geometry = {
-                    "type": "LineString",
-                    "coordinates": self._linestring_wkt_to_coords(wkt)
-                }
-            elif wkt.startswith('POLYGON') or geom_type == 'DISPOSAL':
-                geometry = {
-                    "type": "Polygon",
-                    "coordinates": self._polygon_wkt_to_coords(wkt)
-                }
-            else:
-                continue  # Skip unknown geometry types
-            # Build properties dictionary
-            prop_key = 'length' if geom_type == 'ROAD' else 'area'
-            properties = {
-                "gid": row['gid'],
-                "objectname": row['objectname'],
-                "geom_type": row['geom_type'],
-                prop_key: row['properties']
+        print(f"Converting CSV to GeoJSON: {csv_path} -> {geojson_path}")
+        try:
+            df = pd.read_csv(csv_path)
+            print(f"Map CSV loaded successfully. Shape: {df.shape}")
+            print(f"Map CSV columns: {list(df.columns)}")
+            
+            # Check for required columns
+            required_columns = ['the_geom_text', 'geom_type', 'gid', 'objectname', 'properties']
+            missing_columns = [col for col in required_columns if col not in df.columns]
+            if missing_columns:
+                raise ValueError(f"Missing required columns in map CSV: {missing_columns}")
+            
+            features = []
+            for idx, row in df.iterrows():
+                try:
+                    wkt = row['the_geom_text']
+                    geom_type = row['geom_type'].upper()
+                    
+                    # Geometry conversion
+                    if wkt.startswith('LINESTRING') or geom_type == 'ROAD':
+                        geometry = {
+                            "type": "LineString",
+                            "coordinates": self._linestring_wkt_to_coords(wkt)
+                        }
+                    elif wkt.startswith('POLYGON') or geom_type == 'DISPOSAL':
+                        geometry = {
+                            "type": "Polygon",
+                            "coordinates": self._polygon_wkt_to_coords(wkt)
+                        }
+                    else:
+                        print(f"Skipping unknown geometry type: {geom_type} at row {idx}")
+                        continue  # Skip unknown geometry types
+                    
+                    # Build properties dictionary
+                    prop_key = 'length' if geom_type == 'ROAD' else 'area'
+                    properties = {
+                        "gid": row['gid'],
+                        "objectname": row['objectname'],
+                        "geom_type": row['geom_type'],
+                        prop_key: row['properties']
+                    }
+                    
+                    # Add aggregated statistics as top-level keys if available
+                    if self.road_stats is not None and row['objectname'] in self.road_stats.index:
+                        stats = self.road_stats.loc[row['objectname']].dropna().to_dict()
+                        if 'avg_speed' in stats:
+                            properties['avg_speed'] = round(stats['avg_speed'], 2)
+                        if 'road_grade' in stats:
+                            properties['grade'] = round(stats['road_grade'], 2)
+                        if 'altitude' in stats:
+                            properties['altitude'] = round(stats['altitude'], 2)
+                        if 'zero_speed' in stats:
+                            properties['zero_speed'] = int(stats['zero_speed'])
+                    
+                    feature = {
+                        "type": "Feature",
+                        "geometry": geometry,
+                        "properties": properties
+                    }
+                    features.append(feature)
+                    
+                except Exception as row_error:
+                    print(f"Error processing row {idx}: {str(row_error)}")
+                    continue  # Skip problematic rows
+            
+            print(f"Processed {len(features)} features successfully")
+            
+            geojson = {
+                "type": "FeatureCollection",
+                "features": features
             }
-            # Add aggregated statistics as top-level keys if available
-            if self.road_stats is not None and row['objectname'] in self.road_stats.index:
-                stats = self.road_stats.loc[row['objectname']].dropna().to_dict()
-                if 'avg_speed' in stats:
-                    properties['avg_speed'] = round(stats['avg_speed'], 2)
-                if 'road_grade' in stats:
-                    properties['grade'] = round(stats['road_grade'], 2)
-                if 'altitude' in stats:
-                    properties['altitude'] = round(stats['altitude'], 2)
-                if 'zero_speed' in stats:
-                    properties['zero_speed'] = int(stats['zero_speed'])
-            feature = {
-                "type": "Feature",
-                "geometry": geometry,
-                "properties": properties
-            }
-            features.append(feature)
-        geojson = {
-            "type": "FeatureCollection",
-            "features": features
-        }
-        with open(geojson_path, 'w') as f:
-            json.dump(geojson, f, indent=2)
-        print(f'GeoJSON file created: {geojson_path}')
+            
+            # Ensure output directory exists
+            if output_dir := os.path.dirname(geojson_path):
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir)
+                    print(f"Created output directory: {output_dir}")
+            
+            with open(geojson_path, 'w') as f:
+                json.dump(geojson, f, indent=2)
+            
+            print(f'GeoJSON file created successfully: {geojson_path}')
+            print(f'GeoJSON file size: {os.path.getsize(geojson_path)} bytes')
+            
+        except Exception as e:
+            print(f"Error converting CSV to GeoJSON: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            raise
 
 # Backward compatibility functions
 def linestring_wkt_to_coords(wkt: str) -> list:

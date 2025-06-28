@@ -27,7 +27,7 @@ def test_upload_config():
     """Test the upload configuration endpoint."""
     print("Testing upload configuration...")
     try:
-        response = requests.get('http://localhost:5500/project/project_004_test_upload')
+        response = requests.get('http://68.168.218.105/project/project_004_test_upload')
         if response.status_code == 200:
             config = response.json()
             print(f"✓ Upload configuration:")
@@ -52,7 +52,7 @@ def test_file_upload(file_path, file_type='position'):
             data = {'file_type': file_type}
             
             response = requests.post(
-                'http://localhost:5500/project/project_004_upload',
+                'http://68.168.218.105/project/project_004_upload',
                 files=files,
                 data=data,
                 timeout=60

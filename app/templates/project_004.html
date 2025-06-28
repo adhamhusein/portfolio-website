@@ -1112,7 +1112,11 @@
                 } else {
                     // Hide processing overlay on error
                     hideProcessingOverlay();
-                    alert('Error starting visualization: ' + (result.error || 'Unknown error'));
+                    let errorMessage = 'Error starting visualization. Please try again.';
+                    if (result.error) {
+                        errorMessage = `Error starting visualization: ${result.error}`;
+                    }
+                    alert(errorMessage);
                 }
             } catch (error) {
                 // Hide processing overlay on error
@@ -1126,6 +1130,10 @@
                     errorMessage = 'Processing took too long. Please try with smaller files or try again later.';
                 } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
                     errorMessage = 'Network error. Please check your connection and try again.';
+                } else if (error.message.includes('Failed to fetch')) {
+                    errorMessage = 'Server connection error. Please check if the server is running and try again.';
+                } else if (error.message.includes('Unexpected token')) {
+                    errorMessage = 'Invalid response from server. Please try again.';
                 }
                 
                 alert(errorMessage);
