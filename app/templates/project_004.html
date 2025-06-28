@@ -858,7 +858,22 @@
                 positionUploadStatus.className = 'upload-status success';
             } catch (error) {
                 console.error('Error uploading position file:', error);
-                alert('Error uploading position file. Please try again.');
+                
+                // Show specific error message
+                let errorMessage = 'Error uploading position file. Please try again.';
+                if (error.message.includes('File size too large')) {
+                    errorMessage = 'File size too large. Maximum size is 200MB.';
+                } else if (error.message.includes('Invalid file type')) {
+                    errorMessage = 'Invalid file type. Only CSV files are allowed.';
+                } else if (error.message.includes('Network error')) {
+                    errorMessage = 'Network error. Please check your connection and try again.';
+                } else if (error.message.includes('timeout')) {
+                    errorMessage = 'Upload timeout. Please try again with a smaller file or check your connection.';
+                } else if (error.message.includes('Invalid file format')) {
+                    errorMessage = 'Invalid file format. Please ensure your CSV file is properly formatted.';
+                }
+                
+                alert(errorMessage);
                 
                 // Show error status
                 positionUploadStatus.textContent = 'Upload failed ✗';
@@ -895,7 +910,22 @@
                 mapUploadStatus.className = 'upload-status success';
             } catch (error) {
                 console.error('Error uploading map file:', error);
-                alert('Error uploading map file. Please try again.');
+                
+                // Show specific error message
+                let errorMessage = 'Error uploading map file. Please try again.';
+                if (error.message.includes('File size too large')) {
+                    errorMessage = 'File size too large. Maximum size is 200MB.';
+                } else if (error.message.includes('Invalid file type')) {
+                    errorMessage = 'Invalid file type. Only CSV files are allowed.';
+                } else if (error.message.includes('Network error')) {
+                    errorMessage = 'Network error. Please check your connection and try again.';
+                } else if (error.message.includes('timeout')) {
+                    errorMessage = 'Upload timeout. Please try again with a smaller file or check your connection.';
+                } else if (error.message.includes('Invalid file format')) {
+                    errorMessage = 'Invalid file format. Please ensure your CSV file is properly formatted.';
+                }
+                
+                alert(errorMessage);
                 
                 // Show error status
                 mapUploadStatus.textContent = 'Upload failed ✗';
@@ -913,10 +943,10 @@
         
         async function uploadFile(file, fileType, progressBar) {
             return new Promise((resolve, reject) => {
-                // Validate file size (max 50MB)
-                const maxSize = 200 * 1024 * 1024; // 50MB
+                // Validate file size (max 200MB)
+                const maxSize = 200 * 1024 * 1024; // 200MB
                 if (file.size > maxSize) {
-                    reject(new Error('File size too large. Maximum size is 50MB.'));
+                    reject(new Error('File size too large. Maximum size is 200MB.'));
                     return;
                 }
                 
@@ -954,6 +984,15 @@
                         } catch (error) {
                             reject(new Error('Invalid response from server'));
                         }
+                    } else if (xhr.status === 413) {
+                        reject(new Error('File size too large. Maximum size is 200MB.'));
+                    } else if (xhr.status === 400) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            reject(new Error(response.error || 'Invalid file format'));
+                        } catch (error) {
+                            reject(new Error('Invalid file format'));
+                        }
                     } else {
                         reject(new Error(`Upload failed with status: ${xhr.status}`));
                     }
@@ -961,8 +1000,16 @@
                 
                 // Upload error
                 xhr.addEventListener('error', () => {
-                    reject(new Error('Network error during upload'));
+                    reject(new Error('Network error during upload. Please check your connection.'));
                 });
+                
+                // Upload timeout
+                xhr.addEventListener('timeout', () => {
+                    reject(new Error('Upload timeout. Please try again with a smaller file or check your connection.'));
+                });
+                
+                // Set timeout for large files (5 minutes)
+                xhr.timeout = 300000; // 5 minutes
                 
                 // Start upload
                 xhr.open('POST', '/project/project_004_upload');
