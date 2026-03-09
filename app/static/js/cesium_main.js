@@ -38,8 +38,25 @@ function enableCameraControls() {
 function checkRenderingComplete() {
     if (geoJsonLoaded && vehiclesLoaded && !renderingComplete) {
         renderingComplete = true;
-        // All rendering complete
-        
+
+        // Place factory model on the surface (after all other data is loaded)
+        const factoryPosition = Cesium.Cartesian3.fromDegrees(117.4490905100999, 4.70291486589133, -3);
+        const factoryHeading = Cesium.Math.toRadians(95);
+        const factoryOrientation = Cesium.Transforms.headingPitchRollQuaternion(
+            factoryPosition,
+            new Cesium.HeadingPitchRoll(factoryHeading, 0, 0)
+        );
+        viewer.entities.add({
+            name: 'Factory',
+            position: factoryPosition,
+            orientation: factoryOrientation,
+            model: {
+                uri: '/static/model/FACTORY.glb',
+                scale: 1.0,
+                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
+            }
+        });
+
         // Enable camera controls
         enableCameraControls();
         
