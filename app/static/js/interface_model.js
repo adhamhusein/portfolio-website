@@ -14,14 +14,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dispatch a custom event to signal that the viewer is ready
     const event = new Event('viewerInitialized');
     document.dispatchEvent(event);
-
-    // Set up camera to viewpoint
-    viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(117.47572477414161, 0.689469832959162, 500),
-        orientation: {
-            heading: Cesium.Math.toRadians(350),
-            pitch: Cesium.Math.toRadians(-10),
-            roll: 0.0
-        }
-    });
 });

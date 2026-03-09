@@ -79,10 +79,29 @@ document.addEventListener('viewerInitialized', () => {
     sendRenderingProgress(10, 'Initializing vehicle visualization...');
     
     initializeVehicles(viewer).then(vehicleManager => {
+        if (!vehicleManager) {
+            vehiclesLoaded = true;
+            checkRenderingComplete();
+            return;
+        }
+
         const vehicleDataSource = vehicleManager.entityManager.vehicleDataSource;
         vehiclesLoaded = true;
-        // Vehicle visualization loaded
         sendRenderingProgress(60, 'Vehicle data loaded');
+
+        // Fly camera to the first valid position from uploaded data
+        const initPos = vehicleManager.getInitialPosition();
+        if (initPos) {
+            viewer.camera.flyTo({
+                destination: Cesium.Cartesian3.fromDegrees(initPos.longitude, initPos.latitude, 500),
+                orientation: {
+                    heading: Cesium.Math.toRadians(60),
+                    pitch: Cesium.Math.toRadians(-70),
+                    roll: Cesium.Math.toRadians(0)
+                }
+            });
+        }
+
         checkRenderingComplete();
 
         if (viewer && viewer.screenSpaceEventHandler) {

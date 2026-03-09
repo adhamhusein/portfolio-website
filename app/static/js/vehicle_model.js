@@ -390,6 +390,9 @@ class VehicleVisualizationManager {
             // Skip initialization if no vehicle data was loaded
             if (!unitData || Object.keys(unitData).length === 0) return;
 
+            // Store raw data for initial camera position lookup
+            this._unitData = unitData;
+
             this._createVehicleEntities(unitData);
             this._configureTimeline(unitData);
             this._setupTrajectorySelection();
@@ -399,6 +402,27 @@ class VehicleVisualizationManager {
         } catch (error) {
             console.error('Failed to initialize vehicle visualization:', error);
         }
+    }
+
+    // Get the center position of all valid data points for initial camera position
+    getInitialPosition() {
+        if (!this._unitData) return null;
+        let minLon = Infinity, maxLon = -Infinity;
+        let minLat = Infinity, maxLat = -Infinity;
+        let hasValid = false;
+        for (const dataPoints of Object.values(this._unitData)) {
+            for (const dp of dataPoints) {
+                if (dp.longitude !== 0 && dp.latitude !== 0 && !isNaN(dp.longitude) && !isNaN(dp.latitude)) {
+                    if (dp.longitude < minLon) minLon = dp.longitude;
+                    if (dp.longitude > maxLon) maxLon = dp.longitude;
+                    if (dp.latitude < minLat) minLat = dp.latitude;
+                    if (dp.latitude > maxLat) maxLat = dp.latitude;
+                    hasValid = true;
+                }
+            }
+        }
+        if (!hasValid) return null;
+        return { longitude: (maxLon + minLon) / 2, latitude: (maxLat + minLat) / 2 };
     }
 
     // Create vehicle entities for all units
