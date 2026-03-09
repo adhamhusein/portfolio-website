@@ -30,7 +30,7 @@ function enableCameraControls() {
         viewer.scene.screenSpaceCameraController.enableZoom = true;
         viewer.scene.screenSpaceCameraController.enableTilt = true;
         viewer.scene.screenSpaceCameraController.enableLook = true;
-        console.log('Camera controls enabled');
+        // Camera controls enabled
     }
 }
 
@@ -38,7 +38,7 @@ function enableCameraControls() {
 function checkRenderingComplete() {
     if (geoJsonLoaded && vehiclesLoaded && !renderingComplete) {
         renderingComplete = true;
-        console.log('All rendering complete, notifying parent window');
+        // All rendering complete
         
         // Enable camera controls
         enableCameraControls();
@@ -54,7 +54,7 @@ function checkRenderingComplete() {
 }
 
 document.addEventListener('viewerInitialized', () => {
-    console.log('Viewer initialized, starting other initializations...');
+    // Viewer initialized
 
     // Disable camera controls initially to prevent lag during loading
     if (viewer && viewer.scene && viewer.scene.screenSpaceCameraController) {
@@ -63,25 +63,25 @@ document.addEventListener('viewerInitialized', () => {
         viewer.scene.screenSpaceCameraController.enableZoom = false;
         viewer.scene.screenSpaceCameraController.enableTilt = false;
         viewer.scene.screenSpaceCameraController.enableLook = false;
-        console.log('Camera controls disabled during loading');
+        // Camera controls disabled during loading
     }
 
     // Initialize session manager first
     sessionManager.initialize();
-    console.log('Session manager initialized');
+    // Session manager initialized
 
     // Initialize UI controls
     initializeHeatmapControls();
     initializeDistanceMeasurement(viewer);
 
     // Initialize the vehicle visualization
-    console.log('🚛 Starting Vehicle Visualization...');
+    // Starting Vehicle Visualization
     sendRenderingProgress(10, 'Initializing vehicle visualization...');
     
     initializeVehicles(viewer).then(vehicleManager => {
         const vehicleDataSource = vehicleManager.entityManager.vehicleDataSource;
         vehiclesLoaded = true;
-        console.log('Vehicle visualization loaded');
+        // Vehicle visualization loaded
         sendRenderingProgress(60, 'Vehicle data loaded');
         checkRenderingComplete();
 
@@ -118,7 +118,7 @@ document.addEventListener('viewerInitialized', () => {
     sendRenderingProgress(20, 'Loading map data...');
     loadGeoJSON().then(() => {
         geoJsonLoaded = true;
-        console.log('GeoJSON data loaded');
+        // GeoJSON data loaded
         sendRenderingProgress(50, 'Map data loaded');
         checkRenderingComplete();
     }).catch(error => {

@@ -851,7 +851,7 @@
             try {
                 // Upload file with real progress tracking
                 positionUploadedFile = await uploadFile(file, 'position', positionProgressBar);
-                console.log('Position file uploaded successfully:', positionUploadedFile);
+                // Position file uploaded successfully
                 
                 // Show success status
                 positionUploadStatus.textContent = 'Upload complete ✓';
@@ -903,7 +903,7 @@
             try {
                 // Upload file with real progress tracking
                 mapUploadedFile = await uploadFile(file, 'map', mapProgressBar);
-                console.log('Map file uploaded successfully:', mapUploadedFile);
+                // Map file uploaded successfully
                 
                 // Show success status
                 mapUploadStatus.textContent = 'Upload complete ✓';
@@ -1096,18 +1096,18 @@
                         // Listen for rendering completion message from iframe
                         window.addEventListener('message', function(event) {
                             if (event.data.type === 'rendering_complete') {
-                                console.log('Rendering completed, allowing user interaction');
+                                // Rendering completed
                                 // Hide rendering overlay after a short delay
                                 setTimeout(() => {
                                     hideRenderingOverlay();
                                 }, 1000);
                             } else if (event.data.type === 'rendering_progress') {
-                                console.log('Rendering progress:', event.data.progress, event.data.message);
+                                // Rendering progress update
                                 updateRenderingProgress(event.data.progress, event.data.message);
                             }
                         });
                         
-                        console.log('Processing completed successfully:', sessionData);
+                        // Processing completed successfully
                     }, 3000); // Wait 3 seconds for progress animation and initial loading
                 } else {
                     // Hide processing overlay on error

@@ -22,7 +22,7 @@ class SessionManager {
                 try {
                     this.sessionData = JSON.parse(storedData);
                     this.isInitialized = true;
-                    console.log('Session initialized from storage:', this.sessionData);
+                    // Session initialized from storage
                     return this.sessionData;
                 } catch (error) {
                     console.error('Error parsing session data:', error);
@@ -43,7 +43,7 @@ class SessionManager {
             }
         };
         this.isInitialized = true;
-        console.log('Using default session data:', this.sessionData);
+        // Using default session data
         return this.sessionData;
     }
 
@@ -89,6 +89,12 @@ class SessionManager {
         return this.sessionData.session_id !== 'default';
     }
 
+    // Check if data files are expected to exist (only true when user uploaded files)
+    hasDataFiles() {
+        if (!this.isInitialized) this.initialize();
+        return this.sessionData.session_id !== 'default';
+    }
+
     // Update configuration objects with session data
     updateConfigs() {
         if (!this.isInitialized) this.initialize();
@@ -103,7 +109,7 @@ class SessionManager {
             window.VEHICLE_CONFIG.CSV.DATA_PATH = this.getPositionDataUrl();
         }
         
-        console.log('Configs updated with session data');
+        // Configs updated with session data
     }
 }
 

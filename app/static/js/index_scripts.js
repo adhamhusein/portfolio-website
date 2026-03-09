@@ -3,6 +3,7 @@ function toggleMobileMenu() {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Swiper === 'undefined') return;
     const swiper = new Swiper('.slider-wrapper', {
         loop: false,
         grabCursor: true,

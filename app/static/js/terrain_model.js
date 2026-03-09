@@ -211,9 +211,12 @@ export const loadGeoJSON = async () => {
     try {
         // Initialize session manager and update data source
         sessionManager.initialize();
+
+        // Skip loading if no real session data (default sample files don't exist)
+        if (!sessionManager.hasDataFiles()) return null;
+
         CONFIG.DATA_SOURCE = sessionManager.getGeoJsonDataUrl();
         
-        console.log(`Loading GeoJSON from: ${CONFIG.DATA_SOURCE}`);
         const response = await fetch(CONFIG.DATA_SOURCE);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
@@ -229,7 +232,7 @@ export const loadGeoJSON = async () => {
             processFeatures({ features: [feature] }, config);
         });
 
-        console.log('GeoJSON layer loaded successfully');
+        // GeoJSON layer loaded
         updateCorridorColors();
         return data; // Return the data for promise resolution
     } catch (error) {
@@ -469,5 +472,4 @@ export const initializeHeatmapControls = () => {
     }
 };
 
-// Auto-initialize
-loadGeoJSON();
+// Initialization is handled by cesium_main.js after viewer is ready

@@ -23,7 +23,7 @@ const initializeDataSource = () => {
         try {
             measurementDataSource = new Cesium.CustomDataSource('DistanceMeasurement');
             localViewer.dataSources.add(measurementDataSource);
-            console.log('Distance measurement data source initialized');
+            // Data source initialized
             return true;
         } catch (error) {
             console.error('Failed to initialize measurement data source:', error);
@@ -111,14 +111,14 @@ const addMeasurementPoint = (position) => {
     const clonedPosition = Cesium.Cartesian3.clone(position);
 
     try {
-        console.log('Adding measurement point at:', clonedPosition);
+        // Adding measurement point
         const point = measurementDataSource.entities.add({
             position: clonedPosition,
             point: MEASUREMENT_STYLES.point
         });
         
         measurementPoints.push({ position: clonedPosition, entity: point });
-        console.log('Measurement point added. Total points:', measurementPoints.length);
+        // Measurement point added
         
         // Update the polyline if we have more than one point
         if (measurementPoints.length > 1) {
@@ -232,7 +232,7 @@ const clearMeasurement = () => {
         document.body.style.cursor = 'default';
     }
     
-    console.log('Measurement cleared');
+    // Measurement cleared
 };
 
 // Toggle measurement state
@@ -242,23 +242,23 @@ const toggleMeasurement = () => {
     } else {
         startMeasurement();
     }
-    console.log('Measurement mode toggled');
+    // Measurement mode toggled
 }
 
 // Handle click events for measurement
 const handleMeasurementClick = (movement) => {
-    console.log('Measurement click handler called, isMeasuring:', isMeasuring);
+    // Measurement click handler
     if (!isMeasuring) return;
     
     try {
         const pickedPosition = localViewer.camera.pickEllipsoid(movement.position, localViewer.scene.globe.ellipsoid);
-        console.log('Picked position:', pickedPosition);
+        // Position picked
         if (pickedPosition) {
             addMeasurementPoint(pickedPosition);
             // Prevent the click from being processed by other handlers
             movement.stopPropagation();
         } else {
-            console.log('No position picked from click');
+            // No position picked
         }
     } catch (error) {
         console.error('Error in measurement click handler:', error);
@@ -279,7 +279,7 @@ const handleMeasurementDoubleClick = (movement) => {
 // Finish the current measurement
 const finishMeasurement = () => {
     if (measurementPoints.length > 0) {
-        console.log(`Measurement completed: ${formatDistance(totalDistance)}`);
+        // Measurement completed
         
         // Keep the measurement visible but stop measuring
         isMeasuring = false;
@@ -289,7 +289,7 @@ const finishMeasurement = () => {
 
 // Start a new measurement
 const startMeasurement = () => {
-    console.log('Starting measurement...');
+    // Starting measurement
     
     // Ensure data source is initialized
     if (!initializeDataSource()) {
@@ -300,7 +300,7 @@ const startMeasurement = () => {
     clearMeasurement();
     isMeasuring = true;
     updateMeasurementButton();
-    console.log('Distance measurement started. Click to add points, double-click to finish.');
+    // Distance measurement started
 };
 
 // Update the measurement button state
@@ -381,7 +381,7 @@ export const initializeDistanceMeasurement = (viewer) => {
 
     document.addEventListener('keydown', handleMeasurementKeyDown);
 
-    console.log('Distance measurement functionality initialized');
+    // Distance measurement initialized
 };
 
 // Export functions for external use

@@ -105,10 +105,14 @@ class CSVDataLoader {
         try {
             // Initialize session manager and update data source
             sessionManager.initialize();
+
+            // Skip loading if no real session data (default sample files don't exist)
+            if (!sessionManager.hasDataFiles()) return {};
+
             CONFIG.CSV.DATA_PATH = sessionManager.getPositionDataUrl();
             
-            console.log(`Loading vehicle data from: ${CONFIG.CSV.DATA_PATH}`);
             const response = await fetch(CONFIG.CSV.DATA_PATH);
+            if (!response.ok) return {};
             const csvText = await response.text();
             const rows = csvText.split('\n').slice(1);
             return this.parseRows(rows);
@@ -379,15 +383,19 @@ class VehicleVisualizationManager {
     }
 
     async initialize() {
-        console.log('Initializing Vehicle Visualization Manager...');
+        // Initializing Vehicle Visualization Manager
         try {
             const unitData = await CSVDataLoader.loadVehicleData();
+
+            // Skip initialization if no vehicle data was loaded
+            if (!unitData || Object.keys(unitData).length === 0) return;
+
             this._createVehicleEntities(unitData);
             this._configureTimeline(unitData);
             this._setupTrajectorySelection();
             this._setupSearchUI();
             
-            console.log('Vehicle entities created.');
+            // Vehicle entities created
         } catch (error) {
             console.error('Failed to initialize vehicle visualization:', error);
         }
@@ -405,7 +413,7 @@ class VehicleVisualizationManager {
     _configureTimeline(unitData) {
         const allDataPoints = Object.values(unitData).flat();
         TimelineManager.configureTimeline(this.viewer, allDataPoints);
-        console.log('Timeline configured.');
+        // Timeline configured
     }
 
     _setupTrajectorySelection() {
@@ -415,7 +423,7 @@ class VehicleVisualizationManager {
                 this.entityManager.showTrajectory(selectedEntity.name);
             }
         });
-        console.log('Trajectory selection event listener set up.');
+        // Trajectory selection event listener set up
     }
 
     getAllEntities() {
@@ -428,7 +436,7 @@ class VehicleVisualizationManager {
         const entity = this.entityManager.entities.get(name.toUpperCase());
         if (entity) {
             this.viewer.trackedEntity = entity;
-            console.log(`Focused on vehicle: ${name}`);
+            // Focused on vehicle
         } else {
             console.warn(`Vehicle with name "${name}" not found.`);
         }
@@ -449,7 +457,7 @@ class VehicleVisualizationManager {
                     searchAction();
                 }
             });
-            console.log('Vehicle search UI set up.');
+            // Vehicle search UI set up
         } else {
             console.warn('Vehicle search UI elements not found.');
         }
