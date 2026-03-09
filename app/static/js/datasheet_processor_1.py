@@ -52,29 +52,22 @@ class VehicleDataProcessor:
 
     def fix_stationary_positions(self):
         # Set pos_dir to 0 when position doesn't change between consecutive records
-        def set_pos_dir_zero_if_same_lon_lat(group):
-            same_next = (
-                (group['pos_lon'] == group['pos_lon'].shift(-1)) &
-                (group['pos_lat'] == group['pos_lat'].shift(-1))
-            )
-            group.loc[same_next, 'pos_dir'] = 0
-            return group
-        self.df_processed = self.df_processed.groupby('mobileid', group_keys=False).apply(set_pos_dir_zero_if_same_lon_lat).reset_index(drop=True)
-        if 'mobileid' not in self.df_processed.columns:
-            self.df_processed = self.df_processed.reset_index()
+        same_mobile = self.df_processed['mobileid'] == self.df_processed['mobileid'].shift(-1)
+        same_lon = self.df_processed['pos_lon'] == self.df_processed['pos_lon'].shift(-1)
+        same_lat = self.df_processed['pos_lat'] == self.df_processed['pos_lat'].shift(-1)
+        mask = same_mobile & same_lon & same_lat
+        self.df_processed.loc[mask, 'pos_dir'] = 0
 
     def fill_missing_directions(self):
         # Fill missing pos_dir values using forward and backward fill
-        self.df_processed['pos_dir'] = self.df_processed.groupby('mobileid')['pos_dir'].transform(
-            lambda x: x.replace(0, method='ffill')
-        )
-        def fill_leading_zeros_with_first_nonzero(x):
-            if x.iloc[0] == 0:
-                x = x.replace(0, method='bfill')
-            return x
-        self.df_processed['pos_dir'] = self.df_processed.groupby('mobileid')['pos_dir'].transform(
-            fill_leading_zeros_with_first_nonzero
-        )
+        # Replace 0 with NaN so ffill/bfill can operate on them
+        pos_dir = self.df_processed['pos_dir'].replace(0, np.nan)
+        # Forward-fill within each mobileid group
+        self.df_processed['pos_dir'] = pos_dir.groupby(self.df_processed['mobileid']).ffill()
+        # Backward-fill to handle leading NaNs (groups that start with 0)
+        self.df_processed['pos_dir'] = self.df_processed['pos_dir'].groupby(self.df_processed['mobileid']).bfill()
+        # Any remaining NaN (entire group was 0) gets filled back to 0
+        self.df_processed['pos_dir'] = self.df_processed['pos_dir'].fillna(0)
 
     def calculate_direction_gaps(self):
         # Calculate direction gaps between consecutive positions
@@ -186,5 +179,5 @@ class VehicleDataProcessor:
         self.export_results()
         return self.df_processed
 
-# processor = VehicleDataProcessor('app\static\js\datasheet7.csv', 'app\static\js\datasheet8.csv')
+# processor = VehicleDataProcessor('uploads\position_dataset (26).csv', 'uploads\position_dataset (261).csv')
 # processor.process()
