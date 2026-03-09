@@ -62,7 +62,13 @@ class GeoJSONProcessor:
             for idx, row in df.iterrows():
                 try:
                     wkt = row['the_geom_text']
-                    geom_type = row['geom_type'].upper()
+                    geom_type = row['geom_type']
+                    
+                    # Skip rows with missing geometry or type
+                    if pd.isna(wkt) or pd.isna(geom_type):
+                        continue
+                    
+                    geom_type = str(geom_type).upper()
                     
                     # Geometry conversion
                     if wkt.startswith('LINESTRING') or geom_type == 'ROAD':
