@@ -220,44 +220,42 @@
             <div class="schema-diagram">
               <div class="schema-container">
                 <svg viewBox="0 0 800 400" class="schema-svg">
-                  <!-- Properties Table -->
+                  <!-- property_link Table -->
                   <rect x="50" y="50" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
-                  <text x="150" y="30" text-anchor="middle" fill="#334155" font-weight="bold">Properties</text>
+                  <text x="150" y="30" text-anchor="middle" fill="#334155" font-weight="bold">property_link</text>
                   <line x1="50" y1="80" x2="250" y2="80" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="60" y="70" fill="#64748b" font-size="12">id (PK)</text>
-                  <text x="60" y="100" fill="#64748b" font-size="12">address</text>
-                  <text x="60" y="120" fill="#64748b" font-size="12">property_type</text>
-                  <text x="60" y="140" fill="#64748b" font-size="12">last_updated</text>
-                  <text x="60" y="160" fill="#64748b" font-size="12">geo_location</text>
+                  <text x="60" y="70" fill="#64748b" font-size="12">url (PK)</text>
+                  <text x="60" y="100" fill="#64748b" font-size="12">status</text>
+                  <text x="60" y="120" fill="#64748b" font-size="12">available_data</text>
+                  <text x="60" y="140" fill="#64748b" font-size="12">created_at</text>
 
-                  <!-- Owners Table -->
+                  <!-- property_detil Table -->
                   <rect x="550" y="50" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
-                  <text x="650" y="30" text-anchor="middle" fill="#334155" font-weight="bold">Owners</text>
+                  <text x="650" y="30" text-anchor="middle" fill="#334155" font-weight="bold">property_detil</text>
                   <line x1="550" y1="80" x2="750" y2="80" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="560" y="70" fill="#64748b" font-size="12">id (PK)</text>
-                  <text x="560" y="100" fill="#64748b" font-size="12">name</text>
-                  <text x="560" y="120" fill="#64748b" font-size="12">contact_info</text>
-                  <text x="560" y="140" fill="#64748b" font-size="12">type</text>
+                  <text x="560" y="70" fill="#64748b" font-size="12">propertyid (PK)</text>
+                  <text x="560" y="100" fill="#64748b" font-size="12">url (FK → property_link)</text>
+                  <text x="560" y="120" fill="#64748b" font-size="12">price_real</text>
+                  <text x="560" y="140" fill="#64748b" font-size="12">address</text>
 
-                  <!-- Property Details Table -->
+                  <!-- property_address Table -->
                   <rect x="50" y="250" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
-                  <text x="150" y="230" text-anchor="middle" fill="#334155" font-weight="bold">Property Details</text>
+                  <text x="150" y="230" text-anchor="middle" fill="#334155" font-weight="bold">property_address</text>
                   <line x1="50" y1="280" x2="250" y2="280" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="60" y="270" fill="#64748b" font-size="12">property_id (FK)</text>
-                  <text x="60" y="300" fill="#64748b" font-size="12">square_footage</text>
-                  <text x="60" y="320" fill="#64748b" font-size="12">bedrooms</text>
-                  <text x="60" y="340" fill="#64748b" font-size="12">bathrooms</text>
-                  <text x="60" y="360" fill="#64748b" font-size="12">year_built</text>
+                  <text x="60" y="270" fill="#64748b" font-size="12">propertyid (PK/FK)</text>
+                  <text x="60" y="300" fill="#64748b" font-size="12">province</text>
+                  <text x="60" y="320" fill="#64748b" font-size="12">kabupatenkota</text>
+                  <text x="60" y="340" fill="#64748b" font-size="12">kecamatan</text>
+                  <text x="60" y="360" fill="#64748b" font-size="12">score</text>
 
-                  <!-- Transactions Table -->
+                  <!-- ref_address Table -->
                   <rect x="550" y="250" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
-                  <text x="650" y="230" text-anchor="middle" fill="#334155" font-weight="bold">Transactions</text>
+                  <text x="650" y="230" text-anchor="middle" fill="#334155" font-weight="bold">ref_address</text>
                   <line x1="550" y1="280" x2="750" y2="280" stroke="#94a3b8" stroke-width="2"></line>
                   <text x="560" y="270" fill="#64748b" font-size="12">id (PK)</text>
-                  <text x="560" y="300" fill="#64748b" font-size="12">property_id (FK)</text>
-                  <text x="560" y="320" fill="#64748b" font-size="12">transaction_date</text>
-                  <text x="560" y="340" fill="#64748b" font-size="12">price</text>
-                  <text x="560" y="360" fill="#64748b" font-size="12">transaction_type</text>
+                  <text x="560" y="300" fill="#64748b" font-size="12">provinsi</text>
+                  <text x="560" y="320" fill="#64748b" font-size="12">kabupatenkota</text>
+                  <text x="560" y="340" fill="#64748b" font-size="12">kecamatan</text>
 
                   <!-- Relationships -->
                   <path d="M 250 110 L 400 110 L 400 110 L 550 110" stroke="#94a3b8" stroke-width="2" fill="none"></path>
@@ -283,8 +281,8 @@
             <div class="tables-container">
               <div class="db-table">
                 <div class="db-table-header">
-                  <h3>Properties</h3>
-                  <p>Core table storing basic property information</p>
+                  <h3>property_link</h3>
+                  <p>Tracks every listing URL discovered from Properti123</p>
                 </div>
                 <table>
                   <thead>
@@ -296,29 +294,72 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>id</td>
-                      <td>UUID</td>
-                      <td>Primary key</td>
+                      <td>url</td>
+                      <td>TEXT</td>
+                      <td>Primary key, unique listing URL</td>
+                    </tr>
+                    <tr>
+                      <td>status</td>
+                      <td>VARCHAR(10)</td>
+                      <td>Listing type (e.g., JUAL)</td>
+                    </tr>
+                    <tr>
+                      <td>available_data</td>
+                      <td>INTEGER</td>
+                      <td>Scraping status code for this URL</td>
+                    </tr>
+                    <tr>
+                      <td>created_at</td>
+                      <td>TIMESTAMP</td>
+                      <td>When the URL was first discovered</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div class="db-table">
+                <div class="db-table-header">
+                  <h3>property_detil</h3>
+                  <p>Stores the full scraped attributes for each property</p>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Column</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>propertyid</td>
+                      <td>TEXT</td>
+                      <td>Primary key, property identifier on Properti123</td>
+                    </tr>
+                    <tr>
+                      <td>url</td>
+                      <td>TEXT</td>
+                      <td>Foreign key to property_link.url</td>
+                    </tr>
+                    <tr>
+                      <td>propertytipe</td>
+                      <td>VARCHAR</td>
+                      <td>Property type (e.g., RUMAH DIJUAL)</td>
+                    </tr>
+                    <tr>
+                      <td>price_real</td>
+                      <td>NUMERIC</td>
+                      <td>Parsed numeric price</td>
                     </tr>
                     <tr>
                       <td>address</td>
                       <td>TEXT</td>
-                      <td>Full property address</td>
+                      <td>Raw address string from the listing</td>
                     </tr>
                     <tr>
-                      <td>property_type</td>
-                      <td>VARCHAR(50)</td>
-                      <td>Residential, Commercial, etc.</td>
-                    </tr>
-                    <tr>
-                      <td>geo_location</td>
-                      <td>POINT</td>
-                      <td>Latitude/longitude coordinates</td>
-                    </tr>
-                    <tr>
-                      <td>last_updated</td>
+                      <td>page_created_at</td>
                       <td>TIMESTAMP</td>
-                      <td>Last data update time</td>
+                      <td>When the listing page was created</td>
                     </tr>
                   </tbody>
                 </table>
@@ -326,8 +367,8 @@
               
               <div class="db-table">
                 <div class="db-table-header">
-                  <h3>Property Details</h3>
-                  <p>Extended property attributes and features</p>
+                  <h3>property_address</h3>
+                  <p>Normalized geographic components derived from raw addresses</p>
                 </div>
                 <table>
                   <thead>
@@ -339,72 +380,29 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>property_id</td>
-                      <td>UUID</td>
-                      <td>Foreign key to Properties</td>
+                      <td>propertyid</td>
+                      <td>TEXT</td>
+                      <td>Foreign key to property_detil.propertyid</td>
                     </tr>
                     <tr>
-                      <td>square_footage</td>
+                      <td>province</td>
+                      <td>TEXT</td>
+                      <td>Matched province name</td>
+                    </tr>
+                    <tr>
+                      <td>kabupatenkota</td>
+                      <td>TEXT</td>
+                      <td>Matched city / regency</td>
+                    </tr>
+                    <tr>
+                      <td>kecamatan</td>
+                      <td>TEXT</td>
+                      <td>Matched district</td>
+                    </tr>
+                    <tr>
+                      <td>score</td>
                       <td>INTEGER</td>
-                      <td>Total area in square feet</td>
-                    </tr>
-                    <tr>
-                      <td>bedrooms</td>
-                      <td>INTEGER</td>
-                      <td>Number of bedrooms</td>
-                    </tr>
-                    <tr>
-                      <td>bathrooms</td>
-                      <td>DECIMAL(3,1)</td>
-                      <td>Number of bathrooms</td>
-                    </tr>
-                    <tr>
-                      <td>year_built</td>
-                      <td>INTEGER</td>
-                      <td>Construction year</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              
-              <div class="db-table">
-                <div class="db-table-header">
-                  <h3>Transactions</h3>
-                  <p>Historical property transactions</p>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Column</th>
-                      <th>Type</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>id</td>
-                      <td>UUID</td>
-                      <td>Primary key</td>
-                    </tr>
-                    <tr>
-                      <td>property_id</td>
-                      <td>UUID</td>
-                      <td>Foreign key to Properties</td>
-                    </tr>
-                    <tr>
-                      <td>transaction_date</td>
-                      <td>DATE</td>
-                      <td>Date of transaction</td>
-                    </tr>
-                    <tr>
-                      <td>price</td>
-                      <td>DECIMAL(12,2)</td>
-                      <td>Transaction amount</td>
-                    </tr>
-                    <tr>
-                      <td>transaction_type</td>
-                      <td>VARCHAR(50)</td>
-                      <td>Sale, Refinance, etc.</td>
+                      <td>Average fuzzy matching confidence score</td>
                     </tr>
                   </tbody>
                 </table>
@@ -420,52 +418,52 @@
                   <li class="relationship-item">
                     <div class="relationship-header">
                       <div>
-                        <h4>Property to Property Details</h4>
-                        <p>Each property has one set of detailed attributes</p>
+                        <h4>property_link to property_detil</h4>
+                        <p>Each discovered URL can have one detailed record once it has been scraped</p>
                       </div>
-                      <div class="relationship-type">One-to-One</div>
+                      <div class="relationship-type">One-to-One / One-to-Many</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>property_details.property_id → properties.id</code>
+                      <code>property_detil.url → property_link.url</code>
                     </div>
                   </li>
                   
                   <li class="relationship-item">
                     <div class="relationship-header">
                       <div>
-                        <h4>Property to Transactions</h4>
-                        <p>Each property can have multiple transaction records over time</p>
+                        <h4>property_detil to property_address</h4>
+                        <p>Each scraped property can have one normalized address row</p>
                       </div>
                       <div class="relationship-type">One-to-Many</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>transactions.property_id → properties.id</code>
+                      <code>property_address.propertyid → property_detil.propertyid</code>
                     </div>
                   </li>
                   
                   <li class="relationship-item">
                     <div class="relationship-header">
                       <div>
-                        <h4>Property to Owners</h4>
-                        <p>Properties can have multiple owners, and owners can have multiple properties</p>
+                        <h4>property_address to ref_address</h4>
+                        <p>Normalized address components map back to the reference master data</p>
                       </div>
-                      <div class="relationship-type">Many-to-Many</div>
+                      <div class="relationship-type">Many-to-One</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>property_owners join table with property_id and owner_id foreign keys</code>
+                      <code>(province, kabupatenkota, kecamatan) ↔ ref_address rows</code>
                     </div>
                   </li>
                   
                   <li class="relationship-item">
                     <div class="relationship-header">
                       <div>
-                        <h4>Property to Market Data</h4>
-                        <p>Each property has multiple market value assessments over time</p>
+                        <h4>End-to-end flow</h4>
+                        <p>URLs flow from discovery, to detailed scrape, to standardized geography, ready for alerts and analytics</p>
                       </div>
                       <div class="relationship-type">One-to-Many</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>market_data.property_id → properties.id</code>
+                      <code>property_link → property_detil → property_address → ref_address</code>
                     </div>
                   </li>
                 </ul>

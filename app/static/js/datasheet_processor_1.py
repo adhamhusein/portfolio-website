@@ -59,7 +59,9 @@ class VehicleDataProcessor:
             )
             group.loc[same_next, 'pos_dir'] = 0
             return group
-        self.df_processed = self.df_processed.groupby('mobileid', group_keys=False).apply(set_pos_dir_zero_if_same_lon_lat)
+        self.df_processed = self.df_processed.groupby('mobileid', group_keys=False).apply(set_pos_dir_zero_if_same_lon_lat).reset_index(drop=True)
+        if 'mobileid' not in self.df_processed.columns:
+            self.df_processed = self.df_processed.reset_index()
 
     def fill_missing_directions(self):
         # Fill missing pos_dir values using forward and backward fill
