@@ -1,13 +1,19 @@
-from flask import Flask, render_template, request, send_file, send_from_directory, jsonify
+from flask import Flask, render_template, request, send_file, send_from_directory, jsonify, Response
 from werkzeug.exceptions import RequestEntityTooLarge
 import os
 from threading import Thread
 import time
 from datetime import datetime
+import json
+import psycopg2
+from psycopg2.extras import RealDictCursor
+from dotenv import load_dotenv
 from app.utils.dxf_converter import handle_project_001
 from app.utils.project_004_processor import create_session_processor
 from werkzeug.utils import secure_filename
 import uuid
+
+load_dotenv()
 
 app = Flask(__name__, 
             template_folder='app/templates', 
@@ -37,6 +43,10 @@ def delete_old_files():
         # Iterate through files in the uploads folder
         for filename in os.listdir(UPLOAD_FOLDER):
             file_path = os.path.join(UPLOAD_FOLDER, filename)
+
+            # Only delete regular files; skip directories.
+            if not os.path.isfile(file_path):
+                continue
             
             if os.path.exists(file_path):
                 file_mod_time = os.path.getmtime(file_path)
@@ -204,10 +214,56 @@ def project_004_start():
 def project_001():
     return handle_project_001(request, app.config['UPLOAD_FOLDER'])
 
+@app.route('/api/property_detil', methods=['GET'])
+def property_detil():
+    """Return all rows from public.property_detil as one streamed JSON response."""
+    try:
+        db_password = os.getenv('PROPERTY_DB_PASSWORD')
+        if not db_password:
+            return jsonify({'error': 'Database password is not configured'}), 500
+
+        conn = psycopg2.connect(
+            host='68.168.218.105',
+            database='property',
+            user='postgres',
+            password=db_password
+        )
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute(
+            """
+            SELECT *
+            FROM public.property_detil
+            """
+        )
+
+        def generate_rows():
+            try:
+                first_item = True
+                yield '['
+                while True:
+                    batch = cur.fetchmany(1000)
+                    if not batch:
+                        break
+
+                    for row in batch:
+                        if not first_item:
+                            yield ','
+                        yield json.dumps(row, default=str)
+                        first_item = False
+                yield ']'
+            finally:
+                cur.close()
+                conn.close()
+
+        return Response(generate_rows(), mimetype='application/json')
+
+    except Exception as e:
+        return jsonify({'error': f'Failed to fetch property_detil: {str(e)}'}), 500
+
 @app.route('/download/geojson')
 def download_geojson():
     path = request.args.get('path')
-    if os.path.exists(path):
+    if path and os.path.exists(path):
         return send_file(path, as_attachment=True, download_name='converted.geojson')
     return "File not found", 404
 
@@ -248,11 +304,12 @@ def project_004_upload():
         return jsonify({'error': 'No file provided'}), 400
     
     file = request.files['file']
+    filename = file.filename or ''
     file_type = request.form.get('file_type', 'unknown')  # 'position' or 'map'
     
-    print(f"Processing file: {file.filename}, type: {file_type}")
+    print(f"Processing file: {filename}, type: {file_type}")
     
-    if file.filename == '':
+    if filename == '':
         print("Empty filename")
         return jsonify({'error': 'No file selected'}), 400
     
@@ -270,7 +327,7 @@ def project_004_upload():
     
     # Validate file extension
     allowed_extensions = {'.csv'}
-    file_extension = os.path.splitext(file.filename)[1].lower()
+    file_extension = os.path.splitext(filename)[1].lower()
     
     print(f"File extension: {file_extension}")
     
@@ -281,7 +338,7 @@ def project_004_upload():
     try:
         if file:
             # Generate unique filename to avoid conflicts
-            original_filename = secure_filename(file.filename)
+            original_filename = secure_filename(filename)
             unique_filename = f"{file_type}_{uuid.uuid4().hex}{file_extension}"
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
             

@@ -204,8 +204,10 @@
     <div class="container">
       <h2>Database Structure</h2>
       <p class="lead-text">
-        The database is designed for optimal performance, scalability, and data integrity, with a focus on
-        property-related entities and relationships.
+        The schema mirrors the production PostgreSQL database: <code>property_link</code> stores every discovered URL,
+        <code>property_detil</code> stores the full scraped listing keyed by URL, <code>property_address</code> stores
+        normalized geography keyed by <code>propertyid</code>, and <code>ref_address</code> provides the master list of
+        Indonesian admin areas used for fuzzy matching.
       </p>
       
       <div class="tabs">
@@ -233,29 +235,32 @@
                   <rect x="550" y="50" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
                   <text x="650" y="30" text-anchor="middle" fill="#334155" font-weight="bold">property_detil</text>
                   <line x1="550" y1="80" x2="750" y2="80" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="560" y="70" fill="#64748b" font-size="12">propertyid (PK)</text>
-                  <text x="560" y="100" fill="#64748b" font-size="12">url (FK → property_link)</text>
+                  <text x="560" y="70" fill="#64748b" font-size="12">url (PK, FK → property_link.url)</text>
+                  <text x="560" y="100" fill="#64748b" font-size="12">propertyid (FK → property_address.propertyid)</text>
                   <text x="560" y="120" fill="#64748b" font-size="12">price_real</text>
                   <text x="560" y="140" fill="#64748b" font-size="12">address</text>
+                  <text x="560" y="160" fill="#64748b" font-size="12">title, currency</text>
+                  <text x="560" y="180" fill="#64748b" font-size="12">contact_person, phone_number, …</text>
 
                   <!-- property_address Table -->
-                  <rect x="50" y="250" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
+                  <rect x="50" y="250" width="200" height="140" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
                   <text x="150" y="230" text-anchor="middle" fill="#334155" font-weight="bold">property_address</text>
                   <line x1="50" y1="280" x2="250" y2="280" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="60" y="270" fill="#64748b" font-size="12">propertyid (PK/FK)</text>
-                  <text x="60" y="300" fill="#64748b" font-size="12">province</text>
-                  <text x="60" y="320" fill="#64748b" font-size="12">kabupatenkota</text>
-                  <text x="60" y="340" fill="#64748b" font-size="12">kecamatan</text>
-                  <text x="60" y="360" fill="#64748b" font-size="12">score</text>
+                  <text x="60" y="270" fill="#64748b" font-size="12">propertyid (PK, FK → property_detil.propertyid)</text>
+                  <text x="60" y="300" fill="#64748b" font-size="12">address_nonstandard</text>
+                  <text x="60" y="320" fill="#64748b" font-size="12">province</text>
+                  <text x="60" y="340" fill="#64748b" font-size="12">kabupatenkota</text>
+                  <text x="60" y="360" fill="#64748b" font-size="12">kecamatan</text>
+                  <text x="60" y="380" fill="#64748b" font-size="12">score</text>
 
                   <!-- ref_address Table -->
-                  <rect x="550" y="250" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
+                  <rect x="550" y="250" width="200" height="140" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
                   <text x="650" y="230" text-anchor="middle" fill="#334155" font-weight="bold">ref_address</text>
                   <line x1="550" y1="280" x2="750" y2="280" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="560" y="270" fill="#64748b" font-size="12">id (PK)</text>
-                  <text x="560" y="300" fill="#64748b" font-size="12">provinsi</text>
-                  <text x="560" y="320" fill="#64748b" font-size="12">kabupatenkota</text>
-                  <text x="560" y="340" fill="#64748b" font-size="12">kecamatan</text>
+                  <text x="560" y="270" fill="#64748b" font-size="12">provinsi</text>
+                  <text x="560" y="300" fill="#64748b" font-size="12">kabupatenkota</text>
+                  <text x="560" y="320" fill="#64748b" font-size="12">kecamatan</text>
+                  <text x="560" y="340" fill="#64748b" font-size="12">desakel</text>
 
                   <!-- Relationships -->
                   <path d="M 250 110 L 400 110 L 400 110 L 550 110" stroke="#94a3b8" stroke-width="2" fill="none"></path>
@@ -264,17 +269,12 @@
                   <path d="M 150 170 L 150 210 L 150 210 L 150 250" stroke="#94a3b8" stroke-width="2" fill="none"></path>
                   <polygon points="145,245 150,250 155,245" fill="#94a3b8"></polygon>
 
-                  <path d="M 250 310 L 400 310 L 400 310 L 550 310" stroke="#94a3b8" stroke-width="2" fill="none"></path>
-                  <polygon points="545,305 550,310 545,315" fill="#94a3b8"></polygon>
+                  <path d="M 250 320 L 400 320 L 400 320 L 550 320" stroke="#94a3b8" stroke-width="2" fill="none"></path>
+                  <polygon points="545,315 550,320 545,325" fill="#94a3b8"></polygon>
                 </svg>
               </div>
               <p class="schema-caption">Database schema showing key tables and their relationships</p>
             </div>
-            <p class="schema-description">
-              The database schema is designed to efficiently store and relate property data. The central Properties table
-              connects to related entities like Owners, Property Details, and Transactions, enabling comprehensive data
-              analysis and reporting.
-            </p>
           </div>
           
           <div class="tab-pane" id="tables">
@@ -300,13 +300,13 @@
                     </tr>
                     <tr>
                       <td>status</td>
-                      <td>VARCHAR(10)</td>
+                      <td>TEXT</td>
                       <td>Listing type (e.g., JUAL)</td>
                     </tr>
                     <tr>
                       <td>available_data</td>
                       <td>INTEGER</td>
-                      <td>Scraping status code for this URL</td>
+                      <td>Scraping status / completeness flag for this URL</td>
                     </tr>
                     <tr>
                       <td>created_at</td>
@@ -332,24 +332,54 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>propertyid</td>
-                      <td>TEXT</td>
-                      <td>Primary key, property identifier on Properti123</td>
-                    </tr>
-                    <tr>
                       <td>url</td>
                       <td>TEXT</td>
-                      <td>Foreign key to property_link.url</td>
+                      <td>Primary key, foreign key to <code>property_link.url</code> (one-to-one per URL)</td>
+                    </tr>
+                    <tr>
+                      <td>propertyid</td>
+                      <td>TEXT</td>
+                      <td>Property identifier on Properti123, foreign key from <code>property_address.propertyid</code></td>
+                    </tr>
+                    <tr>
+                      <td>propertylistingid</td>
+                      <td>INTEGER</td>
+                      <td>Internal listing ID from Properti123</td>
                     </tr>
                     <tr>
                       <td>propertytipe</td>
-                      <td>VARCHAR</td>
+                      <td>TEXT</td>
                       <td>Property type (e.g., RUMAH DIJUAL)</td>
                     </tr>
                     <tr>
+                      <td>title</td>
+                      <td>TEXT</td>
+                      <td>Listing title as shown on Properti123</td>
+                    </tr>
+                    <tr>
+                      <td>currency</td>
+                      <td>TEXT</td>
+                      <td>Currency code for the listing price</td>
+                    </tr>
+                    <tr>
                       <td>price_real</td>
-                      <td>NUMERIC</td>
-                      <td>Parsed numeric price</td>
+                      <td>BIGINT</td>
+                      <td>Parsed numeric price in base currency</td>
+                    </tr>
+                    <tr>
+                      <td>price_short</td>
+                      <td>TEXT</td>
+                      <td>Human-readable price label (e.g., “1,2 M”)</td>
+                    </tr>
+                    <tr>
+                      <td>price_monthly</td>
+                      <td>TEXT</td>
+                      <td>Monthly price (for rental listings), if available</td>
+                    </tr>
+                    <tr>
+                      <td>price_psm</td>
+                      <td>TEXT</td>
+                      <td>Price per square meter, if available</td>
                     </tr>
                     <tr>
                       <td>address</td>
@@ -357,9 +387,139 @@
                       <td>Raw address string from the listing</td>
                     </tr>
                     <tr>
+                      <td>contact_person</td>
+                      <td>TEXT</td>
+                      <td>Contact person name on the listing</td>
+                    </tr>
+                    <tr>
+                      <td>phone_number</td>
+                      <td>TEXT</td>
+                      <td>Contact phone number</td>
+                    </tr>
+                    <tr>
+                      <td>agency</td>
+                      <td>TEXT</td>
+                      <td>Agency or broker name, if present</td>
+                    </tr>
+                    <tr>
+                      <td>kondisi_bangunan</td>
+                      <td>TEXT</td>
+                      <td>Building condition (e.g., “Baru”, “Bekas”)</td>
+                    </tr>
+                    <tr>
+                      <td>luas_bangunan</td>
+                      <td>TEXT</td>
+                      <td>Building area text as scraped</td>
+                    </tr>
+                    <tr>
+                      <td>luas_tanah</td>
+                      <td>TEXT</td>
+                      <td>Land area text as scraped</td>
+                    </tr>
+                    <tr>
+                      <td>jumlah_lantai</td>
+                      <td>TEXT</td>
+                      <td>Number of floors</td>
+                    </tr>
+                    <tr>
+                      <td>floor_loc</td>
+                      <td>TEXT</td>
+                      <td>Floor location (for apartments), if applicable</td>
+                    </tr>
+                    <tr>
+                      <td>certificate</td>
+                      <td>TEXT</td>
+                      <td>Certificate type (e.g., SHM, HGB)</td>
+                    </tr>
+                    <tr>
+                      <td>interior</td>
+                      <td>TEXT</td>
+                      <td>Interior condition (e.g., Furnished, Semi Furnished)</td>
+                    </tr>
+                    <tr>
+                      <td>main_bedroom</td>
+                      <td>TEXT</td>
+                      <td>Main bedroom count</td>
+                    </tr>
+                    <tr>
+                      <td>bathroom</td>
+                      <td>TEXT</td>
+                      <td>Bathroom count</td>
+                    </tr>
+                    <tr>
+                      <td>secondary_bedroom</td>
+                      <td>TEXT</td>
+                      <td>Secondary bedroom count</td>
+                    </tr>
+                    <tr>
+                      <td>saluran_telepon</td>
+                      <td>TEXT</td>
+                      <td>Phone line availability</td>
+                    </tr>
+                    <tr>
+                      <td>listrik</td>
+                      <td>TEXT</td>
+                      <td>Electrical power specification</td>
+                    </tr>
+                    <tr>
+                      <td>air_pam</td>
+                      <td>TEXT</td>
+                      <td>PAM (municipal water) availability</td>
+                    </tr>
+                    <tr>
+                      <td>air_tanah</td>
+                      <td>TEXT</td>
+                      <td>Groundwater / well availability</td>
+                    </tr>
+                    <tr>
+                      <td>jalur_mobil</td>
+                      <td>TEXT</td>
+                      <td>Car access (e.g., 1 mobil / 2 mobil)</td>
+                    </tr>
+                    <tr>
+                      <td>garasi</td>
+                      <td>TEXT</td>
+                      <td>Garage availability / capacity</td>
+                    </tr>
+                    <tr>
+                      <td>carport</td>
+                      <td>TEXT</td>
+                      <td>Carport availability / capacity</td>
+                    </tr>
+                    <tr>
+                      <td>direction</td>
+                      <td>TEXT</td>
+                      <td>Building facing direction</td>
+                    </tr>
+                    <tr>
+                      <td>about</td>
+                      <td>TEXT</td>
+                      <td>Free-text description (“about this property” section)</td>
+                    </tr>
+                    <tr>
+                      <td>domain</td>
+                      <td>TEXT</td>
+                      <td>Source domain (e.g., properti123.com)</td>
+                    </tr>
+                    <tr>
                       <td>page_created_at</td>
+                      <td>TEXT</td>
+                      <td>Listing page created-at text as scraped</td>
+                    </tr>
+                    <tr>
+                      <td>created_at</td>
                       <td>TIMESTAMP</td>
-                      <td>When the listing page was created</td>
+                      <td>When the record was written to the database</td>
+                    </tr>
+                    <tr>
+                      <td>page_date</td>
+                      <td>TIMESTAMP</td>
+                      <td>Normalized page date parsed from the text</td>
+                    </tr>
+                    <tr>
+                      <td>page_date_accuration</td>
+                      <td>TEXT</td>
+                      <td>How accurate the parsed page date is (e.g., “day”, “month”)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -382,7 +542,12 @@
                     <tr>
                       <td>propertyid</td>
                       <td>TEXT</td>
-                      <td>Foreign key to property_detil.propertyid</td>
+                      <td>Primary/unique key, foreign key to <code>property_detil.propertyid</code></td>
+                    </tr>
+                    <tr>
+                      <td>address_nonstandard</td>
+                      <td>TEXT</td>
+                      <td>Original, non-standardized address string</td>
                     </tr>
                     <tr>
                       <td>province</td>
@@ -401,8 +566,56 @@
                     </tr>
                     <tr>
                       <td>score</td>
-                      <td>INTEGER</td>
-                      <td>Average fuzzy matching confidence score</td>
+                      <td>REAL</td>
+                      <td>Fuzzy matching confidence score (0–100)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="db-table">
+                <div class="db-table-header">
+                  <h3>ref_address</h3>
+                  <p>Reference master data for Indonesian administrative areas</p>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Column</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>negara</td>
+                      <td>TEXT</td>
+                      <td>Country (e.g., INDONESIA)</td>
+                    </tr>
+                    <tr>
+                      <td>provinsi</td>
+                      <td>TEXT</td>
+                      <td>Province name</td>
+                    </tr>
+                    <tr>
+                      <td>kabupatenkota</td>
+                      <td>TEXT</td>
+                      <td>City / regency name</td>
+                    </tr>
+                    <tr>
+                      <td>kecamatan</td>
+                      <td>TEXT</td>
+                      <td>District name</td>
+                    </tr>
+                    <tr>
+                      <td>desakel</td>
+                      <td>TEXT</td>
+                      <td>Village / urban village name</td>
+                    </tr>
+                    <tr>
+                      <td>addressdetil</td>
+                      <td>TEXT</td>
+                      <td>Additional address detail or concatenated components</td>
                     </tr>
                   </tbody>
                 </table>
@@ -419,12 +632,12 @@
                     <div class="relationship-header">
                       <div>
                         <h4>property_link to property_detil</h4>
-                        <p>Each discovered URL can have one detailed record once it has been scraped</p>
+                        <p>Each discovered URL can have at most one detailed record once it has been scraped</p>
                       </div>
-                      <div class="relationship-type">One-to-One / One-to-Many</div>
+                      <div class="relationship-type">One-to-One</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>property_detil.url → property_link.url</code>
+                      <code>property_detil.url (PK, FK) → property_link.url (PK)</code>
                     </div>
                   </li>
                   
@@ -432,12 +645,12 @@
                     <div class="relationship-header">
                       <div>
                         <h4>property_detil to property_address</h4>
-                        <p>Each scraped property can have one normalized address row</p>
+                        <p>Each scraped property can have at most one normalized address row</p>
                       </div>
-                      <div class="relationship-type">One-to-Many</div>
+                      <div class="relationship-type">One-to-One</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>property_address.propertyid → property_detil.propertyid</code>
+                      <code>property_address.propertyid (UNIQUE, FK) → property_detil.propertyid</code>
                     </div>
                   </li>
                   
@@ -450,7 +663,7 @@
                       <div class="relationship-type">Many-to-One</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>(province, kabupatenkota, kecamatan) ↔ ref_address rows</code>
+                      <code>(province, kabupatenkota, kecamatan, desakel) ↔ ref_address rows</code>
                     </div>
                   </li>
                   
@@ -458,7 +671,7 @@
                     <div class="relationship-header">
                       <div>
                         <h4>End-to-end flow</h4>
-                        <p>URLs flow from discovery, to detailed scrape, to standardized geography, ready for alerts and analytics</p>
+                        <p>URLs flow from discovery, to detailed scrape, to standardized geography, ready for analytics and alerting</p>
                       </div>
                       <div class="relationship-type">One-to-Many</div>
                     </div>

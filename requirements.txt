@@ -7,3 +7,5 @@ ezdxf==1.4.2
 pyproj==3.7.1
 shapely==2.1.2
 gunicorn==23.0.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1
