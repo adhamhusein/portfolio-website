@@ -233,6 +233,7 @@ def property_detil():
             """
             SELECT *
             FROM public.property_detil
+            LIMIT 5000
             """
         )
 
