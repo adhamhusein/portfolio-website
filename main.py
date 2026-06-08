@@ -233,7 +233,6 @@ def property_detil():
             """
             SELECT *
             FROM public.property_detil
-            LIMIT 5000
             """
         )
 
@@ -280,7 +279,6 @@ def property_address():
             """
             SELECT *
             FROM public.property_address
-            LIMIT 5000
             """
         )
 
