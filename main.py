@@ -261,6 +261,53 @@ def property_detil():
     except Exception as e:
         return jsonify({'error': f'Failed to fetch property_detil: {str(e)}'}), 500
 
+@app.route('/api/property_address', methods=['GET'])
+def property_address():
+    """Return rows from public.property_address as one streamed JSON response."""
+    try:
+        db_password = os.getenv('PROPERTY_DB_PASSWORD')
+        if not db_password:
+            return jsonify({'error': 'Database password is not configured'}), 500
+
+        conn = psycopg2.connect(
+            host='68.168.218.105',
+            database='property',
+            user='postgres',
+            password=db_password
+        )
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute(
+            """
+            SELECT *
+            FROM public.property_address
+            LIMIT 5000
+            """
+        )
+
+        def generate_rows():
+            try:
+                first_item = True
+                yield '['
+                while True:
+                    batch = cur.fetchmany(1000)
+                    if not batch:
+                        break
+
+                    for row in batch:
+                        if not first_item:
+                            yield ','
+                        yield json.dumps(row, default=str)
+                        first_item = False
+                yield ']'
+            finally:
+                cur.close()
+                conn.close()
+
+        return Response(generate_rows(), mimetype='application/json')
+
+    except Exception as e:
+        return jsonify({'error': f'Failed to fetch property_address: {str(e)}'}), 500
+
 @app.route('/download/geojson')
 def download_geojson():
     path = request.args.get('path')
