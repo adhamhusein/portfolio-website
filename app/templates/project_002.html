@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>End-to-End Property Data Solutions</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
   <link rel="stylesheet" href="../static/css/project_002_styles.css">
   <link rel="stylesheet" href="../static/css/navbar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -42,10 +43,10 @@
     <div class="container">
       <div class="hero-content">
         <h1>End-to-End Property Data Solutions</h1>
-        <p>A comprehensive system for collecting, processing, and analyzing property data at scale</p>
+        <p>A production-style Python pipeline for scraping, normalizing, and serving Properti123 listing data</p>
         <div class="hero-buttons">
           <button class="btn btn-primary">Explore Project <i class="fas fa-arrow-right"></i></button>
-          <button class="btn btn-outline">View Documentation</button>
+          <a class="btn btn-outline" href="https://github.com/adhamhusein/property-data-solutions" target="_blank" rel="noopener noreferrer">View Documentation</a>
         </div>
       </div>
     </div>
@@ -71,19 +72,16 @@
       <h2>Project Introduction</h2>
       <div class="content-wrapper">
         <p class="lead-text">
-          This project delivers a complete end-to-end solution for automated property data management, built to transform raw, 
-          scattered listings into clean, structured, and insightful datasets. <strong>Running on a VPS Ubuntu server, the system 
-          automates web scraping, processes and standardizes property information, and stores it in a PostgreSQL database</strong>
-          —making it ready for downstream analytics or direct user notification via the LINE Messaging API. It reflects strong 
-          capabilities in system design, Python scripting, data normalization, and deployment in a production-like environment.
+          This project delivers an end-to-end automation flow for property listing data from Properti123. 
+          Running on an Ubuntu VPS, Python scripts collect listing URLs, scrape detailed property attributes,
+          normalize address fields, and store everything in PostgreSQL tables. The same dataset is then exposed
+          through Flask API endpoints for downstream analysis or visualization.
         </p>
         <p class="lead-text">
-          The solution was engineered to address real-world challenges such as inconsistent data from multiple sources, lack of 
-          standard address formatting, and the need for real-time updates. By combining Python (with BeautifulSoup and TheFuzz), 
-          fuzzy matching, job scheduling with crontab, and messaging automation, the pipeline ensures both accuracy and timely 
-          delivery. This project demonstrates not only my technical proficiency but also my ability to <strong>design scalable 
-          data workflows that deliver business value</strong>—skills directly applicable to data engineering, 
-          automation, and backend-focused roles.
+          The implementation focuses on practical reliability: HTTP retry with exponential backoff, 
+          status flags in property_link.available_data, batch-style processing scripts, fuzzy address matching
+          with TheFuzz, and notification integration via messaging bots. The codebase demonstrates applied backend/data engineering
+          skills using Python, SQL, and Linux scheduling.
         </p>
         <p class="lead-text">
           Below is the schematics graph for reference:
@@ -95,11 +93,11 @@
           <h3>Key Features</h3>
           <ul class="feature-list">
             <li><span class="feature-number">1</span> Automated Web Scraping</li>
-            <li><span class="feature-number">2</span> Robust ETL pipeline for data processing</li>
-            <li><span class="feature-number">3</span> Comprehensive data validation and cleaning</li>
-            <li><span class="feature-number">4</span> Scalable database architecture</li>
-            <li><span class="feature-number">5</span> Advanced analytics and reporting</li>
-            <li><span class="feature-number">6</span> Scheduled data refreshes and updates</li>
+            <li><span class="feature-number">2</span> URL discovery and deduplication into property_link</li>
+            <li><span class="feature-number">3</span> Detailed listing extraction into property_detil</li>
+            <li><span class="feature-number">4</span> Address normalization into property_address</li>
+            <li><span class="feature-number">5</span> Telegram/LINE notification for filtered listings</li>
+            <li><span class="feature-number">6</span> Flask API endpoints for data consumption</li>
           </ul>
         </div>
       </div>
@@ -111,22 +109,22 @@
     <div class="container">
       <h2>Pipeline Stages</h2>
       <p class="lead-text">
-        Our data pipeline consists of several key stages that transform raw property data into actionable
-        insights.
+        The pipeline in this repository follows concrete Python modules and SQL operations from link crawling
+        until API-ready data.
       </p>
       <div class="pipeline-stages">
         <div class="pipeline-stage">
           <div class="stage-number">1</div>
           <div class="stage-content">
             <h3>Data Collection</h3>
-            Automatically retrieve new property listing data from <a href="https://properti123.com">https://properti123.com</a> 
-            using Python scripts scheduled with <code>crontab</code>.
+            Retrieve listing URLs from <a href="https://properti123.com">https://properti123.com</a> 
+            using PropertyLinkUpdater.py.
             <div class="stage-details">
               <ul>
-                <li><i class="fas fa-arrow-right"></i> Built a python web scraper to crawl property URLs</li>
-                <li><i class="fas fa-arrow-right"></i> Retrieve all detailed data (price, address, etc) from each link and store into table                </li>
-                <li><i class="fas fa-arrow-right"></i> Persisted new entries into a PostgreSQL table</li>
-                <li><i class="fas fa-arrow-right"></i> Scheduled automated tasks via crontab to ensure fresh data ingestion daily</li>
+                <li><i class="fas fa-arrow-right"></i> Requests + BeautifulSoup crawl paginated listing pages</li>
+                <li><i class="fas fa-arrow-right"></i> Duplicate check against public.property_link</li>
+                <li><i class="fas fa-arrow-right"></i> Insert new links with default available_data=0</li>
+                <li><i class="fas fa-arrow-right"></i> Stop early when one page is already fully known</li>
               </ul>
             </div>
           </div>
@@ -136,13 +134,13 @@
           <div class="stage-number">2</div>
           <div class="stage-content">
             <h3>Data Validation & Cleaning</h3>
-            <p>Ensuring data quality through validation checks, deduplication, and standardization processes.</p>
+            <p>Use status codes and parsing fallbacks to keep failed records traceable and retryable.</p>
             <div class="stage-details">
               <ul>
-                <li><i class="fas fa-arrow-right"></i> Address normalization</li>
-                <li><i class="fas fa-arrow-right"></i> Property attribute validation</li>
-                <li><i class="fas fa-arrow-right"></i> Duplicate detection and resolution</li>
-                <li><i class="fas fa-arrow-right"></i> Date convertion</li>
+                <li><i class="fas fa-arrow-right"></i> URL-level status tracking in property_link.available_data</li>
+                <li><i class="fas fa-arrow-right"></i> Retry with backoff for transient request failures</li>
+                <li><i class="fas fa-arrow-right"></i> Missing-field fallback to Not Found!</li>
+                <li><i class="fas fa-arrow-right"></i> Stored procedure call to normalize page date fields</li>
               </ul>
             </div>
           </div>
@@ -152,13 +150,13 @@
           <div class="stage-number">3</div>
           <div class="stage-content">
             <h3>Data Transformation</h3>
-            <p>Converting raw data into standardized formats and enriching with additional information.</p>
+            <p>Convert raw listing attributes and non-standard addresses into structured records.</p>
             <div class="stage-details">
               <ul>
-                <li><i class="fas fa-arrow-right"></i> Property classification</li>
-                <li><i class="fas fa-arrow-right"></i> Geocoding and spatial analysis</li>
-                <li><i class="fas fa-arrow-right"></i> Historical trend calculation</li>
-                <li><i class="fas fa-arrow-right"></i> Feature engineering for analytics</li>
+                <li><i class="fas fa-arrow-right"></i> Extract property metadata from page JSON/script blocks</li>
+                <li><i class="fas fa-arrow-right"></i> Parse price fields and listing attributes</li>
+                <li><i class="fas fa-arrow-right"></i> Fuzzy match province/kabupaten/kecamatan from ref_address</li>
+                <li><i class="fas fa-arrow-right"></i> Save matching confidence score to property_address.score</li>
               </ul>
             </div>
           </div>
@@ -168,13 +166,13 @@
           <div class="stage-number">4</div>
           <div class="stage-content">
             <h3>Data Storage</h3>
-            <p>Storing processed data in optimized database structures for efficient retrieval and analysis.</p>
+            <p>Persist each pipeline stage in dedicated PostgreSQL tables for traceability.</p>
             <div class="stage-details">
               <ul>
-                <li><i class="fas fa-arrow-right"></i> Relational database for structured data</li>
-                <li><i class="fas fa-arrow-right"></i> Document store for unstructured content</li>
-                <li><i class="fas fa-arrow-right"></i> Time-series data for historical analysis</li>
-                <li><i class="fas fa-arrow-right"></i> Spatial indexing for location queries</li>
+                <li><i class="fas fa-arrow-right"></i> property_link for discovered URLs and processing status</li>
+                <li><i class="fas fa-arrow-right"></i> property_detil for detailed listing attributes</li>
+                <li><i class="fas fa-arrow-right"></i> property_address for normalized location fields</li>
+                <li><i class="fas fa-arrow-right"></i> ref_address as reference dictionary for matching</li>
               </ul>
             </div>
           </div>
@@ -184,13 +182,13 @@
           <div class="stage-number">5</div>
           <div class="stage-content">
             <h3>Analytics & Reporting</h3>
-            <p>Generating insights and visualizations from the processed property data.</p>
+            <p>Serve filtered property outputs to notification channels and API consumers.</p>
             <div class="stage-details">
               <ul>
-                <li><i class="fas fa-arrow-right"></i> Market trend analysis</li>
-                <li><i class="fas fa-arrow-right"></i> Property valuation models</li>
-                <li><i class="fas fa-arrow-right"></i> Investment opportunity scoring</li>
-                <li><i class="fas fa-arrow-right"></i> Customizable dashboards and reports</li>
+                <li><i class="fas fa-arrow-right"></i> Filter listings by location/type/price criteria</li>
+                <li><i class="fas fa-arrow-right"></i> Send summary notifications to Telegram/LINE</li>
+                <li><i class="fas fa-arrow-right"></i> Expose API endpoints from Flask for 5,000-row snapshots</li>
+                <li><i class="fas fa-arrow-right"></i> Support downstream chart/report generation</li>
               </ul>
             </div>
           </div>
@@ -204,9 +202,9 @@
     <div class="container">
       <h2>Database Structure</h2>
       <p class="lead-text">
-        The schema mirrors the production PostgreSQL database: <code>property_link</code> stores every discovered URL,
-        <code>property_detil</code> stores the full scraped listing keyed by URL, <code>property_address</code> stores
-        normalized geography keyed by <code>propertyid</code>, and <code>ref_address</code> provides the master list of
+        The schema mirrors the production PostgreSQL database: property_link stores every discovered URL,
+        property_detil stores the full scraped listing keyed by URL, property_address stores
+        normalized geography keyed by propertyid, and ref_address provides the master list of
         Indonesian admin areas used for fuzzy matching.
       </p>
       
@@ -235,18 +233,17 @@
                   <rect x="550" y="50" width="200" height="120" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
                   <text x="650" y="30" text-anchor="middle" fill="#334155" font-weight="bold">property_detil</text>
                   <line x1="550" y1="80" x2="750" y2="80" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="560" y="70" fill="#64748b" font-size="12">url (PK, FK → property_link.url)</text>
-                  <text x="560" y="100" fill="#64748b" font-size="12">propertyid (FK → property_address.propertyid)</text>
+                  <text x="560" y="70" fill="#64748b" font-size="12">url (PK, FK  property_link.url)</text>
+                  <text x="560" y="100" fill="#64748b" font-size="12">propertyid (FK propertyid)</text>
                   <text x="560" y="120" fill="#64748b" font-size="12">price_real</text>
                   <text x="560" y="140" fill="#64748b" font-size="12">address</text>
-                  <text x="560" y="160" fill="#64748b" font-size="12">title, currency</text>
-                  <text x="560" y="180" fill="#64748b" font-size="12">contact_person, phone_number, …</text>
+                  <text x="560" y="160" fill="#64748b" font-size="12">title, currency, contact_person, ...</text>
 
                   <!-- property_address Table -->
                   <rect x="50" y="250" width="200" height="140" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"></rect>
                   <text x="150" y="230" text-anchor="middle" fill="#334155" font-weight="bold">property_address</text>
                   <line x1="50" y1="280" x2="250" y2="280" stroke="#94a3b8" stroke-width="2"></line>
-                  <text x="60" y="270" fill="#64748b" font-size="12">propertyid (PK, FK → property_detil.propertyid)</text>
+                  <text x="60" y="270" fill="#64748b" font-size="12">propertyid (PK, FK propertyid)</text>
                   <text x="60" y="300" fill="#64748b" font-size="12">address_nonstandard</text>
                   <text x="60" y="320" fill="#64748b" font-size="12">province</text>
                   <text x="60" y="340" fill="#64748b" font-size="12">kabupatenkota</text>
@@ -334,12 +331,12 @@
                     <tr>
                       <td>url</td>
                       <td>TEXT</td>
-                      <td>Primary key, foreign key to <code>property_link.url</code> (one-to-one per URL)</td>
+                      <td>Primary key, foreign key to property_link.url (one-to-one per URL)</td>
                     </tr>
                     <tr>
                       <td>propertyid</td>
                       <td>TEXT</td>
-                      <td>Property identifier on Properti123, foreign key from <code>property_address.propertyid</code></td>
+                      <td>Property identifier on Properti123, foreign key from property_address.propertyid</td>
                     </tr>
                     <tr>
                       <td>propertylistingid</td>
@@ -369,7 +366,7 @@
                     <tr>
                       <td>price_short</td>
                       <td>TEXT</td>
-                      <td>Human-readable price label (e.g., “1,2 M”)</td>
+                      <td>Human-readable price label (e.g., "1,2 M")</td>
                     </tr>
                     <tr>
                       <td>price_monthly</td>
@@ -404,7 +401,7 @@
                     <tr>
                       <td>kondisi_bangunan</td>
                       <td>TEXT</td>
-                      <td>Building condition (e.g., “Baru”, “Bekas”)</td>
+                      <td>Building condition (e.g., "Baru", "Bekas")</td>
                     </tr>
                     <tr>
                       <td>luas_bangunan</td>
@@ -494,7 +491,7 @@
                     <tr>
                       <td>about</td>
                       <td>TEXT</td>
-                      <td>Free-text description (“about this property” section)</td>
+                      <td>Free-text description ("about this property" section)</td>
                     </tr>
                     <tr>
                       <td>domain</td>
@@ -519,7 +516,7 @@
                     <tr>
                       <td>page_date_accuration</td>
                       <td>TEXT</td>
-                      <td>How accurate the parsed page date is (e.g., “day”, “month”)</td>
+                      <td>How accurate the parsed page date is (e.g., "day", "month")</td>
                     </tr>
                   </tbody>
                 </table>
@@ -542,7 +539,7 @@
                     <tr>
                       <td>propertyid</td>
                       <td>TEXT</td>
-                      <td>Primary/unique key, foreign key to <code>property_detil.propertyid</code></td>
+                      <td>Primary/unique key, foreign key to property_detil.propertyid</td>
                     </tr>
                     <tr>
                       <td>address_nonstandard</td>
@@ -567,7 +564,7 @@
                     <tr>
                       <td>score</td>
                       <td>REAL</td>
-                      <td>Fuzzy matching confidence score (0–100)</td>
+                      <td>Fuzzy matching confidence score (0-100)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -637,7 +634,7 @@
                       <div class="relationship-type">One-to-One</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>property_detil.url (PK, FK) → property_link.url (PK)</code>
+                      property_detil.url (PK, FK) property_link.url (PK)
                     </div>
                   </li>
                   
@@ -650,7 +647,7 @@
                       <div class="relationship-type">One-to-One</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>property_address.propertyid (UNIQUE, FK) → property_detil.propertyid</code>
+                      property_address.propertyid (UNIQUE, FK) property_detil.propertyid
                     </div>
                   </li>
                   
@@ -663,7 +660,7 @@
                       <div class="relationship-type">Many-to-One</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>(province, kabupatenkota, kecamatan, desakel) ↔ ref_address rows</code>
+                      (province, kabupatenkota, kecamatan, desakel) ref_address rows
                     </div>
                   </li>
                   
@@ -676,7 +673,7 @@
                       <div class="relationship-type">One-to-Many</div>
                     </div>
                     <div class="relationship-constraint">
-                      <code>property_link → property_detil → property_address → ref_address</code>
+                      property_link  property_detil  property_address  ref_address
                     </div>
                   </li>
                 </ul>
@@ -684,13 +681,13 @@
               
               <div class="integrity-box">
                 <h3>Database Integrity</h3>
-                <p>The database implements several integrity constraints to ensure data quality and consistency:</p>
+                <p>Operational consistency in this project is maintained through SQL rules and processing-state updates:</p>
                 <ul class="integrity-list">
-                  <li><span class="integrity-number">1</span> Foreign key constraints with cascading updates and deletes where appropriate</li>
-                  <li><span class="integrity-number">2</span> Check constraints for data validation (e.g., price > 0)</li>
-                  <li><span class="integrity-number">3</span> Unique constraints on natural keys like property addresses</li>
-                  <li><span class="integrity-number">4</span> Not-null constraints on required fields</li>
-                  <li><span class="integrity-number">5</span> Triggers for maintaining data consistency across related tables</li>
+                  <li><span class="integrity-number">1</span> URL deduplication with conflict-safe insert on property_link.url</li>
+                  <li><span class="integrity-number">2</span> Per-URL processing status in available_data for retry and backfill control</li>
+                  <li><span class="integrity-number">3</span> Address insert protection with conflict handling on property_address.propertyid</li>
+                  <li><span class="integrity-number">4</span> Controlled extraction fallback for missing page fields</li>
+                  <li><span class="integrity-number">5</span> Stored procedure call for page-date normalization after detail inserts</li>
                 </ul>
               </div>
             </div>
@@ -705,7 +702,7 @@
     <div class="container">
       <h2>Technology Stack</h2>
       <p class="lead-text">
-        Our solution leverages modern technologies to ensure reliability, performance, and maintainability.
+        This section reflects the tools and libraries currently used in the implementation.
       </p>
       
       <div class="tech-tabs">
@@ -735,19 +732,19 @@
             <div class="tech-cards">
               <div class="tech-card">
                 <h3>PostgreSQL</h3>
-                <p>Primary relational database with PostGIS extension for spatial data</p>
+                <p>Primary relational database for links, details, normalized addresses, and reference data</p>
               </div>
               <div class="tech-card">
-                <h3>Redis</h3>
-                <p>In-memory data store for caching and real-time data processing</p>
+                <h3>property_link</h3>
+                <p>Queue-like table that tracks discovered URLs and processing status codes</p>
               </div>
               <div class="tech-card">
-                <h3>Elasticsearch</h3>
-                <p>Full-text search and analytics engine for property data</p>
+                <h3>property_detil</h3>
+                <p>Main table storing detailed listing attributes from scraper output</p>
               </div>
               <div class="tech-card">
-                <h3>TimescaleDB</h3>
-                <p>Time-series database extension for historical data analysis</p>
+                <h3>property_address + ref_address</h3>
+                <p>Normalized address output and master reference for fuzzy matching</p>
               </div>
             </div>
           </div>
@@ -756,19 +753,19 @@
             <div class="tech-cards">
               <div class="tech-card">
                 <h3>Python</h3>
-                <p>Primary language for data processing and ETL pipelines</p>
+                <p>Core language for scraping, transformation, matching, and orchestration scripts</p>
               </div>
               <div class="tech-card">
-                <h3>FastAPI</h3>
-                <p>Modern, high-performance web framework for APIs</p>
+                <h3>Flask</h3>
+                <p>Project web integration layer in this repository; scraper core itself is script-driven</p>
               </div>
               <div class="tech-card">
-                <h3>Celery</h3>
-                <p>Distributed task queue for background processing</p>
+                <h3>requests + BeautifulSoup</h3>
+                <p>HTTP retrieval and HTML parsing for Properti123 listing pages</p>
               </div>
               <div class="tech-card">
-                <h3>SQLAlchemy</h3>
-                <p>SQL toolkit and ORM for database interactions</p>
+                <h3>psycopg2</h3>
+                <p>Direct SQL execution for inserts, updates, fetches, and stored procedure calls</p>
               </div>
             </div>
           </div>
@@ -777,19 +774,19 @@
             <div class="tech-cards">
               <div class="tech-card">
                 <h3>HTML/CSS/JavaScript</h3>
-                <p>Core web technologies for building user interfaces</p>
+                <p>Template-driven portfolio pages and static interaction components</p>
               </div>
               <div class="tech-card">
-                <h3>D3.js</h3>
-                <p>JavaScript library for data visualization</p>
+                <h3>Jinja Templates</h3>
+                <p>Server-rendered pages integrated into the Flask application</p>
               </div>
               <div class="tech-card">
-                <h3>Chart.js</h3>
-                <p>Simple yet flexible JavaScript charting library</p>
+                <h3>Font Awesome</h3>
+                <p>Icon set used for visual communication in sections and cards</p>
               </div>
               <div class="tech-card">
-                <h3>Leaflet</h3>
-                <p>Open-source JavaScript library for interactive maps</p>
+                <h3>Custom CSS + JS</h3>
+                <p>Project-specific layout, tabs, and accordion behavior</p>
               </div>
             </div>
           </div>
@@ -797,20 +794,20 @@
           <div class="tech-tab-pane" id="infra-tab">
             <div class="tech-cards">
               <div class="tech-card">
-                <h3>Docker</h3>
-                <p>Containerization platform for consistent environments</p>
+                <h3>Ubuntu VPS</h3>
+                <p>Runtime host for scheduled scraper scripts and Flask API service</p>
               </div>
               <div class="tech-card">
-                <h3>Kubernetes</h3>
-                <p>Container orchestration for scaling and management</p>
+                <h3>crontab</h3>
+                <p>Scheduler for recurring ingestion and update jobs</p>
               </div>
               <div class="tech-card">
-                <h3>AWS</h3>
-                <p>Cloud infrastructure provider (EC2, S3, RDS, Lambda)</p>
+                <h3>Public Domain Hosting</h3>
+                <p>Deployed web/API access through husein-workpace.my.id</p>
               </div>
               <div class="tech-card">
-                <h3>Terraform</h3>
-                <p>Infrastructure as code for automated provisioning</p>
+                <h3>Repository Variants</h3>
+                <p>Parallel script versions in main, github, and project reincarnation folders</p>
               </div>
             </div>
           </div>
@@ -818,20 +815,20 @@
           <div class="tech-tab-pane" id="analytics-tab">
             <div class="tech-cards">
               <div class="tech-card">
-                <h3>Apache Spark</h3>
-                <p>Distributed computing system for big data processing</p>
+                <h3>TheFuzz</h3>
+                <p>Fuzzy matching for province, kabupaten/kota, and kecamatan normalization</p>
               </div>
               <div class="tech-card">
-                <h3>Pandas</h3>
-                <p>Data analysis and manipulation library</p>
+                <h3>SQL Joins and Filters</h3>
+                <p>Selection logic for alerts based on price, property type, and target locations</p>
               </div>
               <div class="tech-card">
-                <h3>Jupyter Notebooks</h3>
-                <p>Interactive computing environment for data exploration</p>
+                <h3>Python Data Parsing</h3>
+                <p>JSON/script block extraction and field transformation from listing pages</p>
               </div>
               <div class="tech-card">
-                <h3>Grafana</h3>
-                <p>Analytics and monitoring platform for visualizing metrics</p>
+                <h3>Message-ready Summaries</h3>
+                <p>Formatted text payloads for notification channels from filtered query results</p>
               </div>
             </div>
           </div>
@@ -839,20 +836,20 @@
           <div class="tech-tab-pane" id="devops-tab">
             <div class="tech-cards">
               <div class="tech-card">
-                <h3>GitHub Actions</h3>
-                <p>CI/CD pipeline automation</p>
+                <h3>Retry + Backoff</h3>
+                <p>Network resilience for scraper requests to reduce transient failures</p>
               </div>
               <div class="tech-card">
-                <h3>Prometheus</h3>
-                <p>Monitoring and alerting toolkit</p>
+                <h3>Status Codes</h3>
+                <p>Track success/failure states in available_data for reprocessing</p>
               </div>
               <div class="tech-card">
-                <h3>Sentry</h3>
-                <p>Error tracking and performance monitoring</p>
+                <h3>Batch Backfill Scripts</h3>
+                <p>run_scraper variants support partial offset processing and recovery</p>
               </div>
               <div class="tech-card">
-                <h3>ArgoCD</h3>
-                <p>GitOps continuous delivery for Kubernetes</p>
+                <h3>Messaging Alerts</h3>
+                <p>Automated outbound notifications to Telegram/LINE channels</p>
               </div>
             </div>
           </div>
@@ -866,7 +863,7 @@
     <div class="container">
       <h2>Challenges & Solutions</h2>
       <p class="lead-text">
-        Throughout the development of this project, we encountered and overcame several significant challenges.
+        The implementation prioritizes practical scraper reliability, database consistency, and repeatable processing.
       </p>
       
       <div class="alert">
@@ -896,15 +893,15 @@
             <div class="challenge-solution">
               <div class="challenge-section">
                 <h4>Challenge:</h4>
-                <p>Property data from different sources often had inconsistent formats, missing values, and conflicting information.</p>
+                  <p>Listing pages are not perfectly uniform, and some attributes are absent or incomplete.</p>
               </div>
               <div class="solution-section">
                 <h4>Solution:</h4>
-                <p>Implemented a robust data validation pipeline with custom rules for each data source. Created a scoring system to identify and prioritize data quality issues. Developed automated data cleansing processes and manual review workflows for edge cases.</p>
+                <p>Implemented defensive extraction with field-level fallback values and URL status updates to mark parse failures for later retry.</p>
               </div>
               <div class="impact-section">
                 <h4>Impact:</h4>
-                <p>Improved data accuracy from 78% to 97%, significantly enhancing the reliability of downstream analytics.</p>
+                <p>Pipeline remains stable even when some listings are malformed, without halting full batch execution.</p>
               </div>
             </div>
           </div>
@@ -927,15 +924,15 @@
             <div class="challenge-solution">
               <div class="challenge-section">
                 <h4>Challenge:</h4>
-                <p>The system needed to process millions of property records daily while maintaining performance and cost-efficiency.</p>
+                <p>Large URL volumes can make one-pass scraping slow and difficult to recover after interruption.</p>
               </div>
               <div class="solution-section">
                 <h4>Solution:</h4>
-                <p>Redesigned the architecture to use distributed processing with Apache Spark. Implemented incremental processing to only handle changed data. Optimized database queries and added appropriate indexes. Used caching strategically for frequently accessed data.</p>
+                <p>Added batch scripts with LIMIT/OFFSET processing and bulk insert/update patterns to process data in controlled chunks.</p>
               </div>
               <div class="impact-section">
                 <h4>Impact:</h4>
-                <p>Reduced processing time by 85% while handling 3x the original data volume.</p>
+                <p>Backfill and rerun operations are easier to resume and monitor from intermediate offsets.</p>
               </div>
             </div>
           </div>
@@ -958,15 +955,15 @@
             <div class="challenge-solution">
               <div class="challenge-section">
                 <h4>Challenge:</h4>
-                <p>Certain use cases required near real-time data updates, which conflicted with our batch processing approach.</p>
+                <p>Frequent network instability can cause intermittent scraping failures during long-running jobs.</p>
               </div>
               <div class="solution-section">
                 <h4>Solution:</h4>
-                <p>Implemented a hybrid architecture with a primary batch processing pipeline for comprehensive updates and a separate streaming pipeline for critical real-time updates. Used Kafka for event streaming and Redis for real-time data access.</p>
+                <p>Implemented request retry with exponential backoff and periodic cooldown intervals after each processing block.</p>
               </div>
               <div class="impact-section">
                 <h4>Impact:</h4>
-                <p>Achieved sub-minute data freshness for critical data points while maintaining efficient batch processing for the majority of data.</p>
+                <p>Improved resilience against transient failures without adding distributed infrastructure complexity.</p>
               </div>
             </div>
           </div>
@@ -989,15 +986,15 @@
             <div class="challenge-solution">
               <div class="challenge-section">
                 <h4>Challenge:</h4>
-                <p>Property data often contains sensitive information subject to various regulations and privacy concerns.</p>
+                <p>Address text from listings is non-standard and difficult to aggregate for location-based analysis.</p>
               </div>
               <div class="solution-section">
                 <h4>Solution:</h4>
-                <p>Implemented comprehensive data governance policies. Created data anonymization and masking processes for sensitive fields. Developed role-based access controls and audit logging for all data access. Established data retention and purging policies compliant with regulations.</p>
+                <p>Built a fuzzy matching step against ref_address to produce standardized province, kabupaten/kota, and kecamatan values.</p>
               </div>
               <div class="impact-section">
                 <h4>Impact:</h4>
-                <p>Achieved full compliance with relevant regulations while still providing valuable insights from the data.</p>
+                <p>Location-level grouping and filtering becomes consistent and usable for downstream queries.</p>
               </div>
             </div>
           </div>
@@ -1020,15 +1017,15 @@
             <div class="challenge-solution">
               <div class="challenge-section">
                 <h4>Challenge:</h4>
-                <p>Needed to integrate with several legacy systems that lacked modern APIs or documentation.</p>
+                <p>Scraped data needs to reach end users quickly with practical filtering rules.</p>
               </div>
               <div class="solution-section">
                 <h4>Solution:</h4>
-                <p>Developed custom adapters for each legacy system. Created a robust error handling and retry mechanism for unreliable connections. Implemented data reconciliation processes to verify data consistency across systems.</p>
+                <p>Added notification modules that select candidate listings from SQL and push summaries to Telegram/LINE.</p>
               </div>
               <div class="impact-section">
                 <h4>Impact:</h4>
-                <p>Successfully integrated with all required systems while isolating the core platform from legacy system limitations.</p>
+                <p>Users receive curated listing updates without manually querying the database.</p>
               </div>
             </div>
           </div>
@@ -1051,15 +1048,15 @@
             <div class="challenge-solution">
               <div class="challenge-section">
                 <h4>Challenge:</h4>
-                <p>Users needed to perform complex spatial and temporal analyses that were difficult to express in traditional query languages.</p>
+                <p>Downstream tools require stable access to processed records, not raw scraper internals.</p>
               </div>
               <div class="solution-section">
                 <h4>Solution:</h4>
-                <p>Developed a domain-specific query language for property analytics. Created pre-computed aggregates and materialized views for common analysis patterns. Implemented a custom query optimizer for spatial and temporal queries.</p>
+                <p>Exposed Flask API endpoints for property detail and address datasets with controlled query limits.</p>
               </div>
               <div class="impact-section">
                 <h4>Impact:</h4>
-                <p>Enabled users to perform complex analyses that were previously impossible, reducing time-to-insight from days to minutes.</p>
+                <p>Front-end and external consumers can retrieve ready-to-use JSON from a single service layer.</p>
               </div>
             </div>
           </div>
@@ -1073,8 +1070,7 @@
     <div class="container">
       <h2>Automation and Scheduling</h2>
       <p class="lead-text">
-        Our system includes robust automation features to ensure data is always up-to-date and processes run
-        smoothly without manual intervention.
+        Automation is organized around script-based jobs that can be scheduled with crontab on the VPS.
       </p>
       
       <div class="automation-tabs">
@@ -1098,69 +1094,69 @@
             <div class="automation-cards">
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>Public Records Sync</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 2:00 AM</div>
+                  <h3>Link Discovery Job</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Scheduled via crontab</div>
                 </div>
-                <p>Synchronizes with county and municipal property records databases</p>
+                <p>Runs PropertyLinkUpdater.fetch_new_links() to crawl listing pages and insert unseen URLs.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>JOB OUTPUT</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>45 minutes</span>
+                    <span>Source</span>
+                    <span>properti123.com/properti-jual</span>
                   </div>
                   <div class="metric-item">
-                    <span>Records Processed</span>
-                    <span>~50,000 per run</span>
+                    <span>Insert Target</span>
+                    <span>public.property_link</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>99.2%</span>
+                    <span>Status Flag</span>
+                    <span>available_data = 0</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>MLS Listings Update</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Every 4 hours</div>
+                  <h3>HTTP Resilience</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Applied each request</div>
                 </div>
-                <p>Retrieves new and updated property listings from Multiple Listing Services</p>
+                <p>All fetches use retry and exponential backoff before marking retrieval failure.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>REQUEST BEHAVIOR</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>12 minutes</span>
+                    <span>Retries</span>
+                    <span>3 attempts</span>
                   </div>
                   <div class="metric-item">
-                    <span>Records Processed</span>
-                    <span>~5,000 per run</span>
+                    <span>Backoff</span>
+                    <span>0.5 * 2^attempt</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>99.8%</span>
+                    <span>Timeout</span>
+                    <span>15 seconds</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>Market Data Collection</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Weekly on Sundays</div>
+                  <h3>Incremental Stop Logic</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> During link crawl</div>
                 </div>
-                <p>Gathers market trends, comparable sales, and neighborhood statistics</p>
+                <p>Crawler stops when a page is fully known, reducing unnecessary requests.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>CONTROL LOGIC</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>2 hours</span>
+                    <span>Page Strategy</span>
+                    <span>Ascending page loop</span>
                   </div>
                   <div class="metric-item">
-                    <span>Records Processed</span>
-                    <span>~100,000 per run</span>
+                    <span>Duplicate Check</span>
+                    <span>IN query against existing URLs</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>98.5%</span>
+                    <span>Early Exit</span>
+                    <span>Break when all links already exist</span>
                   </div>
                 </div>
               </div>
@@ -1171,69 +1167,69 @@
             <div class="automation-cards">
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>ETL Pipeline</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 4:00 AM</div>
+                  <h3>Detail Scraping Job</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Scheduled via crontab</div>
                 </div>
-                <p>Transforms raw property data into standardized formats and loads into the database</p>
+                <p>Runs PropertyDetilUpdater.update_property_details() to scrape and insert full listing attributes.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>JOB OUTPUT</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>1.5 hours</span>
+                    <span>Insert Target</span>
+                    <span>public.property_detil</span>
                   </div>
                   <div class="metric-item">
-                    <span>Records Processed</span>
-                    <span>~75,000 per run</span>
+                    <span>Status Update</span>
+                    <span>available_data = 1 (success)</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>99.5%</span>
+                    <span>Date Normalization</span>
+                    <span>CALL public.ad_update_pagedate()</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>Data Enrichment</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 6:00 AM</div>
+                  <h3>Address Matching Job</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Scheduled via crontab</div>
                 </div>
-                <p>Enhances property records with additional data points and calculated fields</p>
+                <p>Runs AddressMatching.py to normalize non-standard addresses using fuzzy matching.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>MATCHING OUTPUT</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>50 minutes</span>
+                    <span>Source</span>
+                    <span>property_detil.address</span>
                   </div>
                   <div class="metric-item">
-                    <span>Records Processed</span>
-                    <span>~60,000 per run</span>
+                    <span>Reference</span>
+                    <span>public.ref_address</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>99.1%</span>
+                    <span>Output</span>
+                    <span>public.property_address + score</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>Analytics Pre-computation</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Daily at 8:00 AM</div>
+                  <h3>Orchestrated Pipeline Run</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Triggered script flow</div>
                 </div>
-                <p>Generates pre-computed aggregates and statistics for faster query performance</p>
+                <p>PropertyCompiler.py chains link update, detail scrape, notification, and address processing.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>EXECUTION FLOW</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>1 hour</span>
+                    <span>Step 1</span>
+                    <span>fetch_new_links(5)</span>
                   </div>
                   <div class="metric-item">
-                    <span>Records Processed</span>
-                    <span>Full database</span>
+                    <span>Step 2</span>
+                    <span>update_property_details(new_links)</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>99.7%</span>
+                    <span>Step 3+</span>
+                    <span>notification_message + address run</span>
                   </div>
                 </div>
               </div>
@@ -1244,69 +1240,69 @@
             <div class="automation-cards">
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>Database Optimization</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Weekly on Saturdays</div>
+                  <h3>Backfill Script Variants</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Manual or scheduled</div>
                 </div>
-                <p>Performs index rebuilding, vacuum, and other database maintenance tasks</p>
+                <p>run_scraper scripts provide offset-based recovery and batch-size tuning for failed ranges.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>MAINTENANCE CONTROLS</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>3 hours</span>
+                    <span>Batch Insert</span>
+                    <span>execute_values for property_detil</span>
                   </div>
                   <div class="metric-item">
-                    <span>Impact</span>
-                    <span>Query performance improved by ~25%</span>
+                    <span>Batch Status Update</span>
+                    <span>executemany to property_link</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>100%</span>
+                    <span>Offset Control</span>
+                    <span>Resume from selected range</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>Data Quality Audit</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Weekly on Mondays</div>
+                  <h3>Status-Based Retry Queue</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> Continuous process pattern</div>
                 </div>
-                <p>Runs comprehensive data quality checks and generates reports on issues</p>
+                <p>Failed or partial records can be selected by status and retried in dedicated runs.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>QUEUE PATTERN</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>1.5 hours</span>
+                    <span>Source Field</span>
+                    <span>property_link.available_data</span>
                   </div>
                   <div class="metric-item">
-                    <span>Issues Detected</span>
-                    <span>~200 per run</span>
+                    <span>Retry Targets</span>
+                    <span>status 0, 7, or custom set</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>100%</span>
+                    <span>Loop Behavior</span>
+                    <span>Process until no rows remain</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>System Health Check</h3>
-                  <div class="schedule"><i class="fas fa-clock"></i> Every 15 minutes</div>
+                  <h3>Connection Recovery</h3>
+                  <div class="schedule"><i class="fas fa-clock"></i> On psycopg2 error</div>
                 </div>
-                <p>Monitors system performance, resource usage, and service availability</p>
+                <p>Address processor catches DB errors, waits, reconnects, and resumes processing.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>RECOVERY BEHAVIOR</h4>
                   <div class="metric-item">
-                    <span>Avg Runtime</span>
-                    <span>30 seconds</span>
+                    <span>Error Type</span>
+                    <span>psycopg2 database exceptions</span>
                   </div>
                   <div class="metric-item">
-                    <span>Checks Performed</span>
-                    <span>50+</span>
+                    <span>Cooldown</span>
+                    <span>60-second wait before reconnect</span>
                   </div>
                   <div class="metric-item">
-                    <span>Success Rate</span>
-                    <span>99.99%</span>
+                    <span>Action</span>
+                    <span>Reconnect and continue loop</span>
                   </div>
                 </div>
               </div>
@@ -1320,66 +1316,66 @@
                   <h3>Pipeline Failure Alerts</h3>
                   <div class="schedule"><i class="fas fa-exclamation-circle"></i> On job failure</div>
                 </div>
-                <p>Sends notifications when data pipelines fail or exceed time thresholds</p>
+                <p>Script logs and status updates identify failed URLs and failed parsing batches.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>ALERT SIGNALS</h4>
                   <div class="metric-item">
-                    <span>Alert Channels</span>
-                    <span>Email, Slack, SMS</span>
+                    <span>Failure Marker</span>
+                    <span>available_data status transition</span>
                   </div>
                   <div class="metric-item">
-                    <span>Avg Response Time</span>
-                    <span>< 15 minutes</span>
+                    <span>Console Trace</span>
+                    <span>Per-URL processing logs</span>
                   </div>
                   <div class="metric-item">
-                    <span>False Positive Rate</span>
-                    <span>< 0.5%</span>
+                    <span>Recovery Path</span>
+                    <span>Retry with backfill scripts</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>Data Quality Alerts</h3>
-                  <div class="schedule"><i class="fas fa-exclamation-circle"></i> On quality threshold breach</div>
+                  <h3>Property Push Notification</h3>
+                  <div class="schedule"><i class="fas fa-exclamation-circle"></i> After detail update</div>
                 </div>
-                <p>Alerts when data quality metrics fall below defined thresholds</p>
+                <p>Send filtered listing summaries to Telegram/LINE based on SQL criteria.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>MESSAGE FILTERS</h4>
                   <div class="metric-item">
-                    <span>Alert Channels</span>
-                    <span>Email, Slack</span>
+                    <span>Price Rule</span>
+                    <span>price_real &lt; 700000000</span>
                   </div>
                   <div class="metric-item">
-                    <span>Avg Response Time</span>
-                    <span>< 1 hour</span>
+                    <span>Type Rule</span>
+                    <span>selected sale categories</span>
                   </div>
                   <div class="metric-item">
-                    <span>False Positive Rate</span>
-                    <span>< 1%</span>
+                    <span>Location Rule</span>
+                    <span>Jakarta/Bogor/Depok/Tangerang/Bekasi keywords</span>
                   </div>
                 </div>
               </div>
               
               <div class="automation-card">
                 <div class="automation-card-header">
-                  <h3>System Performance Alerts</h3>
-                  <div class="schedule"><i class="fas fa-exclamation-circle"></i> On resource threshold breach</div>
+                  <h3>API Consumption Layer</h3>
+                  <div class="schedule"><i class="fas fa-exclamation-circle"></i> On demand</div>
                 </div>
-                <p>Monitors CPU, memory, disk usage and alerts on high utilization</p>
+                <p>Processed records can be consumed from Flask JSON endpoints in fixed-size snapshots.</p>
                 <div class="metrics-box">
-                  <h4>PERFORMANCE METRICS</h4>
+                  <h4>ENDPOINT OUTPUT</h4>
                   <div class="metric-item">
-                    <span>Alert Channels</span>
-                    <span>Email, Slack, PagerDuty</span>
+                    <span>Endpoint A</span>
+                    <span>/api/property_detil</span>
                   </div>
                   <div class="metric-item">
-                    <span>Avg Response Time</span>
-                    <span>< 5 minutes</span>
+                    <span>Endpoint B</span>
+                    <span>/api/property_address</span>
                   </div>
                   <div class="metric-item">
-                    <span>False Positive Rate</span>
-                    <span>< 0.2%</span>
+                    <span>Query Limit</span>
+                    <span>LIMIT 5000 per endpoint</span>
                   </div>
                 </div>
               </div>
@@ -1396,13 +1392,17 @@
       <h2>End-to-End Property Data Solutions</h2>
       <p>A comprehensive system for property data management and analysis</p>
       <div class="footer-buttons">
-        <button class="btn btn-outline-light">Contact</button>
-        <button class="btn btn-outline-light">Documentation</button>
+        <a class="btn btn-outline-light" href="/#contact">Contact</a>
+        <a class="btn btn-outline-light" href="https://github.com/adhamhusein/property-data-solutions" target="_blank" rel="noopener noreferrer">Documentation</a>
       </div>
-      <p class="copyright">© <span id="current-year"></span> Property Data Solutions. All rights reserved.</p>
+      <p class="copyright">Copyright <span id="current-year"></span> Property Data Solutions. All rights reserved.</p>
     </div>
   </footer>
 
   <script src="../static/js/project_002_script.js"></script>
 </body>
 </html>
+
+
+
+
