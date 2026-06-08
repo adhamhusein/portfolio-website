@@ -3,6 +3,7 @@ body header {
 	margin:0;
 	padding:0;
 	scroll-behavior: smooth;
+    background-color: #ffffff;
 
     --base: #555;
 	--base-100: #f1f1f1;

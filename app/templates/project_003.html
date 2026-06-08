@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BI Property Price-Location Analysis</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+  <link rel="stylesheet" href="../static/css/project_003_styles.css">
+  <link rel="stylesheet" href="../static/css/navbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="../static/js/index_scripts.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo-all">
+      <a href="#" class="logo-holder">
+        <div class="logo">AD</div>
+        <div class="logo-text">Adham's Portfolio</div>
+      </a>
+      <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
+        </svg>
+      </a>
+    </div>
+    <nav>
+      <ul id="menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="https://husein-workpace.my.id/project">Projects</a></li>
+        <li><a href="/#experience">Experience</a></li>
+        <li><a href="/#contact" class="button">Contact</a></li>
+        <li></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <h1 class="project-title">BI Property Price-Location Analysis</h1>
+    <p class="project-subtitle">
+      This business intelligence dashboard analyzes residential property prices in Java by year and province,
+      highlighting market trends, affordability gaps, and practical buying opportunities.
+    </p>
+
+    <section class="dashboard-card" aria-label="Property price analysis dashboard">
+      <img src="../static/images/img-project/project-002.png" alt="BI property price location analysis dashboard">
+    </section>
+
+    <section class="analysis-grid">
+      <article class="panel">
+        <h2>Summary of Residential Price</h2>
+        <p>
+          Over the past <span class="highlight">five years</span>, median residential prices in Indonesia
+          showed a <span class="warning">clear downward trend</span>.
+        </p>
+        <p>
+          The median price fell from IDR 1.370 billion five years ago to around IDR 830 million in 2024,
+          equal to a <span class="warning">decrease of roughly 39.42%</span>.
+        </p>
+        <p>
+          With lower prices, buyers currently have a stronger chance to secure better-value residential properties
+          before market momentum changes.
+        </p>
+      </article>
+
+      <article class="panel">
+        <h2>Regional Price Comparison in Java</h2>
+        <p>
+          <span class="warning">DKI Jakarta</span> remains the most expensive province,
+          supported by the highest mean and upper quartile values in the dataset.
+        </p>
+        <p>
+          <span class="highlight">Banten and Jawa Tengah</span> are the most affordable provinces,
+          making them attractive for cost-sensitive buyers.
+        </p>
+        <p>
+          Across all listed provinces, the overall mean residential price is approximately
+          <span class="highlight">IDR 943 million</span>.
+        </p>
+      </article>
+    </section>
+
+    <section class="findings">
+      <h3>Key BI Findings</h3>
+      <ul>
+        <li>Price distribution narrowed over time, with lower quartile and median values in 2024 compared with 2020-2021.</li>
+        <li>Jakarta and Bali continue to sit above the average, while Banten and Jawa Tengah remain below it.</li>
+        <li>Province-level quartile analysis helps distinguish premium markets from affordable residential clusters.</li>
+        <li>The dashboard supports decision-making for buyers, analysts, and property market monitoring use cases.</li>
+      </ul>
+      <div class="footer-cta">
+        <a class="btn-link btn-primary" href="/project">Back to Projects</a>
+        <a class="btn-link btn-outline" href="/#contact">Contact</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

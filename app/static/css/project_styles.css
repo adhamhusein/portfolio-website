@@ -369,6 +369,13 @@ main .highlight .card {
 	background: #e0e0e0;
 	box-shadow: 15px 15px 30px #bebebe,
 				-15px -15px 30px #ffffff;
+	.card-img-top {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		height: auto;
+		object-fit: cover;
+		object-position: center;
+	}
 	&:hover {
 		box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
 		transform: scale(1.05);

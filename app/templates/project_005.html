@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power BI Property Analysis Dashboard</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+  <link rel="stylesheet" href="../static/css/project_005_styles.css">
+  <link rel="stylesheet" href="../static/css/navbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="../static/js/index_scripts.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo-all">
+      <a href="#" class="logo-holder">
+        <div class="logo">AD</div>
+        <div class="logo-text">Adham's Portfolio</div>
+      </a>
+      <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
+        </svg>
+      </a>
+    </div>
+    <nav>
+      <ul id="menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="https://husein-workpace.my.id/project">Projects</a></li>
+        <li><a href="/#experience">Experience</a></li>
+        <li><a href="/#contact" class="button">Contact</a></li>
+        <li></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <h1>Power BI Property Analysis Dashboard</h1>
+      <p>
+        This dashboard combines strategic market monitoring and operational property analytics.
+        The first view provides executive-level KPI and trend signals, while the second view supports
+        record-level property exploration for tactical decisions.
+      </p>
+      <p>
+        Data used in this dashboard comes from
+        <a href="/project/project_002">My Project 002 (End-to-End Property Data Solutions)</a>.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-link btn-download" href="{{ url_for('static', filename='model/property_dashboard.zip') }}" download="property_dashboard.zip">
+          <i class="fas fa-download" aria-hidden="true"></i>
+          Download Power BI Dashboard
+        </a>
+      </div>
+    </section>
+
+    <section class="section-block" id="executive-summary">
+      <div class="section-header">
+        <h2>Executive Summary</h2>
+        <p>
+          The executive dashboard highlights portfolio scale, total market value movement, active agency footprint,
+          regional listing concentration, and price trends over time.
+        </p>
+      </div>
+      <div class="figure-wrap">
+        <img src="../static/images/img-project/project-007.png" alt="Executive summary Power BI view with KPIs, trend line, and map">
+      </div>
+      <div class="points-grid">
+        <article class="point-card">
+          <h3>Market Pulse</h3>
+          <p>Total listings, property value, and active agents provide a fast monthly health check for the market snapshot.</p>
+        </article>
+        <article class="point-card">
+          <h3>Regional Opportunity</h3>
+          <p>City and province comparison reveals where listing supply is concentrated and where pricing differs across Java and other regions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block" id="property-finder">
+      <div class="section-header">
+        <h2>Property Finder</h2>
+        <p>
+          The property finder view focuses on detailed filtering by year, location, price range, and property type,
+          then surfaces item-level attributes such as bedroom counts, certificates, utilities, access, and agency contact.
+        </p>
+      </div>
+      <div class="figure-wrap">
+        <img src="../static/images/img-project/project-008.png" alt="Property finder Power BI view with filters and detailed listing attributes">
+      </div>
+      <div class="points-grid">
+        <article class="point-card">
+          <h3>Targeted Selection</h3>
+          <p>Analysts can narrow to specific market segments and instantly compare available listings against budget and feature requirements.</p>
+        </article>
+        <article class="point-card">
+          <h3>Decision Ready Detail</h3>
+          <p>Rich property metadata and contact fields support faster shortlist creation and follow-up with relevant agencies.</p>
+        </article>
+      </div>
+      <div class="footer-links">
+        <a href="/project" class="btn-link btn-main">Back to Projects</a>
+        <a href="/#contact" class="btn-link btn-ghost">Contact</a>
+      </div>
+    </section>
+
+    <section class="section-block" id="skills-demonstrated">
+      <div class="section-header">
+        <h2>Skills Demonstrated</h2>
+        <p>
+          This project demonstrates end-to-end analytics delivery from data processing to interactive reporting and API consumption.
+        </p>
+      </div>
+      <div class="points-grid">
+        <article class="point-card">
+          <h3>Business Intelligence</h3>
+          <p>Designed executive KPI dashboards and drill-down views for strategic and operational decision support.</p>
+        </article>
+        <article class="point-card">
+          <h3>Data Modeling and Transformation</h3>
+          <p>Prepared and structured raw property data into analysis-ready datasets with clear dimensions and metrics.</p>
+        </article>
+        <article class="point-card">
+          <h3>API Development</h3>
+          <p>Created Flask API endpoints to get the data as JSON for dashboard use and external integration.</p>
+        </article>
+        <article class="point-card">
+          <h3>Backend Integration</h3>
+          <p>Connected dashboard workflows with PostgreSQL and automation pipelines to keep reporting outputs updated.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

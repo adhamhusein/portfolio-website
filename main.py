@@ -83,9 +83,19 @@ def project():
 def project_002():
     return render_template('project_002.html')
 
+@app.route('/project/project_003')
+@app.route('/project/project_003/')
+def project_003():
+    return render_template('project_003.html')
+
 @app.route('/project/project_004')
 def project_004():
     return render_template('project_004.html')
+
+@app.route('/project/project_005')
+@app.route('/project/project_005/')
+def project_005():
+    return render_template('project_005.html')
 
 @app.route('/project/project_004_2')
 def project_004_2():

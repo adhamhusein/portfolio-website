@@ -1,0 +1,190 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  background: #f2f5f9;
+  color: #0f172a;
+}
+
+.page-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 34px 22px 52px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #0b2a5b, #123e79);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 16px 30px rgba(10, 31, 64, 0.2);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+.hero p {
+  margin: 12px 0 0;
+  max-width: 100%;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+
+.hero p a {
+  color: #fff3a3;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hero p a:visited {
+  color: #ffe08a;
+}
+
+.hero p a:hover {
+  color: #ffffff;
+}
+
+.hero-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-download {
+  background: #ffffff;
+  color: #0f3c74;
+  gap: 8px;
+  border: 1px solid #dbeafe;
+}
+
+.btn-download:hover {
+  background: #eaf3ff;
+}
+
+.section-block {
+  margin-top: 30px;
+  background: #ffffff;
+  border: 1px solid #d6e1ec;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 10px 24px rgba(12, 35, 64, 0.08);
+}
+
+.section-header {
+  margin-bottom: 14px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #0b3a69;
+}
+
+.section-header p {
+  margin: 6px 0 0;
+  font-size: 17px;
+  color: #4b5563;
+  line-height: 1.65;
+}
+
+.figure-wrap {
+  margin-top: 14px;
+  border: 1px solid #cad5e1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.figure-wrap img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
+.points-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.point-card {
+  border: 1px solid #d6e1ec;
+  border-radius: 12px;
+  padding: 14px;
+  background: #f8fbff;
+}
+
+.point-card h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #0f4a84;
+}
+
+.point-card p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #374151;
+}
+
+.footer-links {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.btn-main {
+  background: #0f66bc;
+  color: #ffffff;
+}
+
+.btn-ghost {
+  border: 1px solid #0f66bc;
+  color: #0f66bc;
+  background: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .hero h1 {
+    font-size: 30px;
+  }
+
+  .points-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-shell {
+    padding: 24px 14px 40px;
+  }
+
+  .hero {
+    padding: 22px;
+  }
+
+  .hero h1 {
+    font-size: 25px;
+  }
+}
